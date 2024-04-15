@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ImageEncryptCompress
 {
-    public class Node
+    public class Node<T>
     {
-        public char character;
+        public T value;
         public int freq;
-        public Node left, right;
-        public Node(char character, int freq)
+        public Node<T> left, right;
+        public Node(T value, int freq)
         {
-            this.character = character;
+            this.value = value;
             this.freq = freq;
             left = right = null;
         }
