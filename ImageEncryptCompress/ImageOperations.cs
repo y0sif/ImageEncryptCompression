@@ -244,6 +244,28 @@ namespace ImageEncryptCompress
             return Filtered;
         }
 
+        //linear feedback shift register encryption
+        public static RGBPixel[,] LFSR_Enc(RGBPixel[,] ImageMatrix, int tapPosition, uint initSeed)
+        {
+            throw new NotImplementedException();
+        }
+
+        //linear feedback shift register decryption
+        public static RGBPixel[,] LFSR_Dec(RGBPixel[,] ImageMatrix, int tapPosition, uint initSeed)
+        {
+            throw new NotImplementedException();
+        }
+
+        //use binarywriter to write the image to the file
+        public static void Huffman_Compress(RGBPixel[,] ImageMatrix)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void Huffman_Decompress(RGBPixel[,] ImageMatrix)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }
