@@ -4,6 +4,8 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using System.Linq;
+using System.Security.Cryptography;
 ///Algorithms Project
 ///Intelligent Scissors
 ///
@@ -244,16 +246,146 @@ namespace ImageEncryptCompress
             return Filtered;
         }
 
-        //linear feedback shift register encryption
-        public static RGBPixel[,] LFSR_Enc(RGBPixel[,] ImageMatrix, int tapPosition, uint initSeed)
+        //--------------------------------//
+        // ENCRYPTION & DECRYPTION CODE   //
+        //--------------------------------//
+
+        //Global array to store keys
+        private static string[] RGBKeys = new string[3];
+
+        public static void KeyGeneration(int tapPosition, uint initSeed)
         {
-            throw new NotImplementedException();
+            int keySize = 8;
+            char shiftOut;
+            StringBuilder keyString = new StringBuilder();
+
+            char[] seedBinary = ConvertToBinary((byte)initSeed);
+
+            for (int k = 0; k < RGBKeys.Length; k++)
+            {
+                for (int i = 0; i < keySize; i++)
+                {
+                    shiftOut = seedBinary[0];
+                    for (int j = 1; j < keySize; j++)
+                    {
+                        seedBinary[j - 1] = seedBinary[j];
+                    }
+                    seedBinary[7] = (char)((int)seedBinary[tapPosition] ^ (int)shiftOut);
+                }
+                keyString.Clear();
+                keyString.Append(seedBinary);
+                RGBKeys[k] = keyString.ToString();
+            }
         }
 
-        //linear feedback shift register decryption
-        public static RGBPixel[,] LFSR_Dec(RGBPixel[,] ImageMatrix, int tapPosition, uint initSeed)
+        public static RGBPixel[,] LFSR_Enc(RGBPixel[,] ImageMatrix, int tapPosition, uint initSeed)
+        {            
+            KeyGeneration(tapPosition, initSeed);
+            int keySize = 8;
+
+            StringBuilder redString = new StringBuilder();
+            StringBuilder greenString = new StringBuilder();
+            StringBuilder blueString = new StringBuilder();
+
+            char[] redKey = RGBKeys[0].ToCharArray();
+            char[] greenKey = RGBKeys[1].ToCharArray();
+            char[] blueKey = RGBKeys[2].ToCharArray();
+
+            for (int row = 0; row < GetHeight(ImageMatrix); row++)
+            {
+                for(int col = 0; col < GetWidth(ImageMatrix); col++)
+                {
+                    RGBPixel pixel = ImageMatrix[row, col];
+
+                    char[] redVal = ConvertToBinary(pixel.red);
+                    char[] greenVal = ConvertToBinary(pixel.green);
+                    char[] blueVal = ConvertToBinary(pixel.blue);
+
+                    for (int i = 0; i < keySize; i++)
+                    {
+                        redVal[i] = (char)((int)redVal[i] ^ (int)redKey[i]);
+                        greenVal[i] = (char)((int)greenVal[i] ^ (int)greenKey[i]);
+                        blueVal[i] = (char)((int)blueVal[i] ^ (int)blueKey[i]);
+                    }
+
+                    redString.Clear();
+                    greenString.Clear();
+                    blueString.Clear();
+
+                    pixel.red = ConvertToDecimal(redString.Append(redVal).ToString());
+                    pixel.green = ConvertToDecimal(greenString.Append(greenVal).ToString());
+                    pixel.blue = ConvertToDecimal(blueString.Append(blueVal).ToString());                   
+                }
+            }      
+            
+            return ImageMatrix;
+        }
+
+        public static RGBPixel[,] LFSR_Dec(RGBPixel[,] ImageMatrix)
         {
-            throw new NotImplementedException();
+            int keySize = 8;
+
+            StringBuilder redString = new StringBuilder();
+            StringBuilder greenString = new StringBuilder();
+            StringBuilder blueString = new StringBuilder();
+
+            char[] redKey = RGBKeys[0].ToCharArray();
+            char[] greenKey = RGBKeys[1].ToCharArray();
+            char[] blueKey = RGBKeys[2].ToCharArray();
+
+            for (int row = 0; row < GetHeight(ImageMatrix); row++)
+            {
+                for (int col = 0; col < GetWidth(ImageMatrix); col++)
+                {
+                    RGBPixel pixel = ImageMatrix[row, col];
+
+                    char[] redVal = ConvertToBinary(pixel.red);
+                    char[] greenVal = ConvertToBinary(pixel.green);
+                    char[] blueVal = ConvertToBinary(pixel.blue);
+
+                    for (int i = 0; i < keySize; i++)
+                    {
+                        redVal[i] = (char)((int)redVal[i] ^ (int)redKey[i]);
+                        greenVal[i] = (char)((int)greenVal[i] ^ (int)greenKey[i]);
+                        blueVal[i] = (char)((int)blueVal[i] ^ (int)blueKey[i]);
+                    }
+
+                    redString.Clear();
+                    greenString.Clear();
+                    blueString.Clear();
+
+                    pixel.red = ConvertToDecimal(redString.Append(redVal).ToString());
+                    pixel.green = ConvertToDecimal(greenString.Append(greenVal).ToString());
+                    pixel.blue = ConvertToDecimal(blueString.Append(blueVal).ToString());
+                }
+            }
+
+            return ImageMatrix;
+        }
+
+        public static char[] ConvertToBinary(byte String)
+        {
+            StringBuilder Byte = new StringBuilder();
+
+            for (int i = 0; i < 8; i++)
+            {
+                char remainder = (String % 2 == 0) ? '0' : '1';
+                Byte.Insert(0, remainder);
+
+                String /= 2;
+            }
+
+            return Byte.ToString().ToCharArray();
+        }
+        public static byte ConvertToDecimal(string binary)
+        {
+            byte total = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                total += (byte)((byte)(binary[i]) * Math.Pow(2, 7 - i));
+            }
+
+            return total;
         }
 
         //use binarywriter to write the image to the file
