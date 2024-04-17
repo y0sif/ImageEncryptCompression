@@ -37,6 +37,9 @@ namespace ImageEncryptCompress
             int maskSize = (int)nudMaskSize.Value ;
             ImageMatrix = ImageOperations.GaussianFilter1D(ImageMatrix, maskSize, sigma);
             ImageOperations.DisplayImage(ImageMatrix, pictureBox2);
+
+            /*ImageMatrix = ImageOperations.LFSR_Enc(ImageMatrix, 5, 115);
+            ImageOperations.DisplayImage(ImageMatrix, pictureBox2);*/
         }
 
        
