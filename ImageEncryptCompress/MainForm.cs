@@ -33,16 +33,18 @@ namespace ImageEncryptCompress
 
         private void btnGaussSmooth_Click(object sender, EventArgs e)
         {
-            double sigma = double.Parse(txtGaussSigma.Text);
+            /*double sigma = double.Parse(txtGaussSigma.Text);
             int maskSize = (int)nudMaskSize.Value ;
             ImageMatrix = ImageOperations.GaussianFilter1D(ImageMatrix, maskSize, sigma);
-            ImageOperations.DisplayImage(ImageMatrix, pictureBox2);
-
-            /*ImageMatrix = ImageOperations.LFSR_Enc(ImageMatrix, 5, 115);
             ImageOperations.DisplayImage(ImageMatrix, pictureBox2);*/
+
+            ImageMatrix = ImageOperations.LFSR(ImageMatrix, 5, "01001101011", true);
+            ImageOperations.DisplayImage(ImageMatrix, pictureBox2);
         }
 
-       
-       
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

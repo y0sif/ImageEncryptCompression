@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
@@ -6,6 +7,7 @@ using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Runtime.Serialization.Formatters.Binary;
 ///Algorithms Project
 ///Intelligent Scissors
 ///
@@ -250,143 +252,76 @@ namespace ImageEncryptCompress
         // ENCRYPTION & DECRYPTION CODE   //
         //--------------------------------//
 
-        //Global array to store keys
-        private static string[] RGBKeys = new string[3];
+        //Global Attributes
+        private static char[][] RGBKeys = new char[3][];
+        private const int keySize = 8;
 
-        public static void KeyGeneration(int tapPosition, uint initSeed)
-        {
-            int keySize = 8;
-            char shiftOut;
-            StringBuilder keyString = new StringBuilder();
-
-            char[] seedBinary = ConvertToBinary((byte)initSeed);
+        public static void KeyGeneration(int tapPosition, string initSeed)
+        {                        
+            char[] seedBinary = initSeed.ToCharArray();
+            int bitSize = seedBinary.Length;
 
             for (int k = 0; k < RGBKeys.Length; k++)
             {
+                char[] keyString = new char[keySize];
                 for (int i = 0; i < keySize; i++)
                 {
-                    shiftOut = seedBinary[0];
-                    for (int j = 1; j < keySize; j++)
+                    char shiftOut = seedBinary[0];
+                    char res = (char)(((seedBinary[bitSize - tapPosition] - '0') ^ (shiftOut - '0')) + 48);
+
+                    for (int j = 1; j < bitSize; j++)
                     {
                         seedBinary[j - 1] = seedBinary[j];
                     }
-                    seedBinary[7] = (char)((int)seedBinary[tapPosition] ^ (int)shiftOut);
+
+                    seedBinary[bitSize - 1] = res;
+                    keyString[i] = res;
                 }
-                keyString.Clear();
-                keyString.Append(seedBinary);
-                RGBKeys[k] = keyString.ToString();
+                
+                RGBKeys[k] = keyString;
             }
         }
 
-        public static RGBPixel[,] LFSR_Enc(RGBPixel[,] ImageMatrix, int tapPosition, uint initSeed)
+        public static RGBPixel[,] LFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed, bool encrypt)
         {            
             KeyGeneration(tapPosition, initSeed);
-            int keySize = 8;
-
-            StringBuilder redString = new StringBuilder();
-            StringBuilder greenString = new StringBuilder();
-            StringBuilder blueString = new StringBuilder();
-
-            char[] redKey = RGBKeys[0].ToCharArray();
-            char[] greenKey = RGBKeys[1].ToCharArray();
-            char[] blueKey = RGBKeys[2].ToCharArray();
+            
+            char[] redKey = RGBKeys[0];
+            char[] greenKey = RGBKeys[1];
+            char[] blueKey = RGBKeys[2];
 
             for (int row = 0; row < GetHeight(ImageMatrix); row++)
             {
                 for(int col = 0; col < GetWidth(ImageMatrix); col++)
                 {
-                    RGBPixel pixel = ImageMatrix[row, col];
-
+                    ref RGBPixel pixel = ref ImageMatrix[row, col];
+                    
                     char[] redVal = ConvertToBinary(pixel.red);
                     char[] greenVal = ConvertToBinary(pixel.green);
                     char[] blueVal = ConvertToBinary(pixel.blue);
 
                     for (int i = 0; i < keySize; i++)
                     {
-                        redVal[i] = (char)((int)redVal[i] ^ (int)redKey[i]);
-                        greenVal[i] = (char)((int)greenVal[i] ^ (int)greenKey[i]);
-                        blueVal[i] = (char)((int)blueVal[i] ^ (int)blueKey[i]);
+                        redVal[i] = (char)(((redVal[i] - '0') ^ (redKey[i] - '0')) + 48);
+                        greenVal[i] = (char)(((greenVal[i] - '0') ^ (greenKey[i] - '0')) + 48);
+                        blueVal[i] = (char)(((blueVal[i] - '0') ^ (blueKey[i] - '0')) + 48);
                     }
-
-                    redString.Clear();
-                    greenString.Clear();
-                    blueString.Clear();
-
-                    pixel.red = ConvertToDecimal(redString.Append(redVal).ToString());
-                    pixel.green = ConvertToDecimal(greenString.Append(greenVal).ToString());
-                    pixel.blue = ConvertToDecimal(blueString.Append(blueVal).ToString());                   
-                }
-            }      
-            
-            return ImageMatrix;
-        }
-
-        public static RGBPixel[,] LFSR_Dec(RGBPixel[,] ImageMatrix)
-        {
-            int keySize = 8;
-
-            StringBuilder redString = new StringBuilder();
-            StringBuilder greenString = new StringBuilder();
-            StringBuilder blueString = new StringBuilder();
-
-            char[] redKey = RGBKeys[0].ToCharArray();
-            char[] greenKey = RGBKeys[1].ToCharArray();
-            char[] blueKey = RGBKeys[2].ToCharArray();
-
-            for (int row = 0; row < GetHeight(ImageMatrix); row++)
-            {
-                for (int col = 0; col < GetWidth(ImageMatrix); col++)
-                {
-                    RGBPixel pixel = ImageMatrix[row, col];
-
-                    char[] redVal = ConvertToBinary(pixel.red);
-                    char[] greenVal = ConvertToBinary(pixel.green);
-                    char[] blueVal = ConvertToBinary(pixel.blue);
-
-                    for (int i = 0; i < keySize; i++)
-                    {
-                        redVal[i] = (char)((int)redVal[i] ^ (int)redKey[i]);
-                        greenVal[i] = (char)((int)greenVal[i] ^ (int)greenKey[i]);
-                        blueVal[i] = (char)((int)blueVal[i] ^ (int)blueKey[i]);
-                    }
-
-                    redString.Clear();
-                    greenString.Clear();
-                    blueString.Clear();
-
-                    pixel.red = ConvertToDecimal(redString.Append(redVal).ToString());
-                    pixel.green = ConvertToDecimal(greenString.Append(greenVal).ToString());
-                    pixel.blue = ConvertToDecimal(blueString.Append(blueVal).ToString());
+                    
+                    pixel.red = ConvertToDecimal(redVal);
+                    pixel.green = ConvertToDecimal(greenVal);
+                    pixel.blue = ConvertToDecimal(blueVal);
                 }
             }
 
-            return ImageMatrix;
+            /*if(encrypt)
+                Huffman_Compress(ImageMatrix, tapPosition, initSeed);                
+            else*/
+                return ImageMatrix;
         }
 
-        public static char[] ConvertToBinary(byte String)
-        {
-            StringBuilder Byte = new StringBuilder();
-
-            for (int i = 0; i < 8; i++)
-            {
-                char remainder = (String % 2 == 0) ? '0' : '1';
-                Byte.Insert(0, remainder);
-
-                String /= 2;
-            }
-
-            return Byte.ToString().ToCharArray();
-        }
-        public static byte ConvertToDecimal(string binary)
-        {
-            byte total = 0;
-            for (int i = 0; i < 8; i++)
-            {
-                total += (byte)((byte)(binary[i]) * Math.Pow(2, 7 - i));
-            }
-
-            return total;
-        }
+        //--------------------------------//
+        // COMPRESSION & DECOMPRESSION    //
+        //--------------------------------//
 
         //use binarywriter to write the image to the file
         public static void Huffman_Compress(RGBPixel[,] ImageMatrix)
@@ -399,5 +334,31 @@ namespace ImageEncryptCompress
             throw new NotImplementedException();
         }
 
+
+        //--------------------------------//
+        //       AUXILLARY FUNCTIONS      //
+        //--------------------------------//
+        public static char[] ConvertToBinary(byte dec)
+        {
+            StringBuilder Byte = new StringBuilder();
+            for (int i = 0; i < 8; i++)
+            {
+                char remainder = (dec % 2 == 0) ? '0' : '1';
+                Byte.Insert(0, remainder);
+
+                dec /= 2;
+            }
+            return Byte.ToString().ToCharArray();
+        }
+        public static byte ConvertToDecimal(char[] binary)
+        {
+            byte total = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                total += (byte)((binary[i] - '0') * Math.Pow(2, 7 - i));
+            }
+
+            return total;
+        }        
     }
 }
