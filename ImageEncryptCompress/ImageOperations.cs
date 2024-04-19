@@ -257,9 +257,115 @@ namespace ImageEncryptCompress
         }
 
         //use binarywriter to write the image to the file
+
+        public static Dictionary<byte, int> R = new Dictionary<byte, int>();
+        public static Dictionary<byte, int> G = new Dictionary<byte, int>();
+        public static Dictionary<byte, int> B = new Dictionary<byte, int>();
+
+        private static void Construct_Dictionaries(RGBPixel[,] ImageMatrix)
+        {
+            // make sure dictionary is empty before adding new values of new picture to it
+            R.Clear();
+            G.Clear();
+            B.Clear();
+            for(int i = 0; i < GetHeight(ImageMatrix); i++)
+            {
+                for (int j = 0; j < GetWidth(ImageMatrix); j++)
+                {
+                    RGBPixel pixel = ImageMatrix[i, j];
+                    // red dictionary
+                    if(R.ContainsKey(pixel.red))
+                    {
+                        R[pixel.red]++;
+                    }
+                    else
+                    {
+                        R.Add(pixel.red, 1);
+                    }
+                    // green dictionary
+                    if (G.ContainsKey(pixel.green))
+                    {
+                        G[pixel.green]++;
+                    }
+                    else
+                    {
+                        G.Add(pixel.green, 1);
+                    }
+                    // blue dictionary
+                    if (B.ContainsKey(pixel.blue))
+                    {
+                        B[pixel.blue]++;
+                    }
+                    else
+                    {
+                        B.Add(pixel.blue, 1);
+                    }
+                }
+            }
+        }
+
+        private static Node<byte?> BuildHuffmanTree(Dictionary<byte, int> color)
+        {
+            PriorityQueue<int, Node<byte?>> pq = new PriorityQueue<int, Node<byte?>>();
+
+            foreach(byte value in color.Keys)
+            {
+                int freq = color[value];
+                Node<byte?> node = new Node<byte?>(value, freq);
+                pq.Enqueue(freq, node);
+            }
+            for(int i = 0; i < color.Count;  i++)
+            {
+                Node<byte?> node = new Node<byte?>(null, 0);
+                Node<byte?> left = pq.Dequeue();
+                Node<byte?> right = pq.Dequeue();
+                node.left = left;
+                node.right = right;
+                node.freq = left.freq + right.freq;
+                pq.Enqueue(node.freq, node);
+            }
+            return pq.Dequeue();
+        }
+
+        private static void dfs(Node<byte?> node)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            if (node.value == null) { 
+                Console.WriteLine("node freq: " + node.freq);
+            }else
+            {
+                Console.WriteLine("leaf node");
+                Console.WriteLine("node value: " + node.value);
+                Console.WriteLine("node freq: " + node.freq);
+                Console.WriteLine("end of leaf node");
+            }
+
+            dfs(node.left);
+            dfs(node.right);
+            
+        }
+
         public static void Huffman_Compress(RGBPixel[,] ImageMatrix)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+
+            Construct_Dictionaries(ImageMatrix);
+
+            Node<byte?> root_red = BuildHuffmanTree(R);
+            Node<byte?> root_green = BuildHuffmanTree(G);
+            Node<byte?> root_blue = BuildHuffmanTree(B);
+
+            Console.WriteLine("red tree: ");
+            dfs(root_red);
+            Console.WriteLine("green tree: ");
+            dfs(root_green);
+            Console.WriteLine("blue tree: ");
+            dfs(root_blue);
+
         }
 
         public static void Huffman_Decompress(RGBPixel[,] ImageMatrix)
