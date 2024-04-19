@@ -314,7 +314,7 @@ namespace ImageEncryptCompress
                 Node<byte?> node = new Node<byte?>(value, freq);
                 pq.Enqueue(freq, node);
             }
-            for(int i = 0; i < color.Count;  i++)
+            for(int i = 0; i < color.Count - 1;  i++)
             {
                 Node<byte?> node = new Node<byte?>(null, 0);
                 Node<byte?> left = pq.Dequeue();
