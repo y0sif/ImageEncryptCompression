@@ -38,11 +38,19 @@ namespace ImageEncryptCompress
             ImageMatrix = ImageOperations.GaussianFilter1D(ImageMatrix, maskSize, sigma);
             ImageOperations.DisplayImage(ImageMatrix, pictureBox2);*/
 
-            ImageMatrix = ImageOperations.LFSR(ImageMatrix, 5, "01001101011", true);
+            string initSeed = txtGaussSigma.Text;
+            int tap = (int)nudMaskSize.Value;
+
+            ImageMatrix = ImageOperations.LFSR(ImageMatrix, tap, initSeed, true);
             ImageOperations.DisplayImage(ImageMatrix, pictureBox2);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtWidth_TextChanged(object sender, EventArgs e)
         {
 
         }

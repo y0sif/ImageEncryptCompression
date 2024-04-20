@@ -254,27 +254,26 @@ namespace ImageEncryptCompress
 
         //Global Attributes
         private static char[][] RGBKeys = new char[3][];
-        private const int keySize = 8;
+        private const int KEY_SIZE = 8;
 
-        public static void KeyGeneration(int tapPosition, string initSeed)
+        public static void KeyGeneration(int tapPosition, char[] seed)
         {                        
-            char[] seedBinary = initSeed.ToCharArray();
-            int bitSize = seedBinary.Length;
+            int bitSize = seed.Length;
 
             for (int k = 0; k < RGBKeys.Length; k++)
             {
-                char[] keyString = new char[keySize];
-                for (int i = 0; i < keySize; i++)
+                char[] keyString = new char[KEY_SIZE];
+                for (int i = 0; i < KEY_SIZE; i++)
                 {
-                    char shiftOut = seedBinary[0];
-                    char res = (char)(((seedBinary[bitSize - tapPosition] - '0') ^ (shiftOut - '0')) + 48);
+                    char shiftOut = seed[0];
+                    char res = (char)(((seed[bitSize - tapPosition] - '0') ^ (shiftOut - '0')) + 48);
 
                     for (int j = 1; j < bitSize; j++)
                     {
-                        seedBinary[j - 1] = seedBinary[j];
+                        seed[j - 1] = seed[j];
                     }
 
-                    seedBinary[bitSize - 1] = res;
+                    seed[bitSize - 1] = res;
                     keyString[i] = res;
                 }
                 
@@ -283,24 +282,26 @@ namespace ImageEncryptCompress
         }
 
         public static RGBPixel[,] LFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed, bool encrypt)
-        {            
-            KeyGeneration(tapPosition, initSeed);
-            
-            char[] redKey = RGBKeys[0];
-            char[] greenKey = RGBKeys[1];
-            char[] blueKey = RGBKeys[2];
+        {
+            char[] seed = initSeed.ToCharArray();
 
             for (int row = 0; row < GetHeight(ImageMatrix); row++)
             {
                 for(int col = 0; col < GetWidth(ImageMatrix); col++)
                 {
                     ref RGBPixel pixel = ref ImageMatrix[row, col];
-                    
+
+                    KeyGeneration(tapPosition, seed);
+
+                    char[] redKey = RGBKeys[0];
+                    char[] greenKey = RGBKeys[1];
+                    char[] blueKey = RGBKeys[2];
+
                     char[] redVal = ConvertToBinary(pixel.red);
                     char[] greenVal = ConvertToBinary(pixel.green);
                     char[] blueVal = ConvertToBinary(pixel.blue);
 
-                    for (int i = 0; i < keySize; i++)
+                    for (int i = 0; i < KEY_SIZE; i++)
                     {
                         redVal[i] = (char)(((redVal[i] - '0') ^ (redKey[i] - '0')) + 48);
                         greenVal[i] = (char)(((greenVal[i] - '0') ^ (greenKey[i] - '0')) + 48);
