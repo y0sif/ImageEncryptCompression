@@ -165,7 +165,7 @@ namespace ImageEncryptCompress
             0,
             0});
             this.nudMaskSize.Minimum = new decimal(new int[] {
-            1,
+            0,
             0,
             0,
             0});

@@ -266,7 +266,7 @@ namespace ImageEncryptCompress
                 for (int i = 0; i < KEY_SIZE; i++)
                 {
                     char shiftOut = seed[0];
-                    char res = (char)(((seed[bitSize - tapPosition] - '0') ^ (shiftOut - '0')) + 48);
+                    char res = (char)(((seed[(bitSize - tapPosition) - 1] - '0') ^ (shiftOut - '0')) + '0');
 
                     for (int j = 1; j < bitSize; j++)
                     {
@@ -303,9 +303,9 @@ namespace ImageEncryptCompress
 
                     for (int i = 0; i < KEY_SIZE; i++)
                     {
-                        redVal[i] = (char)(((redVal[i] - '0') ^ (redKey[i] - '0')) + 48);
-                        greenVal[i] = (char)(((greenVal[i] - '0') ^ (greenKey[i] - '0')) + 48);
-                        blueVal[i] = (char)(((blueVal[i] - '0') ^ (blueKey[i] - '0')) + 48);
+                        redVal[i] = (char)(((redVal[i] - '0') ^ (redKey[i] - '0')) + '0');
+                        greenVal[i] = (char)(((greenVal[i] - '0') ^ (greenKey[i] - '0')) + '0');
+                        blueVal[i] = (char)(((blueVal[i] - '0') ^ (blueKey[i] - '0')) + '0');
                     }
                     
                     pixel.red = ConvertToDecimal(redVal);
@@ -317,7 +317,7 @@ namespace ImageEncryptCompress
             /*if(encrypt)
                 Huffman_Compress(ImageMatrix, tapPosition, initSeed);                
             else*/
-                return ImageMatrix;
+            return ImageMatrix;
         }
 
         //--------------------------------//
@@ -360,6 +360,6 @@ namespace ImageEncryptCompress
             }
 
             return total;
-        }        
+        }
     }
 }
