@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace ImageEncryptCompress
     {
         public T value;
         public int freq;
+        public string binary;
         public Node<T> left, right;
         public Node(T value, int freq)
         {

@@ -4,6 +4,11 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using System.Collections;
+using System.Runtime.InteropServices.ComTypes;
 ///Algorithms Project
 ///Intelligent Scissors
 ///
@@ -262,6 +267,10 @@ namespace ImageEncryptCompress
         public static Dictionary<byte, int> G = new Dictionary<byte, int>();
         public static Dictionary<byte, int> B = new Dictionary<byte, int>();
 
+        public static Dictionary<byte, string> R_TREE = new Dictionary<byte, string>();
+        public static Dictionary<byte, string> G_TREE = new Dictionary<byte, string>();
+        public static Dictionary<byte, string> B_TREE = new Dictionary<byte, string>();
+
         private static void Construct_Dictionaries(RGBPixel[,] ImageMatrix)
         {
             // make sure dictionary is empty before adding new values of new picture to it
@@ -317,17 +326,17 @@ namespace ImageEncryptCompress
             for(int i = 0; i < color.Count - 1;  i++)
             {
                 Node<byte?> node = new Node<byte?>(null, 0);
-                Node<byte?> left = pq.Dequeue();
-                Node<byte?> right = pq.Dequeue();
-                node.left = left;
-                node.right = right;
-                node.freq = left.freq + right.freq;
+                Node<byte?> firstMin = pq.Dequeue();
+                Node<byte?> secondMin = pq.Dequeue();  
+                node.left = secondMin;
+                node.right = firstMin;
+                node.freq = firstMin.freq + secondMin.freq;
                 pq.Enqueue(node.freq, node);
             }
             return pq.Dequeue();
         }
 
-        private static void dfs(Node<byte?> node)
+        private static void dfs(Node<byte?> node, string binary, Dictionary<byte, string> tree)
         {
             if (node == null)
             {
@@ -341,31 +350,207 @@ namespace ImageEncryptCompress
                 Console.WriteLine("leaf node");
                 Console.WriteLine("node value: " + node.value);
                 Console.WriteLine("node freq: " + node.freq);
+                Console.WriteLine("binary: " + binary);
                 Console.WriteLine("end of leaf node");
+                node.binary = binary;
+                tree.Add(node.value.Value, binary);
             }
 
-            dfs(node.left);
-            dfs(node.right);
-            
+            dfs(node.left, binary + '0', tree);
+            dfs(node.right, binary + '1', tree);
+
         }
 
-        public static void Huffman_Compress(RGBPixel[,] ImageMatrix)
+        public static void Huffman_Compress(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
         {
-            //throw new NotImplementedException();
-
             Construct_Dictionaries(ImageMatrix);
 
             Node<byte?> root_red = BuildHuffmanTree(R);
             Node<byte?> root_green = BuildHuffmanTree(G);
             Node<byte?> root_blue = BuildHuffmanTree(B);
 
-            Console.WriteLine("red tree: ");
-            dfs(root_red);
-            Console.WriteLine("green tree: ");
-            dfs(root_green);
-            Console.WriteLine("blue tree: ");
-            dfs(root_blue);
+            dfs(root_red, "", R_TREE);
+            dfs(root_green, "", G_TREE);
+            dfs(root_blue, "", B_TREE);
 
+            string[] arrays = PixelEncoding(ImageMatrix);
+
+            SerializeSeedAndTap("D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin", tapPosition, initSeed);
+
+            SerializeTree(root_red, "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin", true);
+            SerializeTree(root_green, "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin", true);
+            SerializeTree(root_blue, "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin", true);
+
+            SerializeBits("D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin", arrays[0]);
+            SerializeBits("D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin", arrays[1]);
+            SerializeBits("D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin", arrays[2]);
+        }
+
+        private static string[] PixelEncoding(RGBPixel[,] ImageMatrix)
+        {
+            string red = "";
+            string green = "";
+            string blue = "";
+
+            for (int i = 0; i < GetHeight(ImageMatrix); i++)
+            {
+                for (int j = 0; j < GetWidth(ImageMatrix); j++)
+                {
+                    RGBPixel pixel = ImageMatrix[i, j];
+                    red += R_TREE[pixel.red];
+                    green += G_TREE[pixel.green];
+                    blue += B_TREE[pixel.blue];
+                }
+            }
+            string[] arrays = new string[]{ red, green, blue };
+            return arrays;
+        }
+
+        private static BitArray MergeBitArrays(params BitArray[] bitArrays)
+        {
+            // Calculate the total length of the merged BitArray
+            int totalLength = 0;
+            foreach (BitArray bitArray in bitArrays)
+            {
+                totalLength += bitArray.Length;
+            }
+
+            // Create a new BitArray with the total length
+            BitArray mergedBitArray = new BitArray(totalLength);
+
+            // Copy the contents of each BitArray into the merged BitArray
+            int currentIndex = 0;
+            foreach (BitArray bitArray in bitArrays)
+            {
+                for (int i = 0; i < bitArray.Length; i++)
+                {
+                    mergedBitArray[currentIndex++] = bitArray[i];
+                }
+            }
+
+            return mergedBitArray;
+        }
+
+        private static void SerializeBits(string filePath, string binaryString)
+        {
+            /*// Calculate the number of bits in the binary string
+            int bitLength = binaryString.Length;
+
+            // Create a byte array to hold the packed binary data
+            byte[] bytes = new byte[(bitLength + 7) / 8]; // Round up to the nearest byte
+
+            // Pack the binary string into bytes
+            for (int i = 0; i < bitLength; i++)
+            {
+                if (binaryString[i] == '1')
+                {
+                    // Set the corresponding bit in the byte array
+                    int byteIndex = i / 8;
+                    int bitOffset = i % 8;
+                    bytes[byteIndex] |= (byte)(1 << (7 - bitOffset));
+                }
+                // Note: If the character is '0', no action is needed since the byte is initialized to 0
+            }*/
+
+            // Write the byte array to a file
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Append))
+            {
+                //fileStream.Write(bytes, 0, bytes.Length);
+                IFormatter formatter = new BinaryFormatter();
+
+                formatter.Serialize(fileStream, binaryString);
+            }
+        }
+
+        private static void SerializeSeedAndTap(string filePath, int tapPosition, string initSeed)
+        {
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                IFormatter formatter = new BinaryFormatter();
+
+                formatter.Serialize(fileStream, initSeed);
+                formatter.Serialize(fileStream, tapPosition);
+            }
+        }
+
+        private static void SerializeTree(Node<byte?> root, string filePath, bool isAppend)
+        {
+
+            if (isAppend)
+            {
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Append))
+                {
+                    IFormatter formatter = new BinaryFormatter();
+                    SerializeNode(root, formatter, fileStream);
+                }
+            }
+            else
+            {
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    IFormatter formatter = new BinaryFormatter();
+                    SerializeNode(root, formatter, fileStream);
+                }
+            }
+
+        }
+
+        private static void SerializeNode(Node<byte?> node, IFormatter formatter, Stream stream)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            if (node.value == null)
+            {
+                formatter.Serialize(stream, -1);
+                formatter.Serialize(stream, node.freq);
+            }
+            else
+            {
+                formatter.Serialize(stream, node.value);
+                formatter.Serialize(stream, node.freq);
+            }
+            SerializeNode(node.left, formatter, stream);
+            SerializeNode(node.right, formatter, stream);
+        }
+
+
+        private static Node<byte?> DeserializeTree(string filePath)
+        {
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+            {
+                IFormatter formatter = new BinaryFormatter();
+                return DeserializeNode(formatter, fileStream);
+            }
+        }
+
+        private static Node<byte?> DeserializeNode(IFormatter formatter, Stream stream)
+        {
+            object value = formatter.Deserialize(stream);
+            if (value == null)
+            {
+                return null; // Leaf node
+            }
+
+            byte? nodeValue = (byte?)value;
+            int freq = (int)formatter.Deserialize(stream);
+            Node<byte?> node = new Node<byte?>(nodeValue, freq);
+            node.left = DeserializeNode(formatter, stream);
+            node.right = DeserializeNode(formatter, stream);
+            return node;
+        }
+
+        private static (object, object) DeserializeSeedAndTap(string filePath)
+        {
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                IFormatter formatter = new BinaryFormatter();
+                object initSeed = formatter.Deserialize(fileStream);
+                object tap = formatter.Deserialize(fileStream);
+                return (initSeed, tap);
+            }
+            
         }
 
         public static void Huffman_Decompress(RGBPixel[,] ImageMatrix)
