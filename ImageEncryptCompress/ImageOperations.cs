@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.Collections;
 using System.Runtime.InteropServices.ComTypes;
+using System.IO.Pipes;
 ///Algorithms Project
 ///Intelligent Scissors
 ///
@@ -277,9 +278,11 @@ namespace ImageEncryptCompress
             R.Clear();
             G.Clear();
             B.Clear();
-            for(int i = 0; i < GetHeight(ImageMatrix); i++)
+            int height = GetHeight(ImageMatrix);
+            int width = GetWidth(ImageMatrix);
+            for (int i = 0; i < height; i++)
             {
-                for (int j = 0; j < GetWidth(ImageMatrix); j++)
+                for (int j = 0; j < width; j++)
                 {
                     RGBPixel pixel = ImageMatrix[i, j];
                     // red dictionary
@@ -375,15 +378,19 @@ namespace ImageEncryptCompress
 
             string[] arrays = PixelEncoding(ImageMatrix);
 
-            SerializeSeedAndTap("D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin", tapPosition, initSeed);
+            string filePath = "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin";
 
-            SerializeTree(root_red, "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin", true);
-            SerializeTree(root_green, "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin", true);
-            SerializeTree(root_blue, "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin", true);
+            SerializeSeedAndTap(filePath, tapPosition, initSeed);
 
-            SerializeBits("D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin", arrays[0]);
-            SerializeBits("D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin", arrays[1]);
-            SerializeBits("D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin", arrays[2]);
+            SerializeTree(root_red, filePath);
+            SerializeTree(root_green, filePath);
+            SerializeTree(root_blue, filePath);
+
+            SerializeDimentions(filePath, GetWidth(ImageMatrix), GetHeight(ImageMatrix));
+
+            SerializeBits(filePath, arrays[0]);
+            SerializeBits(filePath, arrays[1]);
+            SerializeBits(filePath, arrays[2]);
         }
 
         private static string[] PixelEncoding(RGBPixel[,] ImageMatrix)
@@ -406,34 +413,20 @@ namespace ImageEncryptCompress
             return arrays;
         }
 
-        private static BitArray MergeBitArrays(params BitArray[] bitArrays)
+        private static void SerializeDimentions(string filePath, int width, int height)
         {
-            // Calculate the total length of the merged BitArray
-            int totalLength = 0;
-            foreach (BitArray bitArray in bitArrays)
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
             {
-                totalLength += bitArray.Length;
+                IFormatter formatter = new BinaryFormatter();
+
+                formatter.Serialize(fileStream, width);
+                formatter.Serialize(fileStream, height);
             }
-
-            // Create a new BitArray with the total length
-            BitArray mergedBitArray = new BitArray(totalLength);
-
-            // Copy the contents of each BitArray into the merged BitArray
-            int currentIndex = 0;
-            foreach (BitArray bitArray in bitArrays)
-            {
-                for (int i = 0; i < bitArray.Length; i++)
-                {
-                    mergedBitArray[currentIndex++] = bitArray[i];
-                }
-            }
-
-            return mergedBitArray;
         }
 
         private static void SerializeBits(string filePath, string binaryString)
         {
-            /*// Calculate the number of bits in the binary string
+            // Calculate the number of bits in the binary string
             int bitLength = binaryString.Length;
 
             // Create a byte array to hold the packed binary data
@@ -450,15 +443,16 @@ namespace ImageEncryptCompress
                     bytes[byteIndex] |= (byte)(1 << (7 - bitOffset));
                 }
                 // Note: If the character is '0', no action is needed since the byte is initialized to 0
-            }*/
+            }
 
             // Write the byte array to a file
             using (FileStream fileStream = new FileStream(filePath, FileMode.Append))
             {
-                //fileStream.Write(bytes, 0, bytes.Length);
-                IFormatter formatter = new BinaryFormatter();
+                fileStream.Write(bytes, 0, bytes.Length);
 
-                formatter.Serialize(fileStream, binaryString);
+                // Append a delimiter (e.g., newline character) to mark the end of each binary string
+                byte[] delimiter = { (byte)'\n' }; // Use newline character as delimiter
+                fileStream.Write(delimiter, 0, delimiter.Length);
             }
         }
 
@@ -473,25 +467,15 @@ namespace ImageEncryptCompress
             }
         }
 
-        private static void SerializeTree(Node<byte?> root, string filePath, bool isAppend)
+        private static void SerializeTree(Node<byte?> root, string filePath)
         {
 
-            if (isAppend)
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Append))
             {
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Append))
-                {
-                    IFormatter formatter = new BinaryFormatter();
-                    SerializeNode(root, formatter, fileStream);
-                }
+                IFormatter formatter = new BinaryFormatter();
+                SerializeNode(root, formatter, fileStream);
             }
-            else
-            {
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    IFormatter formatter = new BinaryFormatter();
-                    SerializeNode(root, formatter, fileStream);
-                }
-            }
+
 
         }
 
@@ -516,21 +500,21 @@ namespace ImageEncryptCompress
         }
 
 
-        private static Node<byte?> DeserializeTree(string filePath)
+        private static Node<byte?> DeserializeTree(Stream stream)
         {
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
-            {
-                IFormatter formatter = new BinaryFormatter();
-                return DeserializeNode(formatter, fileStream);
-            }
+            IFormatter formatter = new BinaryFormatter();
+            return DeserializeNode(formatter, stream);
         }
 
         private static Node<byte?> DeserializeNode(IFormatter formatter, Stream stream)
         {
-            object value = formatter.Deserialize(stream);
-            if (value == null)
+            byte? value = (byte?)formatter.Deserialize(stream);
+            if ((int)value != -1)
             {
-                return null; // Leaf node
+                byte? leafValue = (byte?)value;
+                int leafFreq = (int)formatter.Deserialize(stream);
+                Node<byte?> leaf = new Node<byte?>(leafValue, leafFreq);
+                return leaf; // Leaf node
             }
 
             byte? nodeValue = (byte?)value;
@@ -541,21 +525,171 @@ namespace ImageEncryptCompress
             return node;
         }
 
-        private static (object, object) DeserializeSeedAndTap(string filePath)
+        private static (int, int) DeserializeSeedAndTap(Stream stream)
         {
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                IFormatter formatter = new BinaryFormatter();
-                object initSeed = formatter.Deserialize(fileStream);
-                object tap = formatter.Deserialize(fileStream);
-                return (initSeed, tap);
-            }
-            
+            IFormatter formatter = new BinaryFormatter();
+            int initSeed = (int)formatter.Deserialize(stream);
+            int tap = (int)formatter.Deserialize(stream);
+            return (initSeed, tap);
         }
 
-        public static void Huffman_Decompress(RGBPixel[,] ImageMatrix)
+        private static (int, int) DeserializeDimentions(Stream stream)
         {
-            throw new NotImplementedException();
+            IFormatter formatter = new BinaryFormatter();
+            int width = (int)formatter.Deserialize(stream);
+            int height = (int)formatter.Deserialize(stream);
+            return (width, height);
+        }
+
+        private static string DeserializeChannel(Stream stream)
+        {
+            StringBuilder binaryStringBuilder = new StringBuilder();
+            int byteValue;
+
+            while ((byteValue = stream.ReadByte()) != -1)
+            {
+                if (byteValue == '\n')
+                {
+                    break;
+                }
+                else
+                {
+                    // Append binary character to StringBuilder
+                    binaryStringBuilder.Append((byteValue == '1') ? '1' : '0');
+                }
+            }
+
+            return binaryStringBuilder.ToString();
+        }
+
+        private static int initSeed;
+        private static int tap;
+        private static Node<byte?> red_root;
+        private static Node<byte?> green_root;
+        private static Node<byte?> blue_root;
+        private static string red_channel;
+        private static string green_channel;
+        private static string blue_channel;
+        private static int imgWidth;
+        private static int imgHeight;
+
+        private static void DeserializeFile(string filePath)
+        {
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+            {
+                (initSeed, tap) = DeserializeSeedAndTap(fileStream);
+
+                // Record the current file position (after tap and seed deserialization)
+                long EndPosition = fileStream.Position;
+
+                fileStream.Seek(EndPosition, SeekOrigin.Begin); 
+                red_root = DeserializeTree(fileStream);
+
+                EndPosition = fileStream.Position;
+                fileStream.Seek(EndPosition, SeekOrigin.Begin); 
+                green_root = DeserializeTree(fileStream);
+
+                EndPosition = fileStream.Position;
+                fileStream.Seek(EndPosition, SeekOrigin.Begin); 
+                blue_root = DeserializeTree(fileStream);
+
+                EndPosition = fileStream.Position;
+                fileStream.Seek(EndPosition, SeekOrigin.Begin);
+                (imgWidth, imgHeight) = DeserializeDimentions(fileStream);
+
+                EndPosition = fileStream.Position;
+                fileStream.Seek(EndPosition, SeekOrigin.Begin); 
+                red_channel = DeserializeChannel(fileStream);
+
+                EndPosition = fileStream.Position;
+                fileStream.Seek(EndPosition, SeekOrigin.Begin);
+                green_channel = DeserializeChannel(fileStream);
+
+                EndPosition = fileStream.Position;
+                fileStream.Seek(EndPosition, SeekOrigin.Begin); 
+                blue_channel = DeserializeChannel(fileStream);
+            }
+
+        }
+
+
+        public static RGBPixel[,] Huffman_Decompress(string filePath)
+        {
+            //throw new NotImplementedException();
+
+            DeserializeFile(filePath);
+
+            RGBPixel[,] decompressedImg = new RGBPixel[imgHeight, imgWidth];
+            int r = 0;
+            int g = 0;
+            int b = 0;
+            for (int i = 0; i < imgHeight; i++)
+            {
+                for (int j = 0; j < imgWidth; j++)
+                {
+                    Node<byte?> red_node = red_root;
+                    Node<byte?> green_node = green_root;
+                    Node<byte?> blue_node = blue_root;
+                    for(int k = r; k < red_channel.Length; k++)
+                    {
+                        if(red_node.left == null || red_node.right == null)
+                        {
+                            decompressedImg[i, j].red = (byte)red_node.value;
+                            break;
+                        }
+                        if (red_channel[k] == '0')
+                        {
+                            red_node = red_node.left;
+                            r++;
+                        }
+                        else
+                        {
+                            red_node = red_node.right;
+                            r++;
+                        }
+                    }
+
+                    for (int k = g; k < green_channel.Length; k++)
+                    {
+                        if (green_node.left == null || green_node.right == null)
+                        {
+                            decompressedImg[i, j].green = (byte)green_node.value;
+                            break;
+                        }
+                        if (green_channel[k] == '0')
+                        {
+                            green_node = green_node.left;
+                            g++;
+                        }
+                        else
+                        {
+                            green_node = green_node.right;
+                            g++;
+                        }
+                    }
+
+                    for (int k = b; k < blue_channel.Length; k++)
+                    {
+                        if (blue_node.left == null || blue_node.right == null)
+                        {
+                            decompressedImg[i, j].blue = (byte)blue_node.value;
+                            break;
+                        }
+                        if (blue_channel[k] == '0')
+                        {
+                            blue_node = blue_node.left;
+                            b++;
+                        }
+                        else
+                        {
+                            blue_node = blue_node.right;
+                            b++;
+                        }
+                    }
+                }
+            }
+
+            return decompressedImg;
         }
 
     }

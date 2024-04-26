@@ -33,9 +33,10 @@ namespace ImageEncryptCompress
 
         private void btnGaussSmooth_Click(object sender, EventArgs e)
         {
-            
+            //ImageMatrix = ImageOperations.Huffman_Decompress("D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin");
             ImageOperations.DisplayImage(ImageMatrix, pictureBox2);
-            ImageOperations.Huffman_Compress(ImageMatrix, 0, "00001");
+            ImageOperations.Huffman_Compress(ImageMatrix, 5, "101011");
+
         }
 
        
