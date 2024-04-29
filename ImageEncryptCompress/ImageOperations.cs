@@ -283,6 +283,7 @@ namespace ImageEncryptCompress
 
         public static RGBPixel[,] LFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed, bool encrypt)
         {
+
             char[] seed = initSeed.ToCharArray();
 
             for (int row = 0; row < GetHeight(ImageMatrix); row++)
@@ -334,23 +335,33 @@ namespace ImageEncryptCompress
             //try all seeds, 2^N possibilities
             for (int i=0; i < Math.Pow(2, N); i++)
             {
-                
+
                 //Convert the decimal to the equivalent binary in a string format
                 string seed = Convert.ToString(i, 2).PadLeft(N, '0');
                 
                 //try all tap positions, N possibilities for each seed
                 for (int tapPosition = 0; tapPosition < N; tapPosition++)
                 {
-                    //decrypt the image
-                    RGBPixel[,] ImageMatrix_copy = ImageMatrix;
-                    ImageMatrix_copy = LFSR(ImageMatrix_copy, tapPosition, seed, false);
 
+                    //Copy the image into another variable
+                    //You can't modify the original or it will ruin it for the next iteration
+                    RGBPixel[,] ImageMatrix_copy = new RGBPixel[ImageMatrix.GetLength(0), ImageMatrix.GetLength(1)];
+                    for (int n = 0; n < ImageMatrix.GetLength(0); n++)
+                    {
+                        for (int m = 0; m < ImageMatrix.GetLength(1); m++)
+                        {
+                            ImageMatrix_copy[n, m] = ImageMatrix[n, m];
+                        }
+                    }
+
+                    //decrypt the image
+                    ImageMatrix_copy = LFSR(ImageMatrix_copy, tapPosition, seed, false);
+             
                     //DEBUG
                     //Console.WriteLine("seed: " + seed + " , Tap: " + tapPosition);
                     //DEBUG
 
-
-                    //initialize
+                    //init each new seed and tap key
                     frequency_deviations[(seed, tapPosition)] = 0;
 
                     //loop through all pixels to calculate frequencies deviations
@@ -361,6 +372,7 @@ namespace ImageEncryptCompress
                             ref RGBPixel pixel = ref ImageMatrix_copy[row, col];
 
                             //Add the deviation of each color from 128
+                            //Negative or Positive deviations should yield same magnitude
                             frequency_deviations[(seed, tapPosition)] += Math.Abs(pixel.red - 128);
                             frequency_deviations[(seed, tapPosition)] += Math.Abs(pixel.green - 128);
                             frequency_deviations[(seed, tapPosition)] += Math.Abs(pixel.blue - 128);     
@@ -389,12 +401,6 @@ namespace ImageEncryptCompress
                 }
 
             }
-
-            //It always return the exact seed but the previous tap, therfore requires incrementing
-            //And in fact, the following tap is always the correct one
-            //The reason behind it is yet to be understood by me
-            //Potential reason could be the handling of zero-based here or in the LFSR function
-            best_seed_and_tap.Item2++;
 
             //DEBUG
             //Console.WriteLine("Chosen seed: " + best_seed_and_tap.Item1 + ", with Tap: " + best_seed_and_tap.Item2);
