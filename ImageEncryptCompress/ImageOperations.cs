@@ -417,10 +417,11 @@ namespace ImageEncryptCompress
         {
             using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
             {
-                IFormatter formatter = new BinaryFormatter();
+                byte[] widthBytes = BitConverter.GetBytes(width);
+                byte[] heightBytes = BitConverter.GetBytes(height);
 
-                formatter.Serialize(fileStream, width);
-                formatter.Serialize(fileStream, height);
+                fileStream.Write(widthBytes, 0, widthBytes.Length);
+                fileStream.Write(heightBytes, 0, heightBytes.Length);
             }
         }
 
@@ -460,10 +461,11 @@ namespace ImageEncryptCompress
         {
             using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
             {
-                IFormatter formatter = new BinaryFormatter();
+                byte[] tapBytes = BitConverter.GetBytes(tapPosition);
+                byte[] seedBytes = Encoding.UTF8.GetBytes(initSeed);
 
-                formatter.Serialize(fileStream, initSeed);
-                formatter.Serialize(fileStream, tapPosition);
+                fileStream.Write(seedBytes, 0, seedBytes.Length);
+                fileStream.Write(tapBytes, 0, tapBytes.Length);
             }
         }
 
@@ -472,72 +474,100 @@ namespace ImageEncryptCompress
 
             using (FileStream fileStream = new FileStream(filePath, FileMode.Append))
             {
-                IFormatter formatter = new BinaryFormatter();
-                SerializeNode(root, formatter, fileStream);
+                SerializeNode(root, fileStream);
             }
 
 
         }
 
-        private static void SerializeNode(Node<byte?> node, IFormatter formatter, Stream stream)
+        private static void SerializeNode(Node<byte?> root, Stream fileStream)
         {
-            if (node == null)
+            if (root == null)
             {
                 return;
             }
-            if (node.value == null)
+
+            // Serialize node value and frequency
+            if(root.value == null)
             {
-                formatter.Serialize(stream, -1);
-                formatter.Serialize(stream, node.freq);
+                byte[] delimiter = { (byte)'\n' };
+                fileStream.Write(delimiter, 0, delimiter.Length);
             }
             else
             {
-                formatter.Serialize(stream, node.value);
-                formatter.Serialize(stream, node.freq);
+                fileStream.WriteByte((byte)root.value);
             }
-            SerializeNode(node.left, formatter, stream);
-            SerializeNode(node.right, formatter, stream);
+            byte[] freqBytes = BitConverter.GetBytes(root.freq);
+            fileStream.Write(freqBytes, 0, freqBytes.Length);
+
+            // Recursively serialize left and right subtrees
+            SerializeNode(root.left, fileStream);
+            SerializeNode(root.right, fileStream);
         }
 
 
-        private static Node<byte?> DeserializeTree(Stream stream)
+        private static Node<byte?> DeserializeTree(Stream fileStream)
         {
-            IFormatter formatter = new BinaryFormatter();
-            return DeserializeNode(formatter, stream);
+                return DeserializeNode(fileStream);
         }
 
-        private static Node<byte?> DeserializeNode(IFormatter formatter, Stream stream)
+        private static Node<byte?> DeserializeNode(Stream fileStream)
         {
-            byte? value = (byte?)formatter.Deserialize(stream);
-            if ((int)value != -1)
+            // Non-null node
+            int value = fileStream.ReadByte();
+            if(value != '\n')
             {
-                byte? leafValue = (byte?)value;
-                int leafFreq = (int)formatter.Deserialize(stream);
-                Node<byte?> leaf = new Node<byte?>(leafValue, leafFreq);
-                return leaf; // Leaf node
+                // Read frequency bytes (assuming frequency is a 4-byte integer)
+                byte[] freqBytesLeaf = new byte[sizeof(int)];
+                fileStream.Read(freqBytesLeaf, 0, freqBytesLeaf.Length);
+                int freqLeaf = BitConverter.ToInt32(freqBytesLeaf, 0);
+
+                // Create the node with the deserialized value and frequency
+                Node<byte?> nodeLeaf = new Node<byte?>((byte)value, freqLeaf);
+                return nodeLeaf;
             }
+            // Read frequency bytes (assuming frequency is a 4-byte integer)
+            byte[] freqBytes = new byte[sizeof(int)];
+            fileStream.Read(freqBytes, 0, freqBytes.Length);
+            int freq = BitConverter.ToInt32(freqBytes, 0);
 
-            byte? nodeValue = (byte?)value;
-            int freq = (int)formatter.Deserialize(stream);
-            Node<byte?> node = new Node<byte?>(nodeValue, freq);
-            node.left = DeserializeNode(formatter, stream);
-            node.right = DeserializeNode(formatter, stream);
+            // Create the node with the deserialized value and frequency
+            Node<byte?> node = new Node<byte?>((byte)value, freq);
+
+            // Recursively deserialize left and right subtrees
+            node.left = DeserializeNode(fileStream);
+            node.right = DeserializeNode(fileStream);
+
             return node;
+
         }
 
-        private static (int, int) DeserializeSeedAndTap(Stream stream)
+        private static (int, string) DeserializeSeedAndTap(Stream fileStream)
         {
-            IFormatter formatter = new BinaryFormatter();
-            int initSeed = (int)formatter.Deserialize(stream);
-            int tap = (int)formatter.Deserialize(stream);
-            return (initSeed, tap);
+
+            byte[] seedBytes = new byte[sizeof(int)];
+            fileStream.Read(seedBytes, 0, seedBytes.Length);
+
+            byte[] tapBytes = new byte[sizeof(int)];
+            fileStream.Read(tapBytes, 0, tapBytes.Length);
+            int tapPosition = BitConverter.ToInt32(tapBytes, 0);
+
+            // Convert seedBytes back to string using UTF-8 encoding
+            string initSeed = Encoding.UTF8.GetString(seedBytes);
+
+            return (tapPosition, initSeed);
         }
 
-        private static (int, int) DeserializeDimentions(Stream stream)
+        private static (int, int) DeserializeDimentions(Stream fileStream)
         {
-            IFormatter formatter = new BinaryFormatter();
-            int width = (int)formatter.Deserialize(stream);
-            int height = (int)formatter.Deserialize(stream);
+            byte[] widthBytes = new byte[sizeof(int)];
+            fileStream.Read(widthBytes, 0, widthBytes.Length);
+            int width = BitConverter.ToInt32(widthBytes, 0);
+
+            byte[] heightBytes = new byte[sizeof(int)];
+            fileStream.Read(heightBytes, 0, heightBytes.Length);
+            int height = BitConverter.ToInt32(heightBytes, 0);
+
             return (width, height);
         }
 
@@ -562,7 +592,7 @@ namespace ImageEncryptCompress
             return binaryStringBuilder.ToString();
         }
 
-        private static int initSeed;
+        private static string initSeed;
         private static int tap;
         private static Node<byte?> red_root;
         private static Node<byte?> green_root;
@@ -577,36 +607,20 @@ namespace ImageEncryptCompress
         {
             using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
             {
-                (initSeed, tap) = DeserializeSeedAndTap(fileStream);
-
-                // Record the current file position (after tap and seed deserialization)
-                long EndPosition = fileStream.Position;
-
-                fileStream.Seek(EndPosition, SeekOrigin.Begin); 
+                (tap, initSeed) = DeserializeSeedAndTap(fileStream);
+ 
                 red_root = DeserializeTree(fileStream);
 
-                EndPosition = fileStream.Position;
-                fileStream.Seek(EndPosition, SeekOrigin.Begin); 
                 green_root = DeserializeTree(fileStream);
 
-                EndPosition = fileStream.Position;
-                fileStream.Seek(EndPosition, SeekOrigin.Begin); 
                 blue_root = DeserializeTree(fileStream);
 
-                EndPosition = fileStream.Position;
-                fileStream.Seek(EndPosition, SeekOrigin.Begin);
                 (imgWidth, imgHeight) = DeserializeDimentions(fileStream);
 
-                EndPosition = fileStream.Position;
-                fileStream.Seek(EndPosition, SeekOrigin.Begin); 
                 red_channel = DeserializeChannel(fileStream);
 
-                EndPosition = fileStream.Position;
-                fileStream.Seek(EndPosition, SeekOrigin.Begin);
                 green_channel = DeserializeChannel(fileStream);
 
-                EndPosition = fileStream.Position;
-                fileStream.Seek(EndPosition, SeekOrigin.Begin); 
                 blue_channel = DeserializeChannel(fileStream);
             }
 
