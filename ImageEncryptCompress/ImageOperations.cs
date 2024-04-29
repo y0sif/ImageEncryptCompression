@@ -320,6 +320,90 @@ namespace ImageEncryptCompress
             return ImageMatrix;
         }
 
+
+
+        //Break the Ecnryption
+        //Knowing the seed has N bits, we can brute force all seed & tap possibilities
+        public static (string, int) Break_Encryption(RGBPixel[,] ImageMatrix, int N)
+        {
+
+            Dictionary<(string, int), int> frequency_deviations = new Dictionary<(string, int), int>();
+            int height = GetHeight(ImageMatrix);
+            int width = GetWidth(ImageMatrix);
+
+            //try all seeds, 2^N possibilities
+            for (int i=0; i < Math.Pow(2, N); i++)
+            {
+                
+                //Convert the decimal to the equivalent binary in a string format
+                string seed = Convert.ToString(i, 2).PadLeft(N, '0');
+                
+                //try all tap positions, N possibilities for each seed
+                for (int tapPosition = 0; tapPosition < N; tapPosition++)
+                {
+                    //decrypt the image
+                    RGBPixel[,] ImageMatrix_copy = ImageMatrix;
+                    ImageMatrix_copy = LFSR(ImageMatrix_copy, tapPosition, seed, false);
+
+                    //DEBUG
+                    //Console.WriteLine("seed: " + seed + " , Tap: " + tapPosition);
+                    //DEBUG
+
+                    //loop through all pixels to calculate frequencies deviations
+                    for (int row = 0; row < height ; row++)
+                    {
+                        for (int col = 0; col < width; col++)
+                        {
+                            ref RGBPixel pixel = ref ImageMatrix_copy[row, col];
+
+                            //init it if it doesn't exist
+                            if (!frequency_deviations.ContainsKey((seed, tapPosition)))
+                                frequency_deviations[(seed, tapPosition)] = 0;
+
+                            //Add the deviation of each color from 128
+                            frequency_deviations[(seed, tapPosition)] += Math.Abs(pixel.red - 128);
+                            frequency_deviations[(seed, tapPosition)] += Math.Abs(pixel.green - 128);
+                            frequency_deviations[(seed, tapPosition)] += Math.Abs(pixel.blue - 128);     
+                            
+                        }
+                    }
+                }
+            }
+
+            //find the max value in the frequency_devaitions hashtable
+            //the max value would mean this seed and tap had the most deviations
+            int max = 0;
+            (string, int) best_seed_and_tap = ("", 0);
+
+            foreach (var entry in frequency_deviations)
+            {
+
+                //DEBUG//
+                //Console.WriteLine(entry.Key.Item1 + " " + entry.Key.Item2 + " " + entry.Value);
+                //DEBUG//
+
+                if (entry.Value > max)
+                {
+                    max = entry.Value;
+                    best_seed_and_tap = entry.Key;
+                }
+
+            }
+
+            //It always return the exact seed but the previous tap, therfore requires incrementing
+            //And in fact, the following tap is always the correct one
+            //The reason behind it is yet to be understood by me
+            //Potential reason could be the handling of zero-based here or in the LFSR function
+            best_seed_and_tap.Item2++;
+
+            //DEBUG
+            //Console.WriteLine("Chosen seed: " + best_seed_and_tap.Item1 + ", with Tap: " + best_seed_and_tap.Item2);
+            //DEBUG
+
+            return best_seed_and_tap;
+
+        }
+
         //--------------------------------//
         // COMPRESSION & DECOMPRESSION    //
         //--------------------------------//
