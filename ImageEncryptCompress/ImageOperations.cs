@@ -349,16 +349,16 @@ namespace ImageEncryptCompress
                     //Console.WriteLine("seed: " + seed + " , Tap: " + tapPosition);
                     //DEBUG
 
+
+                    //initialize
+                    frequency_deviations[(seed, tapPosition)] = 0;
+
                     //loop through all pixels to calculate frequencies deviations
                     for (int row = 0; row < height ; row++)
                     {
                         for (int col = 0; col < width; col++)
                         {
                             ref RGBPixel pixel = ref ImageMatrix_copy[row, col];
-
-                            //init it if it doesn't exist
-                            if (!frequency_deviations.ContainsKey((seed, tapPosition)))
-                                frequency_deviations[(seed, tapPosition)] = 0;
 
                             //Add the deviation of each color from 128
                             frequency_deviations[(seed, tapPosition)] += Math.Abs(pixel.red - 128);

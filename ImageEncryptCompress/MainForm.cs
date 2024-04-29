@@ -40,8 +40,8 @@ namespace ImageEncryptCompress
 
             string initSeed = txtGaussSigma.Text;
             int tap = (int)nudMaskSize.Value;
-
-            ImageMatrix = ImageOperations.LFSR(ImageMatrix, tap, initSeed, true);
+            (initSeed, tap) = ImageOperations.Break_Encryption(ImageMatrix, 8);
+            ImageMatrix = ImageOperations.LFSR(ImageMatrix, tap, initSeed, false);
             ImageOperations.DisplayImage(ImageMatrix, pictureBox2);
         }
 
