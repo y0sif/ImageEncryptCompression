@@ -35,7 +35,7 @@ namespace ImageEncryptCompress
         {
             ImageMatrix = ImageOperations.Huffman_Decompress("D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin");
             ImageOperations.DisplayImage(ImageMatrix, pictureBox2);
-            //ImageOperations.Huffman_Compress(ImageMatrix, 5, "101011");
+            //ImageOperations.Huffman_Compress(ImageMatrix, 1, "1001");
 
         }
 

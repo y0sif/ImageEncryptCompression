@@ -10,6 +10,7 @@ using System.Runtime.Serialization;
 using System.Collections;
 using System.Runtime.InteropServices.ComTypes;
 using System.IO.Pipes;
+using System.Runtime.InteropServices;
 ///Algorithms Project
 ///Intelligent Scissors
 ///
@@ -339,7 +340,7 @@ namespace ImageEncryptCompress
             return pq.Dequeue();
         }
 
-        private static void dfs(Node<byte?> node, string binary, Dictionary<byte, string> tree)
+        private static void dfs(Node<byte?> node, string binary, Dictionary<byte, string> tree, ref int counter)
         {
             if (node == null)
             {
@@ -359,9 +360,9 @@ namespace ImageEncryptCompress
                 tree.Add(node.value.Value, binary);
             }
 
-            dfs(node.left, binary + '0', tree);
-            dfs(node.right, binary + '1', tree);
-
+            dfs(node.left, binary + '0', tree, ref counter);
+            dfs(node.right, binary + '1', tree, ref counter);
+            counter++;
         }
 
         public static void Huffman_Compress(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
@@ -371,26 +372,18 @@ namespace ImageEncryptCompress
             Node<byte?> root_red = BuildHuffmanTree(R);
             Node<byte?> root_green = BuildHuffmanTree(G);
             Node<byte?> root_blue = BuildHuffmanTree(B);
-
-            dfs(root_red, "", R_TREE);
-            dfs(root_green, "", G_TREE);
-            dfs(root_blue, "", B_TREE);
+            int r_count = 0, g_count = 0, b_count = 0;
+            dfs(root_red, "", R_TREE, ref r_count);
+            dfs(root_green, "", G_TREE, ref g_count);
+            dfs(root_blue, "", B_TREE, ref b_count);
 
             string[] arrays = PixelEncoding(ImageMatrix);
 
             string filePath = "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin";
 
-            SerializeSeedAndTap(filePath, tapPosition, initSeed);
 
-            SerializeTree(root_red, filePath);
-            SerializeTree(root_green, filePath);
-            SerializeTree(root_blue, filePath);
+            WriteCompressedImage(filePath, initSeed, tapPosition, r_count, g_count, b_count, root_red, root_green, root_blue, GetWidth(ImageMatrix), GetHeight(ImageMatrix), arrays);
 
-            SerializeDimentions(filePath, GetWidth(ImageMatrix), GetHeight(ImageMatrix));
-
-            SerializeBits(filePath, arrays[0]);
-            SerializeBits(filePath, arrays[1]);
-            SerializeBits(filePath, arrays[2]);
         }
 
         private static string[] PixelEncoding(RGBPixel[,] ImageMatrix)
@@ -413,226 +406,209 @@ namespace ImageEncryptCompress
             return arrays;
         }
 
-        private static void SerializeDimentions(string filePath, int width, int height)
+        private static void WriteCompressedImage(string fileName, string initSeed, int tapPosition, 
+            int r_count, int g_count, int b_count, Node<byte?> red_root, Node<byte?> green_root, Node<byte?> blue_root,int imgWidth, int imgHeight, string[] rgbChannels)
         {
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+            using (var stream = File.Open(fileName, FileMode.Create))
             {
-                byte[] widthBytes = BitConverter.GetBytes(width);
-                byte[] heightBytes = BitConverter.GetBytes(height);
+                using (var writer = new BinaryWriter(stream, Encoding.UTF8, false))
+                {
+                    writer.Write(tapPosition);
+                    writer.Write(initSeed);
 
-                fileStream.Write(widthBytes, 0, widthBytes.Length);
-                fileStream.Write(heightBytes, 0, heightBytes.Length);
+                    writer.Write(imgWidth);
+                    writer.Write(imgHeight);
+
+                    writer.Write(r_count);
+                    WriteTree(writer, red_root);
+
+                    writer.Write(g_count);
+                    WriteTree(writer, green_root);
+
+                    writer.Write(b_count);
+                    WriteTree(writer, blue_root);
+
+                    WriteChannels(writer, rgbChannels[0]);
+                    WriteChannels(writer, rgbChannels[1]);
+                    WriteChannels(writer, rgbChannels[2]);
+                }
             }
         }
 
-        private static void SerializeBits(string filePath, string binaryString)
-        {
-            // Calculate the number of bits in the binary string
-            int bitLength = binaryString.Length;
 
-            // Create a byte array to hold the packed binary data
+        private static void WriteTree(BinaryWriter writer, Node<byte?> node)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            if(node.value == null)
+            {
+                writer.Write('\n');
+                writer.Write(node.freq);
+            }
+            else
+            {
+                writer.Write((byte)node.value);
+                writer.Write(node.freq);
+            }
+
+            WriteTree(writer, node.left);
+            WriteTree(writer, node.right);
+        }
+
+        private static void WriteChannels(BinaryWriter writer, string channel)
+        {
+            int bitLength = channel.Length;
+
             byte[] bytes = new byte[(bitLength + 7) / 8]; // Round up to the nearest byte
 
-            // Pack the binary string into bytes
             for (int i = 0; i < bitLength; i++)
             {
-                if (binaryString[i] == '1')
+                if (channel[i] == '1')
                 {
-                    // Set the corresponding bit in the byte array
                     int byteIndex = i / 8;
                     int bitOffset = i % 8;
-                    bytes[byteIndex] |= (byte)(1 << (7 - bitOffset));
+                    bytes[byteIndex] |= (byte)(1 << (7 - bitOffset)); // Set the corresponding bit to 1
                 }
-                // Note: If the character is '0', no action is needed since the byte is initialized to 0
+                // Note: if channel[i] == '0', the bit remains 0 (default)
             }
 
-            // Write the byte array to a file
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Append))
-            {
-                fileStream.Write(bytes, 0, bytes.Length);
+            writer.Write(bytes); // Write the byte array to the file
+            writer.Write('\n');
+        }
 
-                // Append a delimiter (e.g., newline character) to mark the end of each binary string
-                byte[] delimiter = { (byte)'\n' }; // Use newline character as delimiter
-                fileStream.Write(delimiter, 0, delimiter.Length);
+        private static (int tapPosition, string initSeed, int imgWidth, int imgHeight, int r_count, int g_count, int b_count, Node<byte?> red_root, Node<byte?> green_root, Node<byte?> blue_root, string[] rgbChannels) ReadCompressedImage(string fileName)
+        {
+            int tapPosition;
+            string initSeed;
+            Node<byte?> red_root, green_root, blue_root;
+            int imgWidth, imgHeight;
+            int r_count, g_count, b_count;
+            string[] rgbChannels = new string[3];
+
+            using (var stream = File.OpenRead(fileName))
+            {
+                using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
+                {
+                    tapPosition = reader.ReadInt32();
+                    initSeed = reader.ReadString();
+
+                    imgWidth = reader.ReadInt32();
+                    imgHeight = reader.ReadInt32();
+
+                    r_count = reader.ReadInt32();
+                    red_root = ReadTree(reader, r_count);
+
+                    g_count = reader.ReadInt32();
+                    green_root = ReadTree(reader, g_count);
+
+                    b_count = reader.ReadInt32();
+                    blue_root = ReadTree(reader, b_count);
+
+                    rgbChannels[0] = ReadChannels(reader);
+                    rgbChannels[1] = ReadChannels(reader);
+                    rgbChannels[2] = ReadChannels(reader);
+                }
+            }
+
+            return (tapPosition, initSeed, imgWidth, imgHeight, r_count, g_count, b_count, red_root, green_root, blue_root, rgbChannels);
+        }
+
+        private static Node<byte?> ReadTree(BinaryReader reader, int count)
+        {
+            if(count == 0)
+            {
+                return null;
+            }
+            byte value = reader.ReadByte();
+
+            if (value == '\n') // Indicates a null node
+            {
+                int freq = reader.ReadInt32();
+                Node<byte?> node = new Node<byte?>(null, freq);
+                node.left = ReadTree(reader, count - 1);
+                node.right = ReadTree(reader, count - 1);
+                return node;
+            }
+            else
+            {
+                int freq = reader.ReadInt32();
+                return new Node<byte?>(value, freq);
             }
         }
 
-        private static void SerializeSeedAndTap(string filePath, int tapPosition, string initSeed)
+        private static string ReadChannels(BinaryReader reader)
         {
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+            List<byte> bytes = new List<byte>();
+
+            byte currentByte;
+            while ((currentByte = reader.ReadByte()) != '\n')
             {
-                byte[] tapBytes = BitConverter.GetBytes(tapPosition);
-                byte[] seedBytes = Encoding.UTF8.GetBytes(initSeed);
-
-                fileStream.Write(seedBytes, 0, seedBytes.Length);
-                fileStream.Write(tapBytes, 0, tapBytes.Length);
-            }
-        }
-
-        private static void SerializeTree(Node<byte?> root, string filePath)
-        {
-
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Append))
-            {
-                SerializeNode(root, fileStream);
+                bytes.Add(currentByte);
             }
 
+            StringBuilder channel = new StringBuilder();
 
+            foreach (byte b in bytes)
+            {
+                for (int i = 7; i >= 0; i--)
+                {
+                    bool isSet = (b & (1 << i)) != 0; // Check if the bit is set (1)
+                    channel.Append(isSet ? '1' : '0'); // Append '1' for set bit, '0' otherwise
+                }
+            }
+
+            return channel.ToString();
         }
 
-        private static void SerializeNode(Node<byte?> root, Stream fileStream)
+        static void PrintTree(Node<byte?> node)
         {
-            if (root == null)
+            if (node == null)
             {
                 return;
             }
 
-            // Serialize node value and frequency
-            if(root.value == null)
+            if (node.value == null)
             {
-                byte[] delimiter = { (byte)'\n' };
-                fileStream.Write(delimiter, 0, delimiter.Length);
+                Console.WriteLine("node freq: " + node.freq);
             }
             else
             {
-                fileStream.WriteByte((byte)root.value);
-            }
-            byte[] freqBytes = BitConverter.GetBytes(root.freq);
-            fileStream.Write(freqBytes, 0, freqBytes.Length);
+                Console.WriteLine("leaf node");
+                Console.WriteLine("node value: " + node.value);
+                Console.WriteLine("node freq: " + node.freq);
+                Console.WriteLine("end of leaf node");
 
-            // Recursively serialize left and right subtrees
-            SerializeNode(root.left, fileStream);
-            SerializeNode(root.right, fileStream);
-        }
-
-
-        private static Node<byte?> DeserializeTree(Stream fileStream)
-        {
-                return DeserializeNode(fileStream);
-        }
-
-        private static Node<byte?> DeserializeNode(Stream fileStream)
-        {
-            // Non-null node
-            int value = fileStream.ReadByte();
-            if(value != '\n')
-            {
-                // Read frequency bytes (assuming frequency is a 4-byte integer)
-                byte[] freqBytesLeaf = new byte[sizeof(int)];
-                fileStream.Read(freqBytesLeaf, 0, freqBytesLeaf.Length);
-                int freqLeaf = BitConverter.ToInt32(freqBytesLeaf, 0);
-
-                // Create the node with the deserialized value and frequency
-                Node<byte?> nodeLeaf = new Node<byte?>((byte)value, freqLeaf);
-                return nodeLeaf;
-            }
-            // Read frequency bytes (assuming frequency is a 4-byte integer)
-            byte[] freqBytes = new byte[sizeof(int)];
-            fileStream.Read(freqBytes, 0, freqBytes.Length);
-            int freq = BitConverter.ToInt32(freqBytes, 0);
-
-            // Create the node with the deserialized value and frequency
-            Node<byte?> node = new Node<byte?>((byte)value, freq);
-
-            // Recursively deserialize left and right subtrees
-            node.left = DeserializeNode(fileStream);
-            node.right = DeserializeNode(fileStream);
-
-            return node;
-
-        }
-
-        private static (int, string) DeserializeSeedAndTap(Stream fileStream)
-        {
-
-            byte[] seedBytes = new byte[sizeof(int)];
-            fileStream.Read(seedBytes, 0, seedBytes.Length);
-
-            byte[] tapBytes = new byte[sizeof(int)];
-            fileStream.Read(tapBytes, 0, tapBytes.Length);
-            int tapPosition = BitConverter.ToInt32(tapBytes, 0);
-
-            // Convert seedBytes back to string using UTF-8 encoding
-            string initSeed = Encoding.UTF8.GetString(seedBytes);
-
-            return (tapPosition, initSeed);
-        }
-
-        private static (int, int) DeserializeDimentions(Stream fileStream)
-        {
-            byte[] widthBytes = new byte[sizeof(int)];
-            fileStream.Read(widthBytes, 0, widthBytes.Length);
-            int width = BitConverter.ToInt32(widthBytes, 0);
-
-            byte[] heightBytes = new byte[sizeof(int)];
-            fileStream.Read(heightBytes, 0, heightBytes.Length);
-            int height = BitConverter.ToInt32(heightBytes, 0);
-
-            return (width, height);
-        }
-
-        private static string DeserializeChannel(Stream stream)
-        {
-            StringBuilder binaryStringBuilder = new StringBuilder();
-            int byteValue;
-
-            while ((byteValue = stream.ReadByte()) != -1)
-            {
-                if (byteValue == '\n')
-                {
-                    break;
-                }
-                else
-                {
-                    // Append binary character to StringBuilder
-                    binaryStringBuilder.Append((byteValue == '1') ? '1' : '0');
-                }
             }
 
-            return binaryStringBuilder.ToString();
+            PrintTree(node.left);
+            PrintTree(node.right);
         }
-
-        private static string initSeed;
-        private static int tap;
-        private static Node<byte?> red_root;
-        private static Node<byte?> green_root;
-        private static Node<byte?> blue_root;
-        private static string red_channel;
-        private static string green_channel;
-        private static string blue_channel;
-        private static int imgWidth;
-        private static int imgHeight;
-
-        private static void DeserializeFile(string filePath)
-        {
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
-            {
-                (tap, initSeed) = DeserializeSeedAndTap(fileStream);
- 
-                red_root = DeserializeTree(fileStream);
-
-                green_root = DeserializeTree(fileStream);
-
-                blue_root = DeserializeTree(fileStream);
-
-                (imgWidth, imgHeight) = DeserializeDimentions(fileStream);
-
-                red_channel = DeserializeChannel(fileStream);
-
-                green_channel = DeserializeChannel(fileStream);
-
-                blue_channel = DeserializeChannel(fileStream);
-            }
-
-        }
-
 
         public static RGBPixel[,] Huffman_Decompress(string filePath)
         {
             //throw new NotImplementedException();
 
-            DeserializeFile(filePath);
+            (int tapPosition, string initSeed, int imgWidth, int imgHeight, int r_count, int g_count, int b_count, Node<byte?> red_root, Node<byte?> green_root, Node<byte?> blue_root, string[] rgbChannels) = ReadCompressedImage(filePath);
+            Console.WriteLine($"Tap Position: {tapPosition}");
+            Console.WriteLine($"Init Seed: {initSeed}");
+            Console.WriteLine($"Image Width: {imgWidth}");
+            Console.WriteLine($"Image Height: {imgHeight}");
 
+            Console.WriteLine("Red Tree:");
+            PrintTree(red_root);
+
+            Console.WriteLine("Green Tree:");
+            PrintTree(green_root);
+
+            Console.WriteLine("Blue Tree:");
+            PrintTree(blue_root);
+
+            Console.WriteLine("RGB Channels:");
+            Console.WriteLine($"Red Channel: {rgbChannels[0]}");
+            Console.WriteLine($"Green Channel: {rgbChannels[1]}");
+            Console.WriteLine($"Blue Channel: {rgbChannels[2]}");
             RGBPixel[,] decompressedImg = new RGBPixel[imgHeight, imgWidth];
             int r = 0;
             int g = 0;
@@ -644,14 +620,14 @@ namespace ImageEncryptCompress
                     Node<byte?> red_node = red_root;
                     Node<byte?> green_node = green_root;
                     Node<byte?> blue_node = blue_root;
-                    for(int k = r; k < red_channel.Length; k++)
+                    for(int k = r; k < rgbChannels[0].Length; k++)
                     {
                         if(red_node.left == null || red_node.right == null)
                         {
                             decompressedImg[i, j].red = (byte)red_node.value;
                             break;
                         }
-                        if (red_channel[k] == '0')
+                        if (rgbChannels[0][k] == '0')
                         {
                             red_node = red_node.left;
                             r++;
@@ -663,14 +639,14 @@ namespace ImageEncryptCompress
                         }
                     }
 
-                    for (int k = g; k < green_channel.Length; k++)
+                    for (int k = g; k < rgbChannels[1].Length; k++)
                     {
                         if (green_node.left == null || green_node.right == null)
                         {
                             decompressedImg[i, j].green = (byte)green_node.value;
                             break;
                         }
-                        if (green_channel[k] == '0')
+                        if (rgbChannels[1][k] == '0')
                         {
                             green_node = green_node.left;
                             g++;
@@ -682,14 +658,14 @@ namespace ImageEncryptCompress
                         }
                     }
 
-                    for (int k = b; k < blue_channel.Length; k++)
+                    for (int k = b; k < rgbChannels[2].Length; k++)
                     {
                         if (blue_node.left == null || blue_node.right == null)
                         {
                             decompressedImg[i, j].blue = (byte)blue_node.value;
                             break;
                         }
-                        if (blue_channel[k] == '0')
+                        if (rgbChannels[2][k] == '0')
                         {
                             blue_node = blue_node.left;
                             b++;
