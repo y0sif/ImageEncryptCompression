@@ -254,46 +254,104 @@ namespace ImageEncryptCompress
 
         //Global Attributes
         private static char[][] RGBKeys = new char[3][];
+        private static bool keyFlag;
+
         private const int KEY_SIZE = 8;
 
-        public static void KeyGeneration(int tapPosition, char[] seed)
-        {                        
-            int bitSize = seed.Length;
+        public static void KeyGeneration(int tapPosition, char[] seed, char[][] alphaBinarySeed, char[] concatSeed, byte alphaMethod)
+        {
+            if(alphaMethod == 0)
+            {                
+                int bitSize = concatSeed.Length;
 
-            for (int k = 0; k < RGBKeys.Length; k++)
-            {
-                char[] keyString = new char[KEY_SIZE];
-                for (int i = 0; i < KEY_SIZE; i++)
+                for (int k = 0; k < RGBKeys.Length; k++)
                 {
-                    char shiftOut = seed[0];
-                    char res = (char)(((seed[(bitSize - tapPosition) - 1] - '0') ^ (shiftOut - '0')) + '0');
+                    char[] keyString = new char[KEY_SIZE];
+                    for (int i = 0; i < KEY_SIZE; i++)
+                    {
+                        char shiftOut = concatSeed[0];
+                        char res = XOR(concatSeed[(bitSize - tapPosition) - 1], shiftOut);
+
+                        for (int j = 1; j < bitSize; j++)
+                        {
+                            concatSeed[j - 1] = concatSeed[j];
+                        }
+
+                        concatSeed[bitSize - 1] = res;
+                        keyString[i] = res;
+                    }
+
+                    RGBKeys[k] = keyString;
+                }
+            }
+            else if (alphaMethod == 1)
+            {
+                int bitSize = alphaBinarySeed.Length;
+
+                for (int k = 0; k < RGBKeys.Length; k++)
+                {
+                    char[] shiftOut = alphaBinarySeed[0];
+
+                    char[] result = new char[KEY_SIZE];
+
+                    for (int i = 0; i < 8; i++)
+                    {
+                        result[i] = XOR(alphaBinarySeed[(bitSize - tapPosition) - 1][i], shiftOut[i]);
+                    }
 
                     for (int j = 1; j < bitSize; j++)
                     {
-                        seed[j - 1] = seed[j];
+                        alphaBinarySeed[j - 1] = alphaBinarySeed[j];
                     }
 
-                    seed[bitSize - 1] = res;
-                    keyString[i] = res;
+                    alphaBinarySeed[bitSize - 1] = result;
+
+                    RGBKeys[k] = result;
                 }
-                
-                RGBKeys[k] = keyString;
             }
+            else
+            {
+                int bitSize = seed.Length;
+
+                for (int k = 0; k < RGBKeys.Length; k++)
+                {
+                    char[] keyString = new char[KEY_SIZE];
+                    for (int i = 0; i < KEY_SIZE; i++)
+                    {
+                        char shiftOut = seed[0];
+                        char res = XOR(seed[(bitSize - tapPosition) - 1], shiftOut);
+
+                        for (int j = 1; j < bitSize; j++)
+                        {
+                            seed[j - 1] = seed[j];
+                        }
+
+                        seed[bitSize - 1] = res;
+                        keyString[i] = res;
+                    }
+
+                    RGBKeys[k] = keyString;
+                }
+            }            
         }
 
-        public static RGBPixel[,] LFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed, bool encrypt)
+        public static RGBPixel[,] LFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed, bool encrypt, byte alphaMethod)
         {
-
             char[] seed = initSeed.ToCharArray();
+            char[][] alphaBinarySeed = new char[seed.Length][];
+            StringBuilder concatBinaryASCII = new StringBuilder();
+
+            CheckAlpha(seed, alphaBinarySeed, concatBinaryASCII);
+            char[] concatSeed = concatBinaryASCII.ToString().ToCharArray();
 
             for (int row = 0; row < GetHeight(ImageMatrix); row++)
             {
-                for(int col = 0; col < GetWidth(ImageMatrix); col++)
+                for (int col = 0; col < GetWidth(ImageMatrix); col++)
                 {
                     ref RGBPixel pixel = ref ImageMatrix[row, col];
 
-                    KeyGeneration(tapPosition, seed);
-
+                    KeyGeneration(tapPosition, seed, alphaBinarySeed, concatSeed, alphaMethod);
+                
                     char[] redKey = RGBKeys[0];
                     char[] greenKey = RGBKeys[1];
                     char[] blueKey = RGBKeys[2];
@@ -308,7 +366,7 @@ namespace ImageEncryptCompress
                         greenVal[i] = (char)(((greenVal[i] - '0') ^ (greenKey[i] - '0')) + '0');
                         blueVal[i] = (char)(((blueVal[i] - '0') ^ (blueKey[i] - '0')) + '0');
                     }
-                    
+
                     pixel.red = ConvertToDecimal(redVal);
                     pixel.green = ConvertToDecimal(greenVal);
                     pixel.blue = ConvertToDecimal(blueVal);
@@ -321,10 +379,7 @@ namespace ImageEncryptCompress
             return ImageMatrix;
         }
 
-
-
         //Break the Ecnryption
-        //Knowing the seed has N bits, we can brute force all seed & tap possibilities
         public static (string, int) Break_Encryption(RGBPixel[,] ImageMatrix, int N)
         {
 
@@ -332,20 +387,15 @@ namespace ImageEncryptCompress
             int height = GetHeight(ImageMatrix);
             int width = GetWidth(ImageMatrix);
 
-            //try all seeds, 2^N possibilities
             for (int i=0; i < Math.Pow(2, N); i++)
             {
 
-                //Convert the decimal to the equivalent binary in a string format
                 string seed = Convert.ToString(i, 2).PadLeft(N, '0');
                 
-                //try all tap positions, N possibilities for each seed
                 for (int tapPosition = 0; tapPosition < N; tapPosition++)
                 {
-
-                    //Copy the image into another variable
-                    //You can't modify the original or it will ruin it for the next iteration
                     RGBPixel[,] ImageMatrix_copy = new RGBPixel[ImageMatrix.GetLength(0), ImageMatrix.GetLength(1)];
+
                     for (int n = 0; n < ImageMatrix.GetLength(0); n++)
                     {
                         for (int m = 0; m < ImageMatrix.GetLength(1); m++)
@@ -354,25 +404,15 @@ namespace ImageEncryptCompress
                         }
                     }
 
-                    //decrypt the image
-                    ImageMatrix_copy = LFSR(ImageMatrix_copy, tapPosition, seed, false);
-             
-                    //DEBUG
-                    //Console.WriteLine("seed: " + seed + " , Tap: " + tapPosition);
-                    //DEBUG
-
-                    //init each new seed and tap key
+                    ImageMatrix_copy = LFSR(ImageMatrix_copy, tapPosition, seed, false, 2);
                     frequency_deviations[(seed, tapPosition)] = 0;
 
-                    //loop through all pixels to calculate frequencies deviations
                     for (int row = 0; row < height ; row++)
                     {
                         for (int col = 0; col < width; col++)
                         {
                             ref RGBPixel pixel = ref ImageMatrix_copy[row, col];
 
-                            //Add the deviation of each color from 128
-                            //Negative or Positive deviations should yield same magnitude
                             frequency_deviations[(seed, tapPosition)] += Math.Abs(pixel.red - 128);
                             frequency_deviations[(seed, tapPosition)] += Math.Abs(pixel.green - 128);
                             frequency_deviations[(seed, tapPosition)] += Math.Abs(pixel.blue - 128);     
@@ -382,32 +422,19 @@ namespace ImageEncryptCompress
                 }
             }
 
-            //find the max value in the frequency_devaitions hashtable
-            //the max value would mean this seed and tap had the most deviations
             int max = 0;
             (string, int) best_seed_and_tap = ("", 0);
 
             foreach (var entry in frequency_deviations)
             {
-
-                //DEBUG//
-                //Console.WriteLine(entry.Key.Item1 + " " + entry.Key.Item2 + " " + entry.Value);
-                //DEBUG//
-
                 if (entry.Value > max)
                 {
                     max = entry.Value;
                     best_seed_and_tap = entry.Key;
                 }
-
             }
 
-            //DEBUG
-            //Console.WriteLine("Chosen seed: " + best_seed_and_tap.Item1 + ", with Tap: " + best_seed_and_tap.Item2);
-            //DEBUG
-
             return best_seed_and_tap;
-
         }
 
         //--------------------------------//
@@ -429,6 +456,34 @@ namespace ImageEncryptCompress
         //--------------------------------//
         //       AUXILLARY FUNCTIONS      //
         //--------------------------------//
+        public static void CheckAlpha(char[] seed, char[][] alphaBinarySeed, StringBuilder concatBinaryASCII)
+        {
+            byte[] alphaSeed;               
+            keyFlag = false;
+
+            foreach (char c in seed)
+            {
+                if (char.IsLetterOrDigit(c))
+                {
+                    keyFlag = true;
+                    break;
+                }
+            }
+            if (keyFlag)
+            {
+                alphaSeed = Encoding.ASCII.GetBytes(seed);
+
+                for (int i = 0; i < alphaSeed.Length; i++)
+                {
+                    alphaBinarySeed[i] = ConvertToBinary(alphaSeed[i]);
+                }    
+                               
+                foreach(char[] arr in alphaBinarySeed)
+                {
+                    concatBinaryASCII.Append(arr);
+                }                                                                                                                       
+            }
+        }
         public static char[] ConvertToBinary(byte dec)
         {
             StringBuilder Byte = new StringBuilder();
@@ -450,6 +505,10 @@ namespace ImageEncryptCompress
             }
 
             return total;
+        }
+        public static char XOR(char char1, char char2)
+        {
+            return (char)(((char1 - '0') ^ (char2 - '0')) + '0');
         }
     }
 }
