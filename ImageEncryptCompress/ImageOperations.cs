@@ -11,6 +11,7 @@ using System.Collections;
 using System.Runtime.InteropServices.ComTypes;
 using System.IO.Pipes;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Channels;
 ///Algorithms Project
 ///Intelligent Scissors
 ///
@@ -265,13 +266,13 @@ namespace ImageEncryptCompress
 
         //use binarywriter to write the image to the file
 
-        public static Dictionary<byte, int> R = new Dictionary<byte, int>();
-        public static Dictionary<byte, int> G = new Dictionary<byte, int>();
-        public static Dictionary<byte, int> B = new Dictionary<byte, int>();
+        public static Dictionary<int, int> R = new Dictionary<int, int>();
+        public static Dictionary<int, int> G = new Dictionary<int, int>();
+        public static Dictionary<int, int> B = new Dictionary<int, int>();
 
-        public static Dictionary<byte, string> R_TREE = new Dictionary<byte, string>();
-        public static Dictionary<byte, string> G_TREE = new Dictionary<byte, string>();
-        public static Dictionary<byte, string> B_TREE = new Dictionary<byte, string>();
+        public static Dictionary<int, string> R_TREE = new Dictionary<int, string>();
+        public static Dictionary<int, string> G_TREE = new Dictionary<int, string>();
+        public static Dictionary<int, string> B_TREE = new Dictionary<int, string>();
 
         private static void Construct_Dictionaries(RGBPixel[,] ImageMatrix)
         {
@@ -317,21 +318,21 @@ namespace ImageEncryptCompress
             }
         }
 
-        private static Node<byte?> BuildHuffmanTree(Dictionary<byte, int> color)
+        private static Node<int> BuildHuffmanTree(Dictionary<int, int> color)
         {
-            PriorityQueue<int, Node<byte?>> pq = new PriorityQueue<int, Node<byte?>>();
+            PriorityQueue<int, Node<int>> pq = new PriorityQueue<int, Node<int>>();
 
-            foreach(byte value in color.Keys)
+            foreach(int value in color.Keys)
             {
                 int freq = color[value];
-                Node<byte?> node = new Node<byte?>(value, freq);
+                Node<int> node = new Node<int>(value, freq);
                 pq.Enqueue(freq, node);
             }
             for(int i = 0; i < color.Count - 1;  i++)
             {
-                Node<byte?> node = new Node<byte?>(null, 0);
-                Node<byte?> firstMin = pq.Dequeue();
-                Node<byte?> secondMin = pq.Dequeue();  
+                Node<int> node = new Node<int>(256, 0);
+                Node<int> firstMin = pq.Dequeue();
+                Node<int> secondMin = pq.Dequeue();  
                 node.left = secondMin;
                 node.right = firstMin;
                 node.freq = firstMin.freq + secondMin.freq;
@@ -340,14 +341,14 @@ namespace ImageEncryptCompress
             return pq.Dequeue();
         }
 
-        private static void dfs(Node<byte?> node, string binary, Dictionary<byte, string> tree, ref int counter)
+        private static void dfs(Node<int> node, string binary, Dictionary<int, string> tree, ref int counter)
         {
             if (node == null)
             {
                 return;
             }
 
-            if (node.value == null) { 
+            if (node.value == 256) { 
                 Console.WriteLine("node freq: " + node.freq);
             }else
             {
@@ -357,7 +358,7 @@ namespace ImageEncryptCompress
                 Console.WriteLine("binary: " + binary);
                 Console.WriteLine("end of leaf node");
                 node.binary = binary;
-                tree.Add(node.value.Value, binary);
+                tree.Add(node.value, binary);
             }
 
             dfs(node.left, binary + '0', tree, ref counter);
@@ -369,9 +370,9 @@ namespace ImageEncryptCompress
         {
             Construct_Dictionaries(ImageMatrix);
 
-            Node<byte?> root_red = BuildHuffmanTree(R);
-            Node<byte?> root_green = BuildHuffmanTree(G);
-            Node<byte?> root_blue = BuildHuffmanTree(B);
+            Node<int> root_red = BuildHuffmanTree(R);
+            Node<int> root_green = BuildHuffmanTree(G);
+            Node<int> root_blue = BuildHuffmanTree(B);
             int r_count = 0, g_count = 0, b_count = 0;
             dfs(root_red, "", R_TREE, ref r_count);
             dfs(root_green, "", G_TREE, ref g_count);
@@ -382,7 +383,7 @@ namespace ImageEncryptCompress
             string filePath = "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin";
 
 
-            WriteCompressedImage(filePath, initSeed, tapPosition, r_count, g_count, b_count, root_red, root_green, root_blue, GetWidth(ImageMatrix), GetHeight(ImageMatrix), arrays);
+            WriteCompressedImage(filePath, initSeed, tapPosition, root_red, root_green, root_blue, GetWidth(ImageMatrix), GetHeight(ImageMatrix), arrays);
 
         }
 
@@ -407,7 +408,7 @@ namespace ImageEncryptCompress
         }
 
         private static void WriteCompressedImage(string fileName, string initSeed, int tapPosition, 
-            int r_count, int g_count, int b_count, Node<byte?> red_root, Node<byte?> green_root, Node<byte?> blue_root,int imgWidth, int imgHeight, string[] rgbChannels)
+            Node<int> red_root, Node<int> green_root, Node<int> blue_root,int imgWidth, int imgHeight, string[] rgbChannels)
         {
             using (var stream = File.Open(fileName, FileMode.Create))
             {
@@ -419,73 +420,80 @@ namespace ImageEncryptCompress
                     writer.Write(imgWidth);
                     writer.Write(imgHeight);
 
-                    writer.Write(r_count);
+                    Console.WriteLine("=============== red tree ======================");
                     WriteTree(writer, red_root);
 
-                    writer.Write(g_count);
+                    Console.WriteLine("=============== green tree ======================");
                     WriteTree(writer, green_root);
 
-                    writer.Write(b_count);
+                    Console.WriteLine("=============== blue tree ======================");
                     WriteTree(writer, blue_root);
 
-                    WriteChannels(writer, rgbChannels[0]);
-                    WriteChannels(writer, rgbChannels[1]);
-                    WriteChannels(writer, rgbChannels[2]);
+                    writer.Write(rgbChannels[0].Length);
+                    writer.Write(rgbChannels[1].Length);
+                    writer.Write(rgbChannels[2].Length);
+
+                    WriteChannels(writer, rgbChannels);
                 }
             }
         }
 
 
-        private static void WriteTree(BinaryWriter writer, Node<byte?> node)
+        private static void WriteTree(BinaryWriter writer, Node<int> node)
         {
             if (node == null)
             {
                 return;
             }
-            if(node.value == null)
+            if(node.value == 256)
             {
-                writer.Write('\n');
+                writer.Write(node.value);
+                Console.WriteLine("node freq: " + node.freq);
                 writer.Write(node.freq);
             }
             else
             {
-                writer.Write((byte)node.value);
+                writer.Write(node.value);
                 writer.Write(node.freq);
+                Console.WriteLine("leaf freq: " + node.freq);
+                Console.WriteLine("leaf value: " + node.value);
             }
 
             WriteTree(writer, node.left);
             WriteTree(writer, node.right);
         }
 
-        private static void WriteChannels(BinaryWriter writer, string channel)
+        private static void WriteChannels(BinaryWriter writer, string[] channels)
         {
-            int bitLength = channel.Length;
-
-            byte[] bytes = new byte[(bitLength + 7) / 8]; // Round up to the nearest byte
-
-            for (int i = 0; i < bitLength; i++)
+            foreach (string channel in channels)
             {
-                if (channel[i] == '1')
-                {
-                    int byteIndex = i / 8;
-                    int bitOffset = i % 8;
-                    bytes[byteIndex] |= (byte)(1 << (7 - bitOffset)); // Set the corresponding bit to 1
-                }
-                // Note: if channel[i] == '0', the bit remains 0 (default)
-            }
+                int bitLength = channel.Length;
 
-            writer.Write(bytes); // Write the byte array to the file
-            writer.Write('\n');
+                byte[] bytes = new byte[(bitLength + 7) / 8]; // Round up to the nearest byte
+
+                for (int i = 0; i < bitLength; i++)
+                {
+                    if (channel[i] == '1')
+                    {
+                        int byteIndex = i / 8;
+                        int bitOffset = i % 8;
+                        bytes[byteIndex] |= (byte)(1 << (7 - bitOffset)); // Set the corresponding bit to 1
+                    }
+                    // Note: if channel[i] == '0', the bit remains 0 (default)
+                }
+
+                writer.Write(bytes); // Write the byte array to the file
+            }
         }
 
-        private static (int tapPosition, string initSeed, int imgWidth, int imgHeight, int r_count, int g_count, int b_count, Node<byte?> red_root, Node<byte?> green_root, Node<byte?> blue_root, string[] rgbChannels) ReadCompressedImage(string fileName)
+        private static (int tapPosition, string initSeed, int imgWidth, int imgHeight, Node<int> red_root, Node<int> green_root, Node<int> blue_root, string[] rgbChannels) ReadCompressedImage(string fileName)
         {
             int tapPosition;
             string initSeed;
-            Node<byte?> red_root, green_root, blue_root;
+            Node<int> red_root, green_root, blue_root;
             int imgWidth, imgHeight;
-            int r_count, g_count, b_count;
             string[] rgbChannels = new string[3];
+            int[] channelLength = new int[3];
 
             using (var stream = File.OpenRead(fileName))
             {
@@ -497,79 +505,84 @@ namespace ImageEncryptCompress
                     imgWidth = reader.ReadInt32();
                     imgHeight = reader.ReadInt32();
 
-                    r_count = reader.ReadInt32();
-                    red_root = ReadTree(reader, r_count);
+                    Console.WriteLine("=============== red tree ======================");
+                    red_root = ReadTree(reader);
 
-                    g_count = reader.ReadInt32();
-                    green_root = ReadTree(reader, g_count);
+                    Console.WriteLine("============== green tree=============");
+                    green_root = ReadTree(reader);
 
-                    b_count = reader.ReadInt32();
-                    blue_root = ReadTree(reader, b_count);
+                    Console.WriteLine("============= blue tree ==============");
+                    blue_root = ReadTree(reader);
 
-                    rgbChannels[0] = ReadChannels(reader);
-                    rgbChannels[1] = ReadChannels(reader);
-                    rgbChannels[2] = ReadChannels(reader);
+                    channelLength[0] = reader.ReadInt32();
+                    channelLength[1] = reader.ReadInt32();
+                    channelLength[2] = reader.ReadInt32();
+
+                    rgbChannels = ReadChannels(reader, channelLength);
+
                 }
             }
 
-            return (tapPosition, initSeed, imgWidth, imgHeight, r_count, g_count, b_count, red_root, green_root, blue_root, rgbChannels);
+            return (tapPosition, initSeed, imgWidth, imgHeight, red_root, green_root, blue_root, rgbChannels);
         }
 
-        private static Node<byte?> ReadTree(BinaryReader reader, int count)
+        private static Node<int> ReadTree(BinaryReader reader)
         {
-            if(count == 0)
-            {
-                return null;
-            }
-            byte value = reader.ReadByte();
+            
+            int value = reader.ReadInt32();
 
-            if (value == '\n') // Indicates a null node
+            if (value == 256) // Indicates a null node
             {
+                
                 int freq = reader.ReadInt32();
-                Node<byte?> node = new Node<byte?>(null, freq);
-                node.left = ReadTree(reader, count - 1);
-                node.right = ReadTree(reader, count - 1);
+                Console.WriteLine("node freq: " + freq);
+                Node<int> node = new Node<int>(value, freq);
+                node.left = ReadTree(reader);
+                node.right = ReadTree(reader);
                 return node;
             }
             else
             {
+                
                 int freq = reader.ReadInt32();
-                return new Node<byte?>(value, freq);
+                Console.WriteLine("leaf freq: " + freq);
+                Console.WriteLine("leaf value: " + value);
+                return new Node<int>(value, freq);
             }
         }
 
-        private static string ReadChannels(BinaryReader reader)
+        private static string[] ReadChannels(BinaryReader reader, int[] channelLengths)
         {
-            List<byte> bytes = new List<byte>();
+            List<string> channels = new List<string>();
 
-            byte currentByte;
-            while ((currentByte = reader.ReadByte()) != '\n')
+            foreach (int channelLength in channelLengths)
             {
-                bytes.Add(currentByte);
-            }
+                byte[] bytes = reader.ReadBytes((channelLength + 7) / 8);
+                StringBuilder channel = new StringBuilder();
 
-            StringBuilder channel = new StringBuilder();
-
-            foreach (byte b in bytes)
-            {
-                for (int i = 7; i >= 0; i--)
+                for (int i = 0; i < channelLength; i++)
                 {
-                    bool isSet = (b & (1 << i)) != 0; // Check if the bit is set (1)
+                    int byteIndex = i / 8;
+                    int bitOffset = i % 8;
+                    byte currentByte = bytes[byteIndex];
+                    bool isSet = (currentByte & (1 << (7 - bitOffset))) != 0; // Check if the bit is set (1)
                     channel.Append(isSet ? '1' : '0'); // Append '1' for set bit, '0' otherwise
                 }
+
+                channels.Add(channel.ToString());
             }
 
-            return channel.ToString();
+            return channels.ToArray();
         }
 
-        static void PrintTree(Node<byte?> node)
+        static void PrintTree(Node<int> node)
         {
             if (node == null)
             {
                 return;
             }
 
-            if (node.value == null)
+            if (node.value == 256)
             {
                 Console.WriteLine("node freq: " + node.freq);
             }
@@ -590,7 +603,7 @@ namespace ImageEncryptCompress
         {
             //throw new NotImplementedException();
 
-            (int tapPosition, string initSeed, int imgWidth, int imgHeight, int r_count, int g_count, int b_count, Node<byte?> red_root, Node<byte?> green_root, Node<byte?> blue_root, string[] rgbChannels) = ReadCompressedImage(filePath);
+            (int tapPosition, string initSeed, int imgWidth, int imgHeight, Node<int> red_root, Node<int> green_root, Node<int> blue_root, string[] rgbChannels) = ReadCompressedImage(filePath);
             Console.WriteLine($"Tap Position: {tapPosition}");
             Console.WriteLine($"Init Seed: {initSeed}");
             Console.WriteLine($"Image Width: {imgWidth}");
@@ -617,9 +630,9 @@ namespace ImageEncryptCompress
             {
                 for (int j = 0; j < imgWidth; j++)
                 {
-                    Node<byte?> red_node = red_root;
-                    Node<byte?> green_node = green_root;
-                    Node<byte?> blue_node = blue_root;
+                    Node<int> red_node = red_root;
+                    Node<int> green_node = green_root;
+                    Node<int> blue_node = blue_root;
                     for(int k = r; k < rgbChannels[0].Length; k++)
                     {
                         if(red_node.left == null || red_node.right == null)
