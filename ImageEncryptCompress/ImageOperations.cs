@@ -341,29 +341,21 @@ namespace ImageEncryptCompress
             return pq.Dequeue();
         }
 
-        private static void dfs(Node<int> node, string binary, Dictionary<int, string> tree, ref int counter)
+        private static void dfs(Node<int> node, string binary, Dictionary<int, string> tree)
         {
             if (node == null)
             {
                 return;
             }
 
-            if (node.value == 256) { 
-                Console.WriteLine("node freq: " + node.freq);
-            }else
+            if (node.value != 256)
             {
-                Console.WriteLine("leaf node");
-                Console.WriteLine("node value: " + node.value);
-                Console.WriteLine("node freq: " + node.freq);
-                Console.WriteLine("binary: " + binary);
-                Console.WriteLine("end of leaf node");
                 node.binary = binary;
                 tree.Add(node.value, binary);
             }
 
-            dfs(node.left, binary + '0', tree, ref counter);
-            dfs(node.right, binary + '1', tree, ref counter);
-            counter++;
+            dfs(node.left, binary + '0', tree);
+            dfs(node.right, binary + '1', tree);
         }
 
         public static void Huffman_Compress(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
@@ -373,36 +365,41 @@ namespace ImageEncryptCompress
             Node<int> root_red = BuildHuffmanTree(R);
             Node<int> root_green = BuildHuffmanTree(G);
             Node<int> root_blue = BuildHuffmanTree(B);
-            int r_count = 0, g_count = 0, b_count = 0;
-            dfs(root_red, "", R_TREE, ref r_count);
-            dfs(root_green, "", G_TREE, ref g_count);
-            dfs(root_blue, "", B_TREE, ref b_count);
+
+            dfs(root_red, "", R_TREE);
+            dfs(root_green, "", G_TREE);
+            dfs(root_blue, "", B_TREE);
 
             string[] arrays = PixelEncoding(ImageMatrix);
 
             string filePath = "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin";
 
-
             WriteCompressedImage(filePath, initSeed, tapPosition, root_red, root_green, root_blue, GetWidth(ImageMatrix), GetHeight(ImageMatrix), arrays);
-
         }
 
         private static string[] PixelEncoding(RGBPixel[,] ImageMatrix)
         {
-            string red = "";
-            string green = "";
-            string blue = "";
+            StringBuilder redBuilder = new StringBuilder();
+            StringBuilder greenBuilder = new StringBuilder();
+            StringBuilder blueBuilder = new StringBuilder();
+            int height = GetHeight(ImageMatrix);
+            int width = GetWidth(ImageMatrix);
 
-            for (int i = 0; i < GetHeight(ImageMatrix); i++)
+            for (int i = 0; i < height; i++)
             {
-                for (int j = 0; j < GetWidth(ImageMatrix); j++)
+                for (int j = 0; j < width; j++)
                 {
                     RGBPixel pixel = ImageMatrix[i, j];
-                    red += R_TREE[pixel.red];
-                    green += G_TREE[pixel.green];
-                    blue += B_TREE[pixel.blue];
+                    redBuilder.Append(R_TREE[pixel.red]);
+                    greenBuilder.Append(G_TREE[pixel.green]);
+                    blueBuilder.Append(B_TREE[pixel.blue]);
                 }
             }
+
+            string red = redBuilder.ToString();
+            string green = greenBuilder.ToString();
+            string blue = blueBuilder.ToString();
+
             string[] arrays = new string[]{ red, green, blue };
             return arrays;
         }
@@ -535,7 +532,6 @@ namespace ImageEncryptCompress
             {
                 
                 int freq = reader.ReadInt32();
-                Console.WriteLine("node freq: " + freq);
                 Node<int> node = new Node<int>(value, freq);
                 node.left = ReadTree(reader);
                 node.right = ReadTree(reader);
@@ -545,8 +541,6 @@ namespace ImageEncryptCompress
             {
                 
                 int freq = reader.ReadInt32();
-                Console.WriteLine("leaf freq: " + freq);
-                Console.WriteLine("leaf value: " + value);
                 return new Node<int>(value, freq);
             }
         }
@@ -604,24 +598,7 @@ namespace ImageEncryptCompress
             //throw new NotImplementedException();
 
             (int tapPosition, string initSeed, int imgWidth, int imgHeight, Node<int> red_root, Node<int> green_root, Node<int> blue_root, string[] rgbChannels) = ReadCompressedImage(filePath);
-            Console.WriteLine($"Tap Position: {tapPosition}");
-            Console.WriteLine($"Init Seed: {initSeed}");
-            Console.WriteLine($"Image Width: {imgWidth}");
-            Console.WriteLine($"Image Height: {imgHeight}");
 
-            Console.WriteLine("Red Tree:");
-            PrintTree(red_root);
-
-            Console.WriteLine("Green Tree:");
-            PrintTree(green_root);
-
-            Console.WriteLine("Blue Tree:");
-            PrintTree(blue_root);
-
-            Console.WriteLine("RGB Channels:");
-            Console.WriteLine($"Red Channel: {rgbChannels[0]}");
-            Console.WriteLine($"Green Channel: {rgbChannels[1]}");
-            Console.WriteLine($"Blue Channel: {rgbChannels[2]}");
             RGBPixel[,] decompressedImg = new RGBPixel[imgHeight, imgWidth];
             int r = 0;
             int g = 0;
