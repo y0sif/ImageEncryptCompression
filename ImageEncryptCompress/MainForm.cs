@@ -82,7 +82,7 @@ namespace ImageEncryptCompress
             //ImageOperations.LFSR(ImageMatrix_copy, tap, initSeed, true, alphaMethod);
             ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, tap, initSeed, true);
 
-            float ratio = ImageOperations.Huffman_Compress(ImageMatrix_copy, tap, initSeed);
+            float ratio = 0; ImageOperations.RunLengthEncoding(ImageMatrix_copy, tap, initSeed);
 
             textBox3.Text = ratio.ToString();
 
@@ -113,7 +113,7 @@ namespace ImageEncryptCompress
         {
             //string filepath = textBox3.Text;
             string filepath = "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin";
-            (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.Huffman_Decompress(filepath);
+            (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.RunLengthDecoding();
             //ImageOperations.LFSR(decompressedImage, tap, seed, false, 2);
             ImageOperations.LFSR(decompressedImage, tap, seed, false);
             ImageOperations.DisplayImage(decompressedImage, pictureBox2);
