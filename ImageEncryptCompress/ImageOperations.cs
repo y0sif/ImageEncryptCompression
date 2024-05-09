@@ -1146,7 +1146,7 @@ namespace ImageEncryptCompress
                     else
                     {
                         currentBlue++;
-                        decompressedImg[i, j].red = (byte)blueVal[currentBlue];
+                        decompressedImg[i, j].blue = (byte)blueVal[currentBlue];
                         blueFreq[currentBlue]--;
                     }
                 }
