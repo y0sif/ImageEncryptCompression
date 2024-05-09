@@ -360,15 +360,19 @@ namespace ImageEncryptCompress
                     char[] greenKey = RGBKeys[1];
                     char[] blueKey = RGBKeys[2];
 
-                    char[] redVal = ConvertToBinary(pixel.red);
-                    char[] greenVal = ConvertToBinary(pixel.green);
-                    char[] blueVal = ConvertToBinary(pixel.blue);
+                    string red = Convert.ToString(pixel.red, 2).PadLeft(8, '0');
+                    string green = Convert.ToString(pixel.green, 2).PadLeft(8, '0'); ;
+                    string blue = Convert.ToString(pixel.blue, 2).PadLeft(8, '0');
+
+                    char[] redVal = new char[8];
+                    char[] greenVal = new char[8];
+                    char[] blueVal = new char[8];
 
                     for (int i = 0; i < KEY_SIZE; i++)
                     {
-                        redVal[i] = (char)(((redVal[i] - '0') ^ (redKey[i] - '0')) + '0');
-                        greenVal[i] = (char)(((greenVal[i] - '0') ^ (greenKey[i] - '0')) + '0');
-                        blueVal[i] = (char)(((blueVal[i] - '0') ^ (blueKey[i] - '0')) + '0');
+                        redVal[i] = (char)(((red[i] - '0') ^ (redKey[i] - '0')) + '0');
+                        greenVal[i] = (char)(((green[i] - '0') ^ (greenKey[i] - '0')) + '0');
+                        blueVal[i] = (char)(((blue[i] - '0') ^ (blueKey[i] - '0')) + '0');
                     }
 
                     pixel.red = ConvertToDecimal(redVal);
@@ -377,9 +381,8 @@ namespace ImageEncryptCompress
                 }
             }
 
-            /*if(encrypt)
+            if(encrypt)
                 Huffman_Compress(ImageMatrix, tapPosition, initSeed);                
-            else*/
             return ImageMatrix;
         }
 
@@ -404,15 +407,19 @@ namespace ImageEncryptCompress
                     char[] greenKey = RGBKeys[1];
                     char[] blueKey = RGBKeys[2];
 
-                    char[] redVal = ConvertToBinary(pixel.red);
-                    char[] greenVal = ConvertToBinary(pixel.green);
-                    char[] blueVal = ConvertToBinary(pixel.blue);
+                    string red = Convert.ToString(pixel.red, 2).PadLeft(8, '0');
+                    string green = Convert.ToString(pixel.green, 2).PadLeft(8, '0'); ;
+                    string blue = Convert.ToString(pixel.blue, 2).PadLeft(8, '0');
+
+                    char[] redVal = new char[8];
+                    char[] greenVal = new char[8];
+                    char[] blueVal = new char[8];
 
                     for (int i = 0; i < KEY_SIZE; i++)
                     {
-                        redVal[i] = (char)(((redVal[i] - '0') ^ (redKey[i] - '0')) + '0');
-                        greenVal[i] = (char)(((greenVal[i] - '0') ^ (greenKey[i] - '0')) + '0');
-                        blueVal[i] = (char)(((blueVal[i] - '0') ^ (blueKey[i] - '0')) + '0');
+                        redVal[i] = (char)(((red[i] - '0') ^ (redKey[i] - '0')) + '0');
+                        greenVal[i] = (char)(((green[i] - '0') ^ (greenKey[i] - '0')) + '0');
+                        blueVal[i] = (char)(((blue[i] - '0') ^ (blueKey[i] - '0')) + '0');
                     }
 
                     pixel.red = ConvertToDecimal(redVal);
@@ -671,12 +678,10 @@ namespace ImageEncryptCompress
             {
                 writer.Write(node.value);
                 Console.WriteLine("node freq: " + node.freq);
-                writer.Write(node.freq);
             }
             else
             {
                 writer.Write(node.value);
-                writer.Write(node.freq);
                 Console.WriteLine("leaf freq: " + node.freq);
                 Console.WriteLine("leaf value: " + node.value);
             }
@@ -755,18 +760,14 @@ namespace ImageEncryptCompress
 
             if (value == 256) // Indicates a null node
             {
-                
-                int freq = reader.ReadInt32();
-                Node<int> node = new Node<int>(value, freq);
+                Node<int> node = new Node<int>(value, 0);
                 node.left = ReadTree(reader);
                 node.right = ReadTree(reader);
                 return node;
             }
             else
             {
-                
-                int freq = reader.ReadInt32();
-                return new Node<int>(value, freq);
+                return new Node<int>(value, 0);
             }
         }
 
@@ -818,7 +819,7 @@ namespace ImageEncryptCompress
             PrintTree(node.right);
         }
 
-        public static RGBPixel[,] Huffman_Decompress(string filePath)
+        public static (RGBPixel[,] , int , string) Huffman_Decompress(string filePath)
         {
             //throw new NotImplementedException();
 
@@ -894,7 +895,7 @@ namespace ImageEncryptCompress
                 }
             }
 
-            return decompressedImg;
+            return (decompressedImg, tapPosition, initSeed);
         }
 
 
