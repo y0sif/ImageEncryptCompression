@@ -66,7 +66,7 @@ namespace ImageEncryptCompress
             {
                 throw new Exception("Must choose Method");
             }
-            ImageMatrix = ImageOperations.LFSR(ImageMatrix, tap, initSeed, false, alphaMethod);
+            ImageMatrix = ImageOperations.LFSR(ImageMatrix, tap, initSeed, false);
             ImageOperations.DisplayImage(ImageMatrix, pictureBox2);
 
             radioButton1.Checked = false;

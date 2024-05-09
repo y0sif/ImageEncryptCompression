@@ -258,10 +258,36 @@ namespace ImageEncryptCompress
 
         private const int KEY_SIZE = 8;
 
-        public static void KeyGeneration(int tapPosition, char[] seed, char[][] alphaBinarySeed, char[] concatSeed, byte alphaMethod)
+        public static void KeyGeneration(int tapPosition, char[] seed)
         {
-            if(alphaMethod == 0)
-            {                
+
+            int bitSize = seed.Length;
+
+            for (int k = 0; k < RGBKeys.Length; k++)
+            {
+                char[] keyString = new char[KEY_SIZE];
+                for (int i = 0; i < KEY_SIZE; i++)
+                {
+                    char shiftOut = seed[0];
+                    char res = XOR(seed[(bitSize - tapPosition) - 1], shiftOut);
+
+                    for (int j = 1; j < bitSize; j++)
+                    {
+                        seed[j - 1] = seed[j];
+                    }
+
+                    seed[bitSize - 1] = res;
+                    keyString[i] = res;
+                }
+
+                RGBKeys[k] = keyString;
+            }
+                        
+        }
+        public static void AlphaNumKeyGeneration(int tapPosition, char[] seed, char[][] alphaBinarySeed, char[] concatSeed, byte alphaMethod)
+        {
+            if (alphaMethod == 0)
+            {
                 int bitSize = concatSeed.Length;
 
                 for (int k = 0; k < RGBKeys.Length; k++)
@@ -309,33 +335,49 @@ namespace ImageEncryptCompress
                     RGBKeys[k] = result;
                 }
             }
-            else
-            {
-                int bitSize = seed.Length;
-
-                for (int k = 0; k < RGBKeys.Length; k++)
-                {
-                    char[] keyString = new char[KEY_SIZE];
-                    for (int i = 0; i < KEY_SIZE; i++)
-                    {
-                        char shiftOut = seed[0];
-                        char res = XOR(seed[(bitSize - tapPosition) - 1], shiftOut);
-
-                        for (int j = 1; j < bitSize; j++)
-                        {
-                            seed[j - 1] = seed[j];
-                        }
-
-                        seed[bitSize - 1] = res;
-                        keyString[i] = res;
-                    }
-
-                    RGBKeys[k] = keyString;
-                }
-            }            
         }
 
-        public static RGBPixel[,] LFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed, bool encrypt, byte alphaMethod)
+        public static RGBPixel[,] LFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed, bool encrypt)
+        {
+
+            char[] seed = initSeed.ToCharArray();
+
+            for (int row = 0; row < GetHeight(ImageMatrix); row++)
+            {
+                for (int col = 0; col < GetWidth(ImageMatrix); col++)
+                {
+                    ref RGBPixel pixel = ref ImageMatrix[row, col];
+
+                    KeyGeneration(tapPosition, seed);
+
+                    char[] redKey = RGBKeys[0];
+                    char[] greenKey = RGBKeys[1];
+                    char[] blueKey = RGBKeys[2];
+
+                    char[] redVal = ConvertToBinary(pixel.red);
+                    char[] greenVal = ConvertToBinary(pixel.green);
+                    char[] blueVal = ConvertToBinary(pixel.blue);
+
+                    for (int i = 0; i < KEY_SIZE; i++)
+                    {
+                        redVal[i] = (char)(((redVal[i] - '0') ^ (redKey[i] - '0')) + '0');
+                        greenVal[i] = (char)(((greenVal[i] - '0') ^ (greenKey[i] - '0')) + '0');
+                        blueVal[i] = (char)(((blueVal[i] - '0') ^ (blueKey[i] - '0')) + '0');
+                    }
+
+                    pixel.red = ConvertToDecimal(redVal);
+                    pixel.green = ConvertToDecimal(greenVal);
+                    pixel.blue = ConvertToDecimal(blueVal);
+                }
+            }
+
+            /*if(encrypt)
+                Huffman_Compress(ImageMatrix, tapPosition, initSeed);                
+            else*/
+            return ImageMatrix;
+        }
+
+        public static RGBPixel[,] alphaNumLFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed, bool encrypt, byte alphaMethod)
         {
             char[] seed = initSeed.ToCharArray();
             char[][] alphaBinarySeed = new char[seed.Length][];
@@ -350,7 +392,7 @@ namespace ImageEncryptCompress
                 {
                     ref RGBPixel pixel = ref ImageMatrix[row, col];
 
-                    KeyGeneration(tapPosition, seed, alphaBinarySeed, concatSeed, alphaMethod);
+                    AlphaNumKeyGeneration(tapPosition, seed, alphaBinarySeed, concatSeed, alphaMethod);
                 
                     char[] redKey = RGBKeys[0];
                     char[] greenKey = RGBKeys[1];
@@ -404,7 +446,7 @@ namespace ImageEncryptCompress
                         }
                     }
 
-                    ImageMatrix_copy = LFSR(ImageMatrix_copy, tapPosition, seed, false, 2);
+                    ImageMatrix_copy = LFSR(ImageMatrix_copy, tapPosition, seed, false);
                     frequency_deviations[(seed, tapPosition)] = 0;
 
                     for (int row = 0; row < height ; row++)
