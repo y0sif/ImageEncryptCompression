@@ -348,9 +348,12 @@ namespace ImageEncryptCompress
 
             char[] seed = initSeed.ToCharArray();
 
-            for (int row = 0; row < GetHeight(ImageMatrix); row++)
+            int height = GetHeight(ImageMatrix);
+            int width = GetWidth(ImageMatrix);
+
+            for (int row = 0; row < height; row++)
             {
-                for (int col = 0; col < GetWidth(ImageMatrix); col++)
+                for (int col = 0; col < width; col++)
                 {
                     ref RGBPixel pixel = ref ImageMatrix[row, col];
 
@@ -395,9 +398,12 @@ namespace ImageEncryptCompress
             CheckAlpha(seed, alphaBinarySeed, concatBinaryASCII);
             char[] concatSeed = concatBinaryASCII.ToString().ToCharArray();
 
-            for (int row = 0; row < GetHeight(ImageMatrix); row++)
+            int height = GetHeight(ImageMatrix);
+            int width = GetWidth(ImageMatrix);
+
+            for (int row = 0; row < height; row++)
             {
-                for (int col = 0; col < GetWidth(ImageMatrix); col++)
+                for (int col = 0; col < width; col++)
                 {
                     ref RGBPixel pixel = ref ImageMatrix[row, col];
 
