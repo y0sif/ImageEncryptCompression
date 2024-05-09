@@ -383,9 +383,7 @@ namespace ImageEncryptCompress
                     pixel.blue = ConvertToDecimal(blueVal);
                 }
             }
-
-            if(encrypt)
-                Huffman_Compress(ImageMatrix, tapPosition, initSeed);                
+            
             return ImageMatrix;
         }
 
@@ -579,7 +577,7 @@ namespace ImageEncryptCompress
             return pq.Dequeue();
         }
 
-        private static void dfs(Node<int> node, string binary, Dictionary<int, string> tree)
+        private static void dfs(Node<int> node, string binary, Dictionary<int, string> tree, Dictionary<int, int> freqTree, ref float channelSize)
         {
             if (node == null)
             {
@@ -590,13 +588,14 @@ namespace ImageEncryptCompress
             {
                 node.binary = binary;
                 tree.Add(node.value, binary);
+                channelSize += binary.Length * freqTree[node.value];
             }
 
-            dfs(node.left, binary + '0', tree);
-            dfs(node.right, binary + '1', tree);
+            dfs(node.left, binary + '0', tree, freqTree, ref channelSize);
+            dfs(node.right, binary + '1', tree, freqTree, ref channelSize);
         }
 
-        public static void Huffman_Compress(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
+        public static float Huffman_Compress(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
         {
             Construct_Dictionaries(ImageMatrix);
 
@@ -604,15 +603,28 @@ namespace ImageEncryptCompress
             Node<int> root_green = BuildHuffmanTree(G);
             Node<int> root_blue = BuildHuffmanTree(B);
 
-            dfs(root_red, "", R_TREE);
-            dfs(root_green, "", G_TREE);
-            dfs(root_blue, "", B_TREE);
+            float rChannel = 0;
+            float gChannel = 0;
+            float bChannel = 0;
+
+            dfs(root_red, "", R_TREE, R,  ref rChannel);
+            dfs(root_green, "", G_TREE, G, ref gChannel);
+            dfs(root_blue, "", B_TREE, B, ref bChannel);
+
+            float imgChannelSize = GetHeight(ImageMatrix) * GetWidth(ImageMatrix) * 8;
+
+            float redChannelRatio = (rChannel / imgChannelSize) * 100;
+            float greenChannelRatio = (gChannel / imgChannelSize) * 100;
+            float blueChannelRatio = (bChannel / imgChannelSize) * 100;
+            float compRatio = (redChannelRatio + greenChannelRatio + blueChannelRatio) / 3;
 
             string[] arrays = PixelEncoding(ImageMatrix);
 
             string filePath = "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin";
 
             WriteCompressedImage(filePath, initSeed, tapPosition, root_red, root_green, root_blue, GetWidth(ImageMatrix), GetHeight(ImageMatrix), arrays);
+
+            return compRatio;
         }
 
         private static string[] PixelEncoding(RGBPixel[,] ImageMatrix)

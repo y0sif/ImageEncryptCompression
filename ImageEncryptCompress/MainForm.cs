@@ -80,7 +80,12 @@ namespace ImageEncryptCompress
             }
 
             //ImageOperations.LFSR(ImageMatrix_copy, tap, initSeed, true, alphaMethod);
-            ImageOperations.LFSR(ImageMatrix_copy, tap, initSeed, true);
+            ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, tap, initSeed, true);
+
+            float ratio = ImageOperations.Huffman_Compress(ImageMatrix_copy, tap, initSeed);
+
+            textBox3.Text = ratio.ToString();
+
             ImageOperations.DisplayImage(ImageMatrix_copy, pictureBox2);
 
             radioButton1.Checked = false;
@@ -113,6 +118,11 @@ namespace ImageEncryptCompress
             ImageOperations.LFSR(decompressedImage, tap, seed, false);
             ImageOperations.DisplayImage(decompressedImage, pictureBox2);
             
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
