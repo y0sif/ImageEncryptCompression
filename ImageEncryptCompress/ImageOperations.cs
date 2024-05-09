@@ -5,9 +5,15 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Security.Cryptography;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using System.Collections;
+using System.Runtime.InteropServices.ComTypes;
+using System.IO.Pipes;
+using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Channels;
+
 ///Algorithms Project
 ///Intelligent Scissors
 ///
@@ -484,14 +490,411 @@ namespace ImageEncryptCompress
         //--------------------------------//
 
         //use binarywriter to write the image to the file
-        public static void Huffman_Compress(RGBPixel[,] ImageMatrix)
+
+        public static Dictionary<int, int> R = new Dictionary<int, int>();
+        public static Dictionary<int, int> G = new Dictionary<int, int>();
+        public static Dictionary<int, int> B = new Dictionary<int, int>();
+
+        public static Dictionary<int, string> R_TREE = new Dictionary<int, string>();
+        public static Dictionary<int, string> G_TREE = new Dictionary<int, string>();
+        public static Dictionary<int, string> B_TREE = new Dictionary<int, string>();
+
+        private static void Construct_Dictionaries(RGBPixel[,] ImageMatrix)
         {
-            throw new NotImplementedException();
+            // make sure dictionary is empty before adding new values of new picture to it
+            R.Clear();
+            G.Clear();
+            B.Clear();
+            int height = GetHeight(ImageMatrix);
+            int width = GetWidth(ImageMatrix);
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    RGBPixel pixel = ImageMatrix[i, j];
+                    // red dictionary
+                    if(R.ContainsKey(pixel.red))
+                    {
+                        R[pixel.red]++;
+                    }
+                    else
+                    {
+                        R.Add(pixel.red, 1);
+                    }
+                    // green dictionary
+                    if (G.ContainsKey(pixel.green))
+                    {
+                        G[pixel.green]++;
+                    }
+                    else
+                    {
+                        G.Add(pixel.green, 1);
+                    }
+                    // blue dictionary
+                    if (B.ContainsKey(pixel.blue))
+                    {
+                        B[pixel.blue]++;
+                    }
+                    else
+                    {
+                        B.Add(pixel.blue, 1);
+                    }
+                }
+            }
         }
 
-        public static void Huffman_Decompress(RGBPixel[,] ImageMatrix)
+        private static Node<int> BuildHuffmanTree(Dictionary<int, int> color)
         {
-            throw new NotImplementedException();
+            PriorityQueue<int, Node<int>> pq = new PriorityQueue<int, Node<int>>();
+
+            foreach(int value in color.Keys)
+            {
+                int freq = color[value];
+                Node<int> node = new Node<int>(value, freq);
+                pq.Enqueue(freq, node);
+            }
+            for(int i = 0; i < color.Count - 1;  i++)
+            {
+                Node<int> node = new Node<int>(256, 0);
+                Node<int> firstMin = pq.Dequeue();
+                Node<int> secondMin = pq.Dequeue();  
+                node.left = secondMin;
+                node.right = firstMin;
+                node.freq = firstMin.freq + secondMin.freq;
+                pq.Enqueue(node.freq, node);
+            }
+            return pq.Dequeue();
+        }
+
+        private static void dfs(Node<int> node, string binary, Dictionary<int, string> tree)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            if (node.value != 256)
+            {
+                node.binary = binary;
+                tree.Add(node.value, binary);
+            }
+
+            dfs(node.left, binary + '0', tree);
+            dfs(node.right, binary + '1', tree);
+        }
+
+        public static void Huffman_Compress(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
+        {
+            Construct_Dictionaries(ImageMatrix);
+
+            Node<int> root_red = BuildHuffmanTree(R);
+            Node<int> root_green = BuildHuffmanTree(G);
+            Node<int> root_blue = BuildHuffmanTree(B);
+
+            dfs(root_red, "", R_TREE);
+            dfs(root_green, "", G_TREE);
+            dfs(root_blue, "", B_TREE);
+
+            string[] arrays = PixelEncoding(ImageMatrix);
+
+            string filePath = "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin";
+
+            WriteCompressedImage(filePath, initSeed, tapPosition, root_red, root_green, root_blue, GetWidth(ImageMatrix), GetHeight(ImageMatrix), arrays);
+        }
+
+        private static string[] PixelEncoding(RGBPixel[,] ImageMatrix)
+        {
+            StringBuilder redBuilder = new StringBuilder();
+            StringBuilder greenBuilder = new StringBuilder();
+            StringBuilder blueBuilder = new StringBuilder();
+            int height = GetHeight(ImageMatrix);
+            int width = GetWidth(ImageMatrix);
+
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    RGBPixel pixel = ImageMatrix[i, j];
+                    redBuilder.Append(R_TREE[pixel.red]);
+                    greenBuilder.Append(G_TREE[pixel.green]);
+                    blueBuilder.Append(B_TREE[pixel.blue]);
+                }
+            }
+
+            string red = redBuilder.ToString();
+            string green = greenBuilder.ToString();
+            string blue = blueBuilder.ToString();
+
+            string[] arrays = new string[]{ red, green, blue };
+            return arrays;
+        }
+
+        private static void WriteCompressedImage(string fileName, string initSeed, int tapPosition, 
+            Node<int> red_root, Node<int> green_root, Node<int> blue_root,int imgWidth, int imgHeight, string[] rgbChannels)
+        {
+            using (var stream = File.Open(fileName, FileMode.Create))
+            {
+                using (var writer = new BinaryWriter(stream, Encoding.UTF8, false))
+                {
+                    writer.Write(tapPosition);
+                    writer.Write(initSeed);
+
+                    writer.Write(imgWidth);
+                    writer.Write(imgHeight);
+
+                    Console.WriteLine("=============== red tree ======================");
+                    WriteTree(writer, red_root);
+
+                    Console.WriteLine("=============== green tree ======================");
+                    WriteTree(writer, green_root);
+
+                    Console.WriteLine("=============== blue tree ======================");
+                    WriteTree(writer, blue_root);
+
+                    writer.Write(rgbChannels[0].Length);
+                    writer.Write(rgbChannels[1].Length);
+                    writer.Write(rgbChannels[2].Length);
+
+                    WriteChannels(writer, rgbChannels);
+                }
+            }
+        }
+
+
+        private static void WriteTree(BinaryWriter writer, Node<int> node)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            if(node.value == 256)
+            {
+                writer.Write(node.value);
+                Console.WriteLine("node freq: " + node.freq);
+                writer.Write(node.freq);
+            }
+            else
+            {
+                writer.Write(node.value);
+                writer.Write(node.freq);
+                Console.WriteLine("leaf freq: " + node.freq);
+                Console.WriteLine("leaf value: " + node.value);
+            }
+
+            WriteTree(writer, node.left);
+            WriteTree(writer, node.right);
+        }
+
+        private static void WriteChannels(BinaryWriter writer, string[] channels)
+        {
+            foreach (string channel in channels)
+            {
+                int bitLength = channel.Length;
+
+                byte[] bytes = new byte[(bitLength + 7) / 8]; // Round up to the nearest byte
+
+                for (int i = 0; i < bitLength; i++)
+                {
+                    if (channel[i] == '1')
+                    {
+                        int byteIndex = i / 8;
+                        int bitOffset = i % 8;
+                        bytes[byteIndex] |= (byte)(1 << (7 - bitOffset)); // Set the corresponding bit to 1
+                    }
+                    // Note: if channel[i] == '0', the bit remains 0 (default)
+                }
+
+                writer.Write(bytes); // Write the byte array to the file
+            }
+        }
+
+        private static (int tapPosition, string initSeed, int imgWidth, int imgHeight, Node<int> red_root, Node<int> green_root, Node<int> blue_root, string[] rgbChannels) ReadCompressedImage(string fileName)
+        {
+            int tapPosition;
+            string initSeed;
+            Node<int> red_root, green_root, blue_root;
+            int imgWidth, imgHeight;
+            string[] rgbChannels = new string[3];
+            int[] channelLength = new int[3];
+
+            using (var stream = File.OpenRead(fileName))
+            {
+                using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
+                {
+                    tapPosition = reader.ReadInt32();
+                    initSeed = reader.ReadString();
+
+                    imgWidth = reader.ReadInt32();
+                    imgHeight = reader.ReadInt32();
+
+                    Console.WriteLine("=============== red tree ======================");
+                    red_root = ReadTree(reader);
+
+                    Console.WriteLine("============== green tree=============");
+                    green_root = ReadTree(reader);
+
+                    Console.WriteLine("============= blue tree ==============");
+                    blue_root = ReadTree(reader);
+
+                    channelLength[0] = reader.ReadInt32();
+                    channelLength[1] = reader.ReadInt32();
+                    channelLength[2] = reader.ReadInt32();
+
+                    rgbChannels = ReadChannels(reader, channelLength);
+
+                }
+            }
+
+            return (tapPosition, initSeed, imgWidth, imgHeight, red_root, green_root, blue_root, rgbChannels);
+        }
+
+        private static Node<int> ReadTree(BinaryReader reader)
+        {
+            
+            int value = reader.ReadInt32();
+
+            if (value == 256) // Indicates a null node
+            {
+                
+                int freq = reader.ReadInt32();
+                Node<int> node = new Node<int>(value, freq);
+                node.left = ReadTree(reader);
+                node.right = ReadTree(reader);
+                return node;
+            }
+            else
+            {
+                
+                int freq = reader.ReadInt32();
+                return new Node<int>(value, freq);
+            }
+        }
+
+        private static string[] ReadChannels(BinaryReader reader, int[] channelLengths)
+        {
+            List<string> channels = new List<string>();
+
+            foreach (int channelLength in channelLengths)
+            {
+                byte[] bytes = reader.ReadBytes((channelLength + 7) / 8);
+                StringBuilder channel = new StringBuilder();
+
+                for (int i = 0; i < channelLength; i++)
+                {
+                    int byteIndex = i / 8;
+                    int bitOffset = i % 8;
+                    byte currentByte = bytes[byteIndex];
+                    bool isSet = (currentByte & (1 << (7 - bitOffset))) != 0; // Check if the bit is set (1)
+                    channel.Append(isSet ? '1' : '0'); // Append '1' for set bit, '0' otherwise
+                }
+
+                channels.Add(channel.ToString());
+            }
+
+            return channels.ToArray();
+        }
+
+        static void PrintTree(Node<int> node)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            if (node.value == 256)
+            {
+                Console.WriteLine("node freq: " + node.freq);
+            }
+            else
+            {
+                Console.WriteLine("leaf node");
+                Console.WriteLine("node value: " + node.value);
+                Console.WriteLine("node freq: " + node.freq);
+                Console.WriteLine("end of leaf node");
+
+            }
+
+            PrintTree(node.left);
+            PrintTree(node.right);
+        }
+
+        public static RGBPixel[,] Huffman_Decompress(string filePath)
+        {
+            //throw new NotImplementedException();
+
+            (int tapPosition, string initSeed, int imgWidth, int imgHeight, Node<int> red_root, Node<int> green_root, Node<int> blue_root, string[] rgbChannels) = ReadCompressedImage(filePath);
+
+            RGBPixel[,] decompressedImg = new RGBPixel[imgHeight, imgWidth];
+            int r = 0;
+            int g = 0;
+            int b = 0;
+            for (int i = 0; i < imgHeight; i++)
+            {
+                for (int j = 0; j < imgWidth; j++)
+                {
+                    Node<int> red_node = red_root;
+                    Node<int> green_node = green_root;
+                    Node<int> blue_node = blue_root;
+                    for(int k = r; k < rgbChannels[0].Length; k++)
+                    {
+                        if(red_node.left == null || red_node.right == null)
+                        {
+                            decompressedImg[i, j].red = (byte)red_node.value;
+                            break;
+                        }
+                        if (rgbChannels[0][k] == '0')
+                        {
+                            red_node = red_node.left;
+                            r++;
+                        }
+                        else
+                        {
+                            red_node = red_node.right;
+                            r++;
+                        }
+                    }
+
+                    for (int k = g; k < rgbChannels[1].Length; k++)
+                    {
+                        if (green_node.left == null || green_node.right == null)
+                        {
+                            decompressedImg[i, j].green = (byte)green_node.value;
+                            break;
+                        }
+                        if (rgbChannels[1][k] == '0')
+                        {
+                            green_node = green_node.left;
+                            g++;
+                        }
+                        else
+                        {
+                            green_node = green_node.right;
+                            g++;
+                        }
+                    }
+
+                    for (int k = b; k < rgbChannels[2].Length; k++)
+                    {
+                        if (blue_node.left == null || blue_node.right == null)
+                        {
+                            decompressedImg[i, j].blue = (byte)blue_node.value;
+                            break;
+                        }
+                        if (rgbChannels[2][k] == '0')
+                        {
+                            blue_node = blue_node.left;
+                            b++;
+                        }
+                        else
+                        {
+                            blue_node = blue_node.right;
+                            b++;
+                        }
+                    }
+                }
+            }
+
+            return decompressedImg;
         }
 
 
