@@ -13,6 +13,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System.IO.Pipes;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Channels;
+using System.Reflection.Emit;
 
 ///Algorithms Project
 ///Intelligent Scissors
@@ -101,6 +102,20 @@ namespace ImageEncryptCompress
             }
 
             return Buffer;
+        }
+
+        public static int saveImage(PictureBox PicBox)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
+            saveFileDialog1.RestoreDirectory = true;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                PicBox.Image.Save(saveFileDialog1.FileName, ImageFormat.Bmp);
+                return 0; 
+            }
+
+            return -1; //failed
         }
         
         /// <summary>

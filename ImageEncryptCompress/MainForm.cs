@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Text;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -19,7 +20,7 @@ namespace ImageEncryptCompress
 
         RGBPixel[,] ImageMatrix;
         byte alphaMethod;
-        private void btnOpen_Click(object sender, EventArgs e)
+        private void enc_load_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -28,13 +29,26 @@ namespace ImageEncryptCompress
                 string OpenedFilePath = openFileDialog1.FileName;
                 ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
                 ImageOperations.DisplayImage(ImageMatrix, pictureBox1);
+                enc_load.Visible = false;
+                panel1.Visible = true;
+                txtWidth.Text = ImageOperations.GetWidth(ImageMatrix).ToString();
+                txtHeight.Text = ImageOperations.GetHeight(ImageMatrix).ToString();
             }
-            txtWidth.Text = ImageOperations.GetWidth(ImageMatrix).ToString();
-            txtHeight.Text = ImageOperations.GetHeight(ImageMatrix).ToString();
+            
         }
+        private void enc_clear_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = null;
+            panel2.Visible = false;
+            enc_save.Visible = false;
+            panel1.Visible = false;
+            enc_load.Visible = true;
+            label2.Visible = false;
+        }
+
         private void radioButton_CheckedChanged(object sender, EventArgs e)
         {
-
+/**
             if (radioButton1.Checked)
             {
                 alphaMethod = 0; //Concat
@@ -47,7 +61,7 @@ namespace ImageEncryptCompress
             {
                 alphaMethod = 2; //Binary
             }
-
+**/
         }
         private void btnGaussSmooth_Click(object sender, EventArgs e)
         {
@@ -59,12 +73,7 @@ namespace ImageEncryptCompress
             string initSeed = txtGaussSigma.Text;
             int tap = (int)nudMaskSize.Value;
 
-            //---ENCRYPTION BREAKING---//
-            //int N = 8;
-            //(initSeed, tap) = ImageOperations.Break_Encryption(ImageMatrix, N);
-            //---ENCRYPTION BREAKING---//
-
-            if (!(radioButton1.Checked || radioButton2.Checked || radioButton3.Checked))
+            //if (!(radioButton1.Checked || radioButton2.Checked || radioButton3.Checked))
             {
                 //throw new Exception("Must choose Method");
             }
@@ -79,24 +88,37 @@ namespace ImageEncryptCompress
                 }
             }
 
-            //ImageOperations.LFSR(ImageMatrix_copy, tap, initSeed, true, alphaMethod);
-            ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, tap, initSeed, true);
+            string method = comboBox1.SelectedItem.ToString();
 
-            float ratio = ImageOperations.Huffman_Compress(ImageMatrix_copy, tap, initSeed);
+            if (method == "Binary")
+                ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, tap, initSeed, true);
 
-            textBox3.Text = ratio.ToString();
+            //float ratio = ImageOperations.Huffman_Compress(ImageMatrix_copy, tap, initSeed);
 
+            //textBox3.Text = ratio.ToString();
+
+            panel2.Visible = true;
+            enc_save.Visible = true;
             ImageOperations.DisplayImage(ImageMatrix_copy, pictureBox2);
 
-            radioButton1.Checked = false;
-            radioButton2.Checked = false;
-            radioButton3.Checked = false;
+            //radioButton1.Checked = false;
+            //radioButton2.Checked = false;
+            //radioButton3.Checked = false;
         }
+        private void enc_save_Click(object sender, EventArgs e)
+        {
+            if (ImageOperations.saveImage(pictureBox2) >= 0)
+            {
+                label2.Visible = true;
+            }
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
 
         }
 
+        /**
         private void button1_Click(object sender, EventArgs e)
         {
             //seed bits
@@ -108,6 +130,7 @@ namespace ImageEncryptCompress
             textBox1.Text = tap.ToString();
 
         }
+        **/
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -124,5 +147,12 @@ namespace ImageEncryptCompress
         {
 
         }
+
+        private void enc_b_Click(object sender, EventArgs e)
+        {
+            Menu_Panel.Visible = false;
+            Enc_Panel.Visible = true;
+        }
+
     }
 }
