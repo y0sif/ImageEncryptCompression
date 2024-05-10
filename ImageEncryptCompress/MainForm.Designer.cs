@@ -42,9 +42,12 @@ namespace ImageEncryptCompress
             this.panel2 = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.Enc_Panel = new System.Windows.Forms.Panel();
+            this.enc_back = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.enc_save = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.enc_clear = new System.Windows.Forms.Button();
@@ -84,7 +87,89 @@ namespace ImageEncryptCompress
             this.op_b = new System.Windows.Forms.Button();
             this.comp_b = new System.Windows.Forms.Button();
             this.enc_b = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.button8 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.label26 = new System.Windows.Forms.Label();
+            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.button9 = new System.Windows.Forms.Button();
+            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.button10 = new System.Windows.Forms.Button();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
+            this.label32 = new System.Windows.Forms.Label();
+            this.textBox15 = new System.Windows.Forms.TextBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.button11 = new System.Windows.Forms.Button();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.button12 = new System.Windows.Forms.Button();
+            this.label36 = new System.Windows.Forms.Label();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.button13 = new System.Windows.Forms.Button();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
+            this.Break_Panel = new System.Windows.Forms.Panel();
+            this.break_output = new System.Windows.Forms.Panel();
+            this.break_display = new System.Windows.Forms.Button();
+            this.break_tap = new System.Windows.Forms.Label();
+            this.break_seed = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.label51 = new System.Windows.Forms.Label();
+            this.break_insights = new System.Windows.Forms.Panel();
+            this.break_time = new System.Windows.Forms.Label();
+            this.break_possibilities = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.panel14 = new System.Windows.Forms.Panel();
+            this.pictureBox9 = new System.Windows.Forms.PictureBox();
+            this.break_back = new System.Windows.Forms.Button();
+            this.label37 = new System.Windows.Forms.Label();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.attack = new System.Windows.Forms.Button();
+            this.label40 = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
+            this.break_clear = new System.Windows.Forms.Button();
+            this.textBox16 = new System.Windows.Forms.TextBox();
+            this.break_bits = new System.Windows.Forms.NumericUpDown();
+            this.textBox17 = new System.Windows.Forms.TextBox();
+            this.label43 = new System.Windows.Forms.Label();
+            this.panel15 = new System.Windows.Forms.Panel();
+            this.break_load = new System.Windows.Forms.Button();
+            this.pictureBox10 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaskSize)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -100,6 +185,28 @@ namespace ImageEncryptCompress
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             this.Menu_Panel.SuspendLayout();
+            this.panel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
+            this.panel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            this.panel10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
+            this.panel11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            this.panel12.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
+            this.Break_Panel.SuspendLayout();
+            this.break_output.SuspendLayout();
+            this.break_insights.SuspendLayout();
+            this.panel14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
+            this.panel13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.break_bits)).BeginInit();
+            this.panel15.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             this.SuspendLayout();
             // 
             // enc_load
@@ -117,7 +224,7 @@ namespace ImageEncryptCompress
             // btnGaussSmooth
             // 
             this.btnGaussSmooth.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGaussSmooth.Location = new System.Drawing.Point(271, 129);
+            this.btnGaussSmooth.Location = new System.Drawing.Point(271, 103);
             this.btnGaussSmooth.Margin = new System.Windows.Forms.Padding(4);
             this.btnGaussSmooth.Name = "btnGaussSmooth";
             this.btnGaussSmooth.Size = new System.Drawing.Size(229, 81);
@@ -130,7 +237,7 @@ namespace ImageEncryptCompress
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(84, 140);
+            this.label3.Location = new System.Drawing.Point(84, 114);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 21);
@@ -151,7 +258,7 @@ namespace ImageEncryptCompress
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(84, 184);
+            this.label4.Location = new System.Drawing.Point(84, 158);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(52, 21);
@@ -161,7 +268,7 @@ namespace ImageEncryptCompress
             // nudMaskSize
             // 
             this.nudMaskSize.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudMaskSize.Location = new System.Drawing.Point(148, 140);
+            this.nudMaskSize.Location = new System.Drawing.Point(148, 114);
             this.nudMaskSize.Margin = new System.Windows.Forms.Padding(4);
             this.nudMaskSize.Maximum = new decimal(new int[] {
             99,
@@ -201,7 +308,7 @@ namespace ImageEncryptCompress
             // txtGaussSigma
             // 
             this.txtGaussSigma.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtGaussSigma.Location = new System.Drawing.Point(148, 178);
+            this.txtGaussSigma.Location = new System.Drawing.Point(148, 152);
             this.txtGaussSigma.Margin = new System.Windows.Forms.Padding(4);
             this.txtGaussSigma.Name = "txtGaussSigma";
             this.txtGaussSigma.Size = new System.Drawing.Size(75, 27);
@@ -215,7 +322,7 @@ namespace ImageEncryptCompress
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel3.Controls.Add(this.enc_load);
             this.panel3.Controls.Add(this.pictureBox1);
-            this.panel3.Location = new System.Drawing.Point(42, 16);
+            this.panel3.Location = new System.Drawing.Point(42, 67);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(583, 456);
@@ -236,7 +343,7 @@ namespace ImageEncryptCompress
             this.panel2.AutoScroll = true;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel2.Controls.Add(this.pictureBox2);
-            this.panel2.Location = new System.Drawing.Point(769, 16);
+            this.panel2.Location = new System.Drawing.Point(769, 67);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(619, 456);
@@ -255,6 +362,8 @@ namespace ImageEncryptCompress
             // 
             // Enc_Panel
             // 
+            this.Enc_Panel.Controls.Add(this.enc_back);
+            this.Enc_Panel.Controls.Add(this.label7);
             this.Enc_Panel.Controls.Add(this.label2);
             this.Enc_Panel.Controls.Add(this.enc_save);
             this.Enc_Panel.Controls.Add(this.panel1);
@@ -267,10 +376,31 @@ namespace ImageEncryptCompress
             this.Enc_Panel.TabIndex = 0;
             this.Enc_Panel.Visible = false;
             // 
+            // enc_back
+            // 
+            this.enc_back.Location = new System.Drawing.Point(13, 15);
+            this.enc_back.Name = "enc_back";
+            this.enc_back.Size = new System.Drawing.Size(30, 29);
+            this.enc_back.TabIndex = 65;
+            this.enc_back.Text = "<";
+            this.enc_back.UseVisualStyleBackColor = true;
+            this.enc_back.Click += new System.EventHandler(this.enc_back_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.SystemColors.InfoText;
+            this.label7.Location = new System.Drawing.Point(46, 15);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(261, 29);
+            this.label7.TabIndex = 64;
+            this.label7.Text = "Encryption/Decryption";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1037, 482);
+            this.label2.Location = new System.Drawing.Point(1037, 533);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(169, 16);
             this.label2.TabIndex = 63;
@@ -280,7 +410,7 @@ namespace ImageEncryptCompress
             // enc_save
             // 
             this.enc_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.enc_save.Location = new System.Drawing.Point(1050, 509);
+            this.enc_save.Location = new System.Drawing.Point(1050, 560);
             this.enc_save.Name = "enc_save";
             this.enc_save.Size = new System.Drawing.Size(137, 46);
             this.enc_save.TabIndex = 62;
@@ -303,17 +433,29 @@ namespace ImageEncryptCompress
             this.panel1.Controls.Add(this.txtWidth);
             this.panel1.Controls.Add(this.txtGaussSigma);
             this.panel1.Controls.Add(this.label5);
-            this.panel1.Location = new System.Drawing.Point(42, 479);
+            this.panel1.Location = new System.Drawing.Point(42, 530);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(583, 240);
+            this.panel1.Size = new System.Drawing.Size(583, 191);
             this.panel1.TabIndex = 61;
             this.panel1.Visible = false;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Binary",
+            "XOR\t",
+            "Concat"});
+            this.comboBox1.Location = new System.Drawing.Point(244, 54);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 24);
+            this.comboBox1.TabIndex = 62;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(162, 80);
+            this.label6.Location = new System.Drawing.Point(162, 54);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(75, 21);
@@ -729,6 +871,7 @@ namespace ImageEncryptCompress
             this.break_b.TabIndex = 4;
             this.break_b.Text = "Break Encryption";
             this.break_b.UseVisualStyleBackColor = true;
+            this.break_b.Click += new System.EventHandler(this.break_b_Click);
             // 
             // op_b
             // 
@@ -761,24 +904,979 @@ namespace ImageEncryptCompress
             this.enc_b.UseVisualStyleBackColor = true;
             this.enc_b.Click += new System.EventHandler(this.enc_b_Click);
             // 
-            // comboBox1
+            // button1
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.button1.Location = new System.Drawing.Point(13, 15);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(30, 29);
+            this.button1.TabIndex = 65;
+            this.button1.Text = "<";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.SystemColors.InfoText;
+            this.label8.Location = new System.Drawing.Point(46, 15);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(261, 29);
+            this.label8.TabIndex = 64;
+            this.label8.Text = "Encryption/Decryption";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(1037, 533);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(169, 16);
+            this.label9.TabIndex = 63;
+            this.label9.Text = "Image Saved Successfully!";
+            this.label9.Visible = false;
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(1050, 560);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(137, 46);
+            this.button2.TabIndex = 62;
+            this.button2.Text = "Save Image";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.comboBox2);
+            this.panel7.Controls.Add(this.label10);
+            this.panel7.Controls.Add(this.button7);
+            this.panel7.Controls.Add(this.label11);
+            this.panel7.Controls.Add(this.label23);
+            this.panel7.Controls.Add(this.button8);
+            this.panel7.Controls.Add(this.textBox1);
+            this.panel7.Controls.Add(this.label24);
+            this.panel7.Controls.Add(this.numericUpDown1);
+            this.panel7.Controls.Add(this.textBox2);
+            this.panel7.Controls.Add(this.textBox3);
+            this.panel7.Controls.Add(this.label25);
+            this.panel7.Location = new System.Drawing.Point(42, 530);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(583, 191);
+            this.panel7.TabIndex = 61;
+            this.panel7.Visible = false;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
             "Binary",
             "XOR\t",
             "Concat"});
-            this.comboBox1.Location = new System.Drawing.Point(244, 80);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
-            this.comboBox1.TabIndex = 62;
-            this.comboBox1.SelectedItem = "Binary";
+            this.comboBox2.Location = new System.Drawing.Point(244, 54);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 24);
+            this.comboBox2.TabIndex = 62;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(162, 54);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(75, 21);
+            this.label10.TabIndex = 61;
+            this.label10.Text = "Method";
+            // 
+            // button7
+            // 
+            this.button7.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button7.Location = new System.Drawing.Point(271, 103);
+            this.button7.Margin = new System.Windows.Forms.Padding(4);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(229, 81);
+            this.button7.TabIndex = 33;
+            this.button7.Text = "Encrypt/Decrypt";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(183, 7);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(67, 21);
+            this.label11.TabIndex = 60;
+            this.label11.Text = "Height";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(84, 114);
+            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(41, 21);
+            this.label23.TabIndex = 34;
+            this.label23.Text = "Tap";
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(472, 3);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(107, 28);
+            this.button8.TabIndex = 59;
+            this.button8.Text = "Clear Image";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(257, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(75, 27);
+            this.textBox1.TabIndex = 35;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(84, 158);
+            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(52, 21);
+            this.label24.TabIndex = 36;
+            this.label24.Text = "Seed";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDown1.Location = new System.Drawing.Point(148, 114);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(76, 27);
+            this.numericUpDown1.TabIndex = 37;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // textBox2
+            // 
+            this.textBox2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.Location = new System.Drawing.Point(77, 6);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(75, 27);
+            this.textBox2.TabIndex = 38;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox3.Location = new System.Drawing.Point(148, 152);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(75, 27);
+            this.textBox3.TabIndex = 42;
+            this.textBox3.Text = "1";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(9, 10);
+            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(61, 21);
+            this.label25.TabIndex = 39;
+            this.label25.Text = "Width";
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.label26);
+            this.panel8.Controls.Add(this.textBox10);
+            this.panel8.Controls.Add(this.button9);
+            this.panel8.Controls.Add(this.numericUpDown4);
+            this.panel8.Controls.Add(this.label27);
+            this.panel8.Controls.Add(this.label28);
+            this.panel8.Controls.Add(this.label29);
+            this.panel8.Controls.Add(this.textBox11);
+            this.panel8.Controls.Add(this.textBox12);
+            this.panel8.Controls.Add(this.button10);
+            this.panel8.Controls.Add(this.panel9);
+            this.panel8.Controls.Add(this.panel10);
+            this.panel8.Controls.Add(this.textBox13);
+            this.panel8.Controls.Add(this.label30);
+            this.panel8.Controls.Add(this.label31);
+            this.panel8.Controls.Add(this.textBox14);
+            this.panel8.Controls.Add(this.numericUpDown5);
+            this.panel8.Controls.Add(this.label32);
+            this.panel8.Controls.Add(this.textBox15);
+            this.panel8.Controls.Add(this.label33);
+            this.panel8.Controls.Add(this.button11);
+            this.panel8.Controls.Add(this.label34);
+            this.panel8.Controls.Add(this.label35);
+            this.panel8.Controls.Add(this.button12);
+            this.panel8.Controls.Add(this.label36);
+            this.panel8.Controls.Add(this.radioButton1);
+            this.panel8.Controls.Add(this.radioButton2);
+            this.panel8.Controls.Add(this.radioButton3);
+            this.panel8.Location = new System.Drawing.Point(2000, 2000);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(1421, 738);
+            this.panel8.TabIndex = 58;
+            this.panel8.Visible = false;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(1217, 701);
+            this.label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(33, 16);
+            this.label26.TabIndex = 57;
+            this.label26.Text = "ratio";
+            // 
+            // textBox10
+            // 
+            this.textBox10.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox10.Location = new System.Drawing.Point(1266, 695);
+            this.textBox10.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.Size = new System.Drawing.Size(128, 27);
+            this.textBox10.TabIndex = 56;
+            // 
+            // button9
+            // 
+            this.button9.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button9.Location = new System.Drawing.Point(1266, 598);
+            this.button9.Margin = new System.Windows.Forms.Padding(4);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(123, 89);
+            this.button9.TabIndex = 55;
+            this.button9.Text = "BCK";
+            this.button9.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown4
+            // 
+            this.numericUpDown4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDown4.Location = new System.Drawing.Point(144, 556);
+            this.numericUpDown4.Margin = new System.Windows.Forms.Padding(4);
+            this.numericUpDown4.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.numericUpDown4.Name = "numericUpDown4";
+            this.numericUpDown4.Size = new System.Drawing.Size(76, 27);
+            this.numericUpDown4.TabIndex = 54;
+            this.numericUpDown4.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(26, 562);
+            this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(96, 21);
+            this.label27.TabIndex = 53;
+            this.label27.Text = "Input Bits";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(206, 662);
+            this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(117, 21);
+            this.label28.TabIndex = 52;
+            this.label28.Text = "Output Seed";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label29.Location = new System.Drawing.Point(217, 621);
+            this.label29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(106, 21);
+            this.label29.TabIndex = 51;
+            this.label29.Text = "Output Tap";
+            // 
+            // textBox11
+            // 
+            this.textBox11.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox11.Location = new System.Drawing.Point(333, 617);
+            this.textBox11.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.ReadOnly = true;
+            this.textBox11.Size = new System.Drawing.Size(100, 27);
+            this.textBox11.TabIndex = 50;
+            // 
+            // textBox12
+            // 
+            this.textBox12.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox12.Location = new System.Drawing.Point(333, 659);
+            this.textBox12.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.ReadOnly = true;
+            this.textBox12.Size = new System.Drawing.Size(123, 27);
+            this.textBox12.TabIndex = 49;
+            // 
+            // button10
+            // 
+            this.button10.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button10.Location = new System.Drawing.Point(30, 608);
+            this.button10.Margin = new System.Windows.Forms.Padding(4);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(147, 89);
+            this.button10.TabIndex = 48;
+            this.button10.Text = "Break Encryption";
+            this.button10.UseVisualStyleBackColor = true;
+            // 
+            // panel9
+            // 
+            this.panel9.AutoScroll = true;
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel9.Controls.Add(this.pictureBox5);
+            this.panel9.Location = new System.Drawing.Point(769, 16);
+            this.panel9.Margin = new System.Windows.Forms.Padding(4);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(619, 456);
+            this.panel9.TabIndex = 44;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Location = new System.Drawing.Point(4, 4);
+            this.pictureBox5.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(412, 360);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox5.TabIndex = 1;
+            this.pictureBox5.TabStop = false;
+            // 
+            // panel10
+            // 
+            this.panel10.AutoScroll = true;
+            this.panel10.AutoScrollMinSize = new System.Drawing.Size(1, 1);
+            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel10.Controls.Add(this.pictureBox6);
+            this.panel10.Location = new System.Drawing.Point(42, 16);
+            this.panel10.Margin = new System.Windows.Forms.Padding(4);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(583, 456);
+            this.panel10.TabIndex = 43;
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Location = new System.Drawing.Point(4, 4);
+            this.pictureBox6.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(427, 360);
+            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox6.TabIndex = 0;
+            this.pictureBox6.TabStop = false;
+            // 
+            // textBox13
+            // 
+            this.textBox13.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox13.Location = new System.Drawing.Point(1008, 577);
+            this.textBox13.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(75, 27);
+            this.textBox13.TabIndex = 42;
+            this.textBox13.Text = "1";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.Location = new System.Drawing.Point(458, 480);
+            this.label30.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(67, 21);
+            this.label30.TabIndex = 40;
+            this.label30.Text = "Height";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(62, 480);
+            this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(61, 21);
+            this.label31.TabIndex = 39;
+            this.label31.Text = "Width";
+            // 
+            // textBox14
+            // 
+            this.textBox14.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox14.Location = new System.Drawing.Point(130, 476);
+            this.textBox14.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.ReadOnly = true;
+            this.textBox14.Size = new System.Drawing.Size(75, 27);
+            this.textBox14.TabIndex = 38;
+            // 
+            // numericUpDown5
+            // 
+            this.numericUpDown5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDown5.Location = new System.Drawing.Point(1008, 530);
+            this.numericUpDown5.Margin = new System.Windows.Forms.Padding(4);
+            this.numericUpDown5.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.numericUpDown5.Name = "numericUpDown5";
+            this.numericUpDown5.Size = new System.Drawing.Size(76, 27);
+            this.numericUpDown5.TabIndex = 37;
+            this.numericUpDown5.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.Location = new System.Drawing.Point(882, 580);
+            this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(52, 21);
+            this.label32.TabIndex = 36;
+            this.label32.Text = "Seed";
+            // 
+            // textBox15
+            // 
+            this.textBox15.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox15.Location = new System.Drawing.Point(532, 476);
+            this.textBox15.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox15.Name = "textBox15";
+            this.textBox15.ReadOnly = true;
+            this.textBox15.Size = new System.Drawing.Size(75, 27);
+            this.textBox15.TabIndex = 35;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.Location = new System.Drawing.Point(882, 532);
+            this.label33.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(41, 21);
+            this.label33.TabIndex = 34;
+            this.label33.Text = "Tap";
+            // 
+            // button11
+            // 
+            this.button11.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button11.Location = new System.Drawing.Point(1266, 468);
+            this.button11.Margin = new System.Windows.Forms.Padding(4);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(123, 89);
+            this.button11.TabIndex = 33;
+            this.button11.Text = "Encrypt FWD";
+            this.button11.UseVisualStyleBackColor = true;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label34.Location = new System.Drawing.Point(1090, 486);
+            this.label34.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(152, 24);
+            this.label34.TabIndex = 32;
+            this.label34.Text = "Output Image";
+            this.label34.Visible = false;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label35.Location = new System.Drawing.Point(261, 475);
+            this.label35.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(162, 24);
+            this.label35.TabIndex = 31;
+            this.label35.Text = "Original Image";
+            // 
+            // button12
+            // 
+            this.button12.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button12.Location = new System.Drawing.Point(636, 556);
+            this.button12.Margin = new System.Windows.Forms.Padding(4);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(125, 89);
+            this.button12.TabIndex = 30;
+            this.button12.Text = "Open Image";
+            this.button12.UseVisualStyleBackColor = true;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label36.Location = new System.Drawing.Point(882, 635);
+            this.label36.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(198, 21);
+            this.label36.TabIndex = 41;
+            this.label36.Text = "Alphanumeric Method";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.Location = new System.Drawing.Point(1113, 621);
+            this.radioButton1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(104, 25);
+            this.radioButton1.TabIndex = 45;
+            this.radioButton1.Text = "Concat";
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.Location = new System.Drawing.Point(1113, 651);
+            this.radioButton2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(104, 25);
+            this.radioButton2.TabIndex = 47;
+            this.radioButton2.Text = "XOR";
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.Location = new System.Drawing.Point(1113, 681);
+            this.radioButton3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(104, 25);
+            this.radioButton3.TabIndex = 46;
+            this.radioButton3.Text = "Binary";
+            // 
+            // panel11
+            // 
+            this.panel11.AutoScroll = true;
+            this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel11.Controls.Add(this.pictureBox7);
+            this.panel11.Location = new System.Drawing.Point(769, 67);
+            this.panel11.Margin = new System.Windows.Forms.Padding(4);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(619, 456);
+            this.panel11.TabIndex = 44;
+            this.panel11.Visible = false;
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Location = new System.Drawing.Point(4, 4);
+            this.pictureBox7.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(412, 360);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox7.TabIndex = 1;
+            this.pictureBox7.TabStop = false;
+            // 
+            // panel12
+            // 
+            this.panel12.AutoScroll = true;
+            this.panel12.AutoScrollMinSize = new System.Drawing.Size(1, 1);
+            this.panel12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel12.Controls.Add(this.button13);
+            this.panel12.Controls.Add(this.pictureBox8);
+            this.panel12.Location = new System.Drawing.Point(42, 67);
+            this.panel12.Margin = new System.Windows.Forms.Padding(4);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(583, 456);
+            this.panel12.TabIndex = 43;
+            // 
+            // button13
+            // 
+            this.button13.Font = new System.Drawing.Font("Tahoma", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button13.Location = new System.Drawing.Point(-2, -2);
+            this.button13.Margin = new System.Windows.Forms.Padding(4);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(579, 450);
+            this.button13.TabIndex = 30;
+            this.button13.Text = "[+] ADD IMAGE";
+            this.button13.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox8
+            // 
+            this.pictureBox8.Location = new System.Drawing.Point(4, 4);
+            this.pictureBox8.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(427, 360);
+            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox8.TabIndex = 0;
+            this.pictureBox8.TabStop = false;
+            // 
+            // Break_Panel
+            // 
+            this.Break_Panel.Controls.Add(this.break_output);
+            this.Break_Panel.Controls.Add(this.break_insights);
+            this.Break_Panel.Controls.Add(this.panel14);
+            this.Break_Panel.Controls.Add(this.break_back);
+            this.Break_Panel.Controls.Add(this.label37);
+            this.Break_Panel.Controls.Add(this.panel13);
+            this.Break_Panel.Controls.Add(this.panel15);
+            this.Break_Panel.Location = new System.Drawing.Point(2, 0);
+            this.Break_Panel.Name = "Break_Panel";
+            this.Break_Panel.Size = new System.Drawing.Size(1421, 729);
+            this.Break_Panel.TabIndex = 2;
+            this.Break_Panel.Visible = false;
+            // 
+            // break_output
+            // 
+            this.break_output.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.break_output.Controls.Add(this.break_display);
+            this.break_output.Controls.Add(this.break_tap);
+            this.break_output.Controls.Add(this.break_seed);
+            this.break_output.Controls.Add(this.label49);
+            this.break_output.Controls.Add(this.label50);
+            this.break_output.Controls.Add(this.label51);
+            this.break_output.Location = new System.Drawing.Point(938, 107);
+            this.break_output.Name = "break_output";
+            this.break_output.Size = new System.Drawing.Size(286, 191);
+            this.break_output.TabIndex = 74;
+            this.break_output.Visible = false;
+            // 
+            // break_display
+            // 
+            this.break_display.Location = new System.Drawing.Point(68, 143);
+            this.break_display.Name = "break_display";
+            this.break_display.Size = new System.Drawing.Size(156, 43);
+            this.break_display.TabIndex = 6;
+            this.break_display.Text = "Display Decrypted Image";
+            this.break_display.UseVisualStyleBackColor = true;
+            this.break_display.Click += new System.EventHandler(this.break_display_Click);
+            // 
+            // break_tap
+            // 
+            this.break_tap.AutoSize = true;
+            this.break_tap.Location = new System.Drawing.Point(191, 108);
+            this.break_tap.Name = "break_tap";
+            this.break_tap.Size = new System.Drawing.Size(51, 16);
+            this.break_tap.TabIndex = 5;
+            this.break_tap.Text = "label45";
+            // 
+            // break_seed
+            // 
+            this.break_seed.AutoSize = true;
+            this.break_seed.Location = new System.Drawing.Point(191, 72);
+            this.break_seed.Name = "break_seed";
+            this.break_seed.Size = new System.Drawing.Size(51, 16);
+            this.break_seed.TabIndex = 4;
+            this.break_seed.Text = "label45";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label49.Location = new System.Drawing.Point(43, 106);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(95, 18);
+            this.label49.TabIndex = 2;
+            this.label49.Text = "Tap Position:";
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label50.Location = new System.Drawing.Point(43, 70);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(82, 18);
+            this.label50.TabIndex = 1;
+            this.label50.Text = "Initial Seed:";
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label51.Location = new System.Drawing.Point(15, 12);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(84, 25);
+            this.label51.TabIndex = 0;
+            this.label51.Text = "Output:";
+            // 
+            // break_insights
+            // 
+            this.break_insights.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.break_insights.Controls.Add(this.break_time);
+            this.break_insights.Controls.Add(this.break_possibilities);
+            this.break_insights.Controls.Add(this.label44);
+            this.break_insights.Controls.Add(this.label39);
+            this.break_insights.Controls.Add(this.label38);
+            this.break_insights.Location = new System.Drawing.Point(557, 107);
+            this.break_insights.Name = "break_insights";
+            this.break_insights.Size = new System.Drawing.Size(362, 191);
+            this.break_insights.TabIndex = 73;
+            this.break_insights.Visible = false;
+            // 
+            // break_time
+            // 
+            this.break_time.AutoSize = true;
+            this.break_time.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.break_time.Location = new System.Drawing.Point(206, 142);
+            this.break_time.Name = "break_time";
+            this.break_time.Size = new System.Drawing.Size(54, 18);
+            this.break_time.TabIndex = 6;
+            this.break_time.Text = "label45";
+            // 
+            // break_possibilities
+            // 
+            this.break_possibilities.AutoSize = true;
+            this.break_possibilities.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.break_possibilities.Location = new System.Drawing.Point(206, 70);
+            this.break_possibilities.Name = "break_possibilities";
+            this.break_possibilities.Size = new System.Drawing.Size(54, 18);
+            this.break_possibilities.TabIndex = 4;
+            this.break_possibilities.Text = "label45";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label44.Location = new System.Drawing.Point(28, 139);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(165, 24);
+            this.label44.TabIndex = 3;
+            this.label44.Text = "Estimated time left:";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label39.Location = new System.Drawing.Point(28, 67);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(157, 24);
+            this.label39.TabIndex = 1;
+            this.label39.Text = "Total Possibilities:";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label38.Location = new System.Drawing.Point(15, 12);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(110, 29);
+            this.label38.TabIndex = 0;
+            this.label38.Text = "Insights:";
+            // 
+            // panel14
+            // 
+            this.panel14.AutoScroll = true;
+            this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel14.Controls.Add(this.pictureBox9);
+            this.panel14.Location = new System.Drawing.Point(668, 328);
+            this.panel14.Margin = new System.Windows.Forms.Padding(4);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(425, 375);
+            this.panel14.TabIndex = 67;
+            this.panel14.Visible = false;
+            // 
+            // pictureBox9
+            // 
+            this.pictureBox9.Location = new System.Drawing.Point(4, 4);
+            this.pictureBox9.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox9.Name = "pictureBox9";
+            this.pictureBox9.Size = new System.Drawing.Size(412, 360);
+            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox9.TabIndex = 1;
+            this.pictureBox9.TabStop = false;
+            // 
+            // break_back
+            // 
+            this.break_back.Location = new System.Drawing.Point(23, 11);
+            this.break_back.Name = "break_back";
+            this.break_back.Size = new System.Drawing.Size(30, 29);
+            this.break_back.TabIndex = 72;
+            this.break_back.Text = "<";
+            this.break_back.UseVisualStyleBackColor = true;
+            this.break_back.Click += new System.EventHandler(this.break_back_Click);
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label37.ForeColor = System.Drawing.SystemColors.InfoText;
+            this.label37.Location = new System.Drawing.Point(56, 11);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(206, 29);
+            this.label37.TabIndex = 71;
+            this.label37.Text = "Break Encryption";
+            // 
+            // panel13
+            // 
+            this.panel13.Controls.Add(this.attack);
+            this.panel13.Controls.Add(this.label40);
+            this.panel13.Controls.Add(this.label41);
+            this.panel13.Controls.Add(this.break_clear);
+            this.panel13.Controls.Add(this.textBox16);
+            this.panel13.Controls.Add(this.break_bits);
+            this.panel13.Controls.Add(this.textBox17);
+            this.panel13.Controls.Add(this.label43);
+            this.panel13.Location = new System.Drawing.Point(53, 468);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(448, 191);
+            this.panel13.TabIndex = 68;
+            this.panel13.Visible = false;
+            // 
+            // attack
+            // 
+            this.attack.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.attack.Location = new System.Drawing.Point(220, 75);
+            this.attack.Margin = new System.Windows.Forms.Padding(4);
+            this.attack.Name = "attack";
+            this.attack.Size = new System.Drawing.Size(200, 73);
+            this.attack.TabIndex = 33;
+            this.attack.Text = "Start Attack";
+            this.attack.UseVisualStyleBackColor = true;
+            this.attack.Click += new System.EventHandler(this.attack_Click);
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.Location = new System.Drawing.Point(157, 10);
+            this.label40.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(67, 21);
+            this.label40.TabIndex = 60;
+            this.label40.Text = "Height";
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label41.Location = new System.Drawing.Point(5, 78);
+            this.label41.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(204, 21);
+            this.label41.TabIndex = 34;
+            this.label41.Text = "Number of bits in seed";
+            // 
+            // break_clear
+            // 
+            this.break_clear.Location = new System.Drawing.Point(325, 6);
+            this.break_clear.Name = "break_clear";
+            this.break_clear.Size = new System.Drawing.Size(107, 28);
+            this.break_clear.TabIndex = 59;
+            this.break_clear.Text = "Clear Image";
+            this.break_clear.UseVisualStyleBackColor = true;
+            this.break_clear.Click += new System.EventHandler(this.break_clear_Click);
+            // 
+            // textBox16
+            // 
+            this.textBox16.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox16.Location = new System.Drawing.Point(231, 7);
+            this.textBox16.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox16.Name = "textBox16";
+            this.textBox16.ReadOnly = true;
+            this.textBox16.Size = new System.Drawing.Size(65, 27);
+            this.textBox16.TabIndex = 35;
+            // 
+            // break_bits
+            // 
+            this.break_bits.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.break_bits.Location = new System.Drawing.Point(70, 103);
+            this.break_bits.Margin = new System.Windows.Forms.Padding(4);
+            this.break_bits.Maximum = new decimal(new int[] {
+            256,
+            0,
+            0,
+            0});
+            this.break_bits.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.break_bits.Name = "break_bits";
+            this.break_bits.Size = new System.Drawing.Size(76, 27);
+            this.break_bits.TabIndex = 37;
+            this.break_bits.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.break_bits.ValueChanged += new System.EventHandler(this.break_bits_ValueChanged);
+            // 
+            // textBox17
+            // 
+            this.textBox17.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox17.Location = new System.Drawing.Point(77, 6);
+            this.textBox17.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox17.Name = "textBox17";
+            this.textBox17.ReadOnly = true;
+            this.textBox17.Size = new System.Drawing.Size(62, 27);
+            this.textBox17.TabIndex = 38;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label43.Location = new System.Drawing.Point(9, 10);
+            this.label43.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(61, 21);
+            this.label43.TabIndex = 39;
+            this.label43.Text = "Width";
+            // 
+            // panel15
+            // 
+            this.panel15.AutoScroll = true;
+            this.panel15.AutoScrollMinSize = new System.Drawing.Size(1, 1);
+            this.panel15.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel15.Controls.Add(this.break_load);
+            this.panel15.Controls.Add(this.pictureBox10);
+            this.panel15.Location = new System.Drawing.Point(52, 63);
+            this.panel15.Margin = new System.Windows.Forms.Padding(4);
+            this.panel15.Name = "panel15";
+            this.panel15.Size = new System.Drawing.Size(449, 379);
+            this.panel15.TabIndex = 66;
+            // 
+            // break_load
+            // 
+            this.break_load.Font = new System.Drawing.Font("Tahoma", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.break_load.Location = new System.Drawing.Point(-2, -2);
+            this.break_load.Margin = new System.Windows.Forms.Padding(4);
+            this.break_load.Name = "break_load";
+            this.break_load.Size = new System.Drawing.Size(443, 373);
+            this.break_load.TabIndex = 30;
+            this.break_load.Text = "[+] ADD IMAGE";
+            this.break_load.UseVisualStyleBackColor = true;
+            this.break_load.Click += new System.EventHandler(this.break_load_Click);
+            // 
+            // pictureBox10
+            // 
+            this.pictureBox10.Location = new System.Drawing.Point(4, 4);
+            this.pictureBox10.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox10.Name = "pictureBox10";
+            this.pictureBox10.Size = new System.Drawing.Size(427, 360);
+            this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox10.TabIndex = 0;
+            this.pictureBox10.TabStop = false;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1423, 731);
+            this.Controls.Add(this.Break_Panel);
             this.Controls.Add(this.Menu_Panel);
             this.Controls.Add(this.Enc_Panel);
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -807,6 +1905,40 @@ namespace ImageEncryptCompress
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             this.Menu_Panel.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            this.panel10.ResumeLayout(false);
+            this.panel10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
+            this.panel11.ResumeLayout(false);
+            this.panel11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            this.panel12.ResumeLayout(false);
+            this.panel12.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
+            this.Break_Panel.ResumeLayout(false);
+            this.Break_Panel.PerformLayout();
+            this.break_output.ResumeLayout(false);
+            this.break_output.PerformLayout();
+            this.break_insights.ResumeLayout(false);
+            this.break_insights.PerformLayout();
+            this.panel14.ResumeLayout(false);
+            this.panel14.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.break_bits)).EndInit();
+            this.panel15.ResumeLayout(false);
+            this.panel15.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -869,5 +2001,90 @@ namespace ImageEncryptCompress
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button enc_back;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.NumericUpDown numericUpDown4;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.TextBox textBox14;
+        private System.Windows.Forms.NumericUpDown numericUpDown5;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.TextBox textBox15;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.PictureBox pictureBox8;
+        private System.Windows.Forms.Panel Break_Panel;
+        private System.Windows.Forms.Button break_back;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.Button attack;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Button break_clear;
+        private System.Windows.Forms.TextBox textBox16;
+        private System.Windows.Forms.NumericUpDown break_bits;
+        private System.Windows.Forms.TextBox textBox17;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Panel panel14;
+        private System.Windows.Forms.PictureBox pictureBox9;
+        private System.Windows.Forms.Panel panel15;
+        private System.Windows.Forms.Button break_load;
+        private System.Windows.Forms.PictureBox pictureBox10;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Panel break_insights;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Label break_time;
+        private System.Windows.Forms.Label break_possibilities;
+        private System.Windows.Forms.Panel break_output;
+        private System.Windows.Forms.Button break_display;
+        private System.Windows.Forms.Label break_tap;
+        private System.Windows.Forms.Label break_seed;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.Label label51;
     }
 }

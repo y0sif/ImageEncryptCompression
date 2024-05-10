@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
@@ -19,7 +20,8 @@ namespace ImageEncryptCompress
         }
 
         RGBPixel[,] ImageMatrix;
-        byte alphaMethod;
+
+        //Enc Panel
         private void enc_load_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -46,23 +48,6 @@ namespace ImageEncryptCompress
             label2.Visible = false;
         }
 
-        private void radioButton_CheckedChanged(object sender, EventArgs e)
-        {
-/**
-            if (radioButton1.Checked)
-            {
-                alphaMethod = 0; //Concat
-            }
-            else if (radioButton2.Checked)
-            {
-                alphaMethod = 1; //XOR
-            }
-            else if (radioButton3.Checked)
-            {
-                alphaMethod = 2; //Binary
-            }
-**/
-        }
         private void btnGaussSmooth_Click(object sender, EventArgs e)
         {
             /*double sigma = double.Parse(txtGaussSigma.Text);
@@ -99,6 +84,7 @@ namespace ImageEncryptCompress
 
             panel2.Visible = true;
             enc_save.Visible = true;
+            label2.Visible = false;
             ImageOperations.DisplayImage(ImageMatrix_copy, pictureBox2);
 
             //radioButton1.Checked = false;
@@ -112,6 +98,20 @@ namespace ImageEncryptCompress
                 label2.Visible = true;
             }
         }
+
+        private void enc_back_Click(object sender, EventArgs e)
+        {
+            Enc_Panel.Visible = false;
+            Menu_Panel.Visible = false;
+            panel1.Visible = false;
+            panel2.Visible = false;
+            enc_save.Visible = false;
+            label2.Visible = false;
+            Menu_Panel.Visible = true;
+            enc_load.Visible = true;
+            pictureBox1.Image = null;
+        }
+        //End of Enc Panel
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -148,11 +148,120 @@ namespace ImageEncryptCompress
 
         }
 
+        //Menu Panel
         private void enc_b_Click(object sender, EventArgs e)
         {
             Menu_Panel.Visible = false;
             Enc_Panel.Visible = true;
+            comboBox1.SelectedItem = "Binary";
+        }        
+        private void break_b_Click(object sender, EventArgs e)
+        {
+            Menu_Panel.Visible = false;
+            Break_Panel.Visible = true;
         }
+        //End of Menu Panel
+
+
+        //Break Panel
+        private void break_back_Click(object sender, EventArgs e)
+        {
+            Break_Panel.Visible = false;
+            Menu_Panel.Visible = true;
+            panel13.Visible = false;
+            panel14.Visible = false;
+            break_insights.Visible = false;
+            break_output.Visible = false;
+            break_load.Visible = true;
+            pictureBox10.Image = null;
+        }
+
+        private void break_load_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                //Open the browsed image and display it
+                string OpenedFilePath = openFileDialog1.FileName;
+                ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
+                ImageOperations.DisplayImage(ImageMatrix, pictureBox10);
+                break_load.Visible = false;
+                break_insights.Visible = true;
+                panel13.Visible = true;
+                textBox17.Text = ImageOperations.GetWidth(ImageMatrix).ToString();
+                textBox16.Text = ImageOperations.GetHeight(ImageMatrix).ToString();
+                break_bits_ValueChanged(sender, e);
+
+            }
+        }
+
+        private void break_clear_Click(object sender, EventArgs e)
+        {
+            panel13.Visible = false;
+            panel14.Visible = false;
+            break_insights.Visible = false;
+            break_output.Visible = false;
+            break_load.Visible = true;
+            pictureBox10.Image = null;
+        }
+
+        private void attack_Click(object sender, EventArgs e)
+        {
+            int bits = (int)break_bits.Value;
+            //break here
+            string seed;
+            int tap;
+            (seed, tap) = ImageOperations.Break_Encryption(ImageMatrix, bits);
+
+            break_output.Visible = true;
+            break_seed.Text = seed;
+            break_tap.Text = tap.ToString();
+        }
+
+        private void break_display_Click(object sender, EventArgs e)
+        {
+            RGBPixel[,] ImageMatrix_copy = new RGBPixel[ImageMatrix.GetLength(0), ImageMatrix.GetLength(1)];
+            for (int n = 0; n < ImageMatrix.GetLength(0); n++)
+            {
+                for (int m = 0; m < ImageMatrix.GetLength(1); m++)
+                {
+                    ImageMatrix_copy[n, m] = ImageMatrix[n, m];
+                }
+            }
+
+            
+            ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, int.Parse(break_tap.Text), break_seed.Text, false);
+
+            panel14.Visible = true;
+
+            ImageOperations.DisplayImage(ImageMatrix_copy, pictureBox9);
+        }
+
+        private void break_bits_ValueChanged(object sender, EventArgs e)
+        {
+            int bits = (int)break_bits.Value;
+            long possibilities = bits * (int)Math.Pow(2, bits);
+            break_possibilities.Text = possibilities.ToString();
+            double time = int.Parse(textBox16.Text) * int.Parse(textBox17.Text) * bits * Math.Pow(2, bits) / 470000;
+            time = Math.Ceiling(time + (time / 10));
+            if (time < 60)
+                break_time.Text = time.ToString() + " seconds";
+            else if (time < 3600)
+                break_time.Text = Math.Ceiling(time/60).ToString() + " minutes";
+            else if (time < 86400)
+                break_time.Text = Math.Ceiling(time/3600).ToString() + " hours";
+            else
+                break_time.Text = Math.Ceiling(time/86400).ToString() + " days";
+
+
+
+
+        }
+
+        //End of Break Panel
+
+
+
 
     }
 }

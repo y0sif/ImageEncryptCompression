@@ -456,7 +456,6 @@ namespace ImageEncryptCompress
         //Break the Ecnryption
         public static (string, int) Break_Encryption(RGBPixel[,] ImageMatrix, int N)
         {
-
             Dictionary<(string, int), int> frequency_deviations = new Dictionary<(string, int), int>();
             int height = GetHeight(ImageMatrix);
             int width = GetWidth(ImageMatrix);
