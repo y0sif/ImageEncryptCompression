@@ -211,6 +211,9 @@ namespace ImageEncryptCompress
             //break here
             string seed;
             int tap;
+            break_output.Visible = false;
+            panel14.Visible = false;
+
             (seed, tap) = ImageOperations.Break_Encryption(ImageMatrix, bits);
 
             break_output.Visible = true;
@@ -232,7 +235,7 @@ namespace ImageEncryptCompress
             
             ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, int.Parse(break_tap.Text), break_seed.Text, false);
 
-            panel14.Visible = true;
+            panel14.Visible = !panel14.Visible;
 
             ImageOperations.DisplayImage(ImageMatrix_copy, pictureBox9);
         }
@@ -257,10 +260,59 @@ namespace ImageEncryptCompress
 
 
         }
-
         //End of Break Panel
 
 
+        //Comp Panel
+        private void comp_back_Click(object sender, EventArgs e)
+        {
+            Comp_Panel.Visible = false;
+            panel18.Visible = false;
+            comp_output.Visible = false;
+            comp_load.Visible = true;
+            pictureBox12.Image = null;
+            Menu_Panel.Visible = true;
+        }
+
+        private void comp_load_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                //Open the browsed image and display it
+                string OpenedFilePath = openFileDialog1.FileName;
+                ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
+                ImageOperations.DisplayImage(ImageMatrix, pictureBox12);
+                comp_load.Visible = false;
+                panel18.Visible = true;
+                textBox17.Text = ImageOperations.GetWidth(ImageMatrix).ToString();
+                textBox16.Text = ImageOperations.GetHeight(ImageMatrix).ToString();
+            }
+        }
+
+        private void comp_clear_Click(object sender, EventArgs e)
+        {
+            panel18.Visible = false;
+            comp_load.Visible = true;
+            pictureBox12.Image = null;
+
+        }
+
+        private void comp_button_Click(object sender, EventArgs e)
+        {
+            string method = comp_method.SelectedItem.ToString();
+            float ratio = 0;
+
+            //if (method == "Huffman")
+            //    ratio = ImageOperations.Huffman_Compress()
+        }
+
+        private void comp_download_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //End of Comp panel
 
 
     }
