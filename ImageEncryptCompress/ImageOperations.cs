@@ -133,6 +133,28 @@ namespace ImageEncryptCompress
             return -1; //failed
         }
 
+        public static (string fileName, long fileSize) loadBinary()
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "Binary files (*.bin)|*.bin|All files (*.*)|*.*";
+            openFileDialog1.RestoreDirectory = true;
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string fileName = openFileDialog1.FileName;
+                    long fileSize = new FileInfo(fileName).Length;
+
+                    return (fileName, fileSize);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            return (null, 0); //failed
+        }
+
         /// <summary>
         /// Get the height of the image 
         /// </summary>
@@ -649,9 +671,6 @@ namespace ImageEncryptCompress
 
             string[] arrays = PixelEncoding(ImageMatrix);
 
-            string filePath = "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin";
-
-            //WriteCompressedImage(filePath, initSeed, tapPosition, root_red, root_green, root_blue, GetWidth(ImageMatrix), GetHeight(ImageMatrix), arrays);
 
             return (compRatio, root_red, root_green, root_blue, arrays);
         }
@@ -1026,7 +1045,7 @@ namespace ImageEncryptCompress
                     WriteChannels(writer, rgbChannels);
                 }
 
-                // Get the size of the data in the memory stream
+                //Get the size of the data in the memory stream
                 return memoryStream.Length;
             }
         }

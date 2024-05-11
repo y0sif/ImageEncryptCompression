@@ -58,10 +58,6 @@ namespace ImageEncryptCompress
             string initSeed = txtGaussSigma.Text;
             int tap = (int)nudMaskSize.Value;
 
-            //if (!(radioButton1.Checked || radioButton2.Checked || radioButton3.Checked))
-            {
-                //throw new Exception("Must choose Method");
-            }
 
             //Do not modify the uploaded image, instead take a copy
             RGBPixel[,] ImageMatrix_copy = new RGBPixel[ImageMatrix.GetLength(0), ImageMatrix.GetLength(1)];
@@ -78,18 +74,14 @@ namespace ImageEncryptCompress
             if (method == "Binary")
                 ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, tap, initSeed, true);
 
-            //float ratio = ImageOperations.Huffman_Compress(ImageMatrix_copy, tap, initSeed);
 
-            //textBox3.Text = ratio.ToString();
 
             panel2.Visible = true;
             enc_save.Visible = true;
             label2.Visible = false;
             ImageOperations.DisplayImage(ImageMatrix_copy, pictureBox2);
 
-            //radioButton1.Checked = false;
-            //radioButton2.Checked = false;
-            //radioButton3.Checked = false;
+
         }
         private void enc_save_Click(object sender, EventArgs e)
         {
@@ -118,35 +110,6 @@ namespace ImageEncryptCompress
 
         }
 
-        /**
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //seed bits
-            int N = (int)numericUpDown1.Value;
-            string seed;
-            int tap;
-            (seed, tap) = ImageOperations.Break_Encryption(ImageMatrix, N);
-            textBox2.Text = seed;
-            textBox1.Text = tap.ToString();
-
-        }
-        **/
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            //string filepath = textBox3.Text;
-            string filepath = "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin";
-            (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.Huffman_Decompress(filepath);
-            //ImageOperations.LFSR(decompressedImage, tap, seed, false, 2);
-            ImageOperations.LFSR(decompressedImage, tap, seed, false);
-            ImageOperations.DisplayImage(decompressedImage, pictureBox2);
-            
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
 
         //Menu Panel
         private void enc_b_Click(object sender, EventArgs e)
@@ -168,6 +131,8 @@ namespace ImageEncryptCompress
             comp_comp.Visible = true;
             comp_radio.Checked = true;
             comp_method.SelectedItem = "Huffman";
+            decomp_method.SelectedItem = "Huffman";
+
         }
         //End of Menu Panel
 
@@ -276,7 +241,9 @@ namespace ImageEncryptCompress
 
         private void comp_radio_CheckedChanged(object sender, EventArgs e)
         {
-            //comp_decomp.Visible = false;
+            if (comp_radio.Checked == false) return;
+
+            comp_decomp.Visible = false;
             comp_comp.Visible = true;
             comp_output.Visible = false;
             comp_done.Visible = false;
@@ -285,9 +252,15 @@ namespace ImageEncryptCompress
 
         private void decomp_radio_CheckedChanged(object sender, EventArgs e)
         {
-            //comp_decomp.Visible = true;
+            if (decomp_radio.Checked == false) return;
+
+            comp_decomp.Visible = true;
             comp_comp.Visible = false;
-            //decomp_method.SelectedItem = "Huffman";
+            decomp_done.Visible = false;
+            panel6.Visible = false;
+            panel16.Visible = false;
+            decomp_save.Visible = false;
+            decomp_method.SelectedItem = "Huffman";
         }
 
         private void comp_back_Click(object sender, EventArgs e)
@@ -384,6 +357,7 @@ namespace ImageEncryptCompress
             }
         }
 
+
         private void comp_tap_ValueChanged(object sender, EventArgs e)
         {
             comp_done.Visible = false;
@@ -396,7 +370,42 @@ namespace ImageEncryptCompress
             comp_output.Visible = false;
         }
 
+        private void decomp_load_Click(object sender, EventArgs e)
+        {
+            (string fileName, long fileSize) = ImageOperations.loadBinary();
+            if (fileName != null)
+            {
+                decomp_name.Text = fileName;
+                decomp_size.Text = fileSize.ToString();
+                panel6.Visible = true;
+            }
+        }
+
+        private void decomp_button_Click(object sender, EventArgs e)
+        {
+            decomp_done.Visible = false;
+            decomp_save.Visible = false;
+            panel16.Visible = false;
+
+            string filePath = decomp_name.Text;
+
+            (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.Huffman_Decompress(filePath);
+            ImageOperations.DisplayImage(decompressedImage, pictureBox11);
+
+            decomp_save.Visible = true;
+            panel16.Visible = true;
+        }
+
+        private void decomp_save_Click(object sender, EventArgs e)
+        {
+            if (ImageOperations.saveImage(pictureBox11) >= 0)
+            {
+                decomp_done.Visible = true;
+            }
+        }
+
         //End of Comp panel
+
 
 
     }
