@@ -160,6 +160,15 @@ namespace ImageEncryptCompress
             Menu_Panel.Visible = false;
             Break_Panel.Visible = true;
         }
+
+        private void comp_b_Click(object sender, EventArgs e)
+        {
+            Menu_Panel.Visible = false;
+            Comp_Panel.Visible = true;
+            comp_comp.Visible = true;
+            comp_radio.Checked = true;
+            comp_method.SelectedItem = "Huffman";
+        }
         //End of Menu Panel
 
 
@@ -264,6 +273,23 @@ namespace ImageEncryptCompress
 
 
         //Comp Panel
+
+        private void comp_radio_CheckedChanged(object sender, EventArgs e)
+        {
+            //comp_decomp.Visible = false;
+            comp_comp.Visible = true;
+            comp_output.Visible = false;
+            comp_done.Visible = false;
+            comp_method.SelectedItem = "Huffman";
+        }
+
+        private void decomp_radio_CheckedChanged(object sender, EventArgs e)
+        {
+            //comp_decomp.Visible = true;
+            comp_comp.Visible = false;
+            //decomp_method.SelectedItem = "Huffman";
+        }
+
         private void comp_back_Click(object sender, EventArgs e)
         {
             Comp_Panel.Visible = false;
@@ -272,6 +298,8 @@ namespace ImageEncryptCompress
             comp_load.Visible = true;
             pictureBox12.Image = null;
             Menu_Panel.Visible = true;
+            comp_done.Visible = false;
+
         }
 
         private void comp_load_Click(object sender, EventArgs e)
@@ -285,8 +313,8 @@ namespace ImageEncryptCompress
                 ImageOperations.DisplayImage(ImageMatrix, pictureBox12);
                 comp_load.Visible = false;
                 panel18.Visible = true;
-                textBox17.Text = ImageOperations.GetWidth(ImageMatrix).ToString();
-                textBox16.Text = ImageOperations.GetHeight(ImageMatrix).ToString();
+                comp_width.Text = ImageOperations.GetWidth(ImageMatrix).ToString();
+                comp_height.Text = ImageOperations.GetHeight(ImageMatrix).ToString();
             }
         }
 
@@ -295,21 +323,77 @@ namespace ImageEncryptCompress
             panel18.Visible = false;
             comp_load.Visible = true;
             pictureBox12.Image = null;
+            comp_output.Visible = false;
+            comp_done.Visible = false;
+
 
         }
+
+
+        // Compression global variables
+        // Useful because this function only calculated size but doesn't save file
+        // So any change of seed after compression will ruin the new binary file
+        Node<int> red_root, green_root, blue_root;
+        string[] rgbChannels;
+        int tap;
+        string seed;
+        int width ;
+        int height ;
+
 
         private void comp_button_Click(object sender, EventArgs e)
         {
-            string method = comp_method.SelectedItem.ToString();
-            float ratio = 0;
 
-            //if (method == "Huffman")
-            //    ratio = ImageOperations.Huffman_Compress()
+            comp_output.Visible = false;
+            comp_done.Visible = false;
+
+            string method = comp_method.SelectedItem.ToString();
+
+            RGBPixel[,] ImageMatrix_copy = new RGBPixel[ImageMatrix.GetLength(0), ImageMatrix.GetLength(1)];
+            for (int n = 0; n < ImageMatrix.GetLength(0); n++)
+            {
+                for (int m = 0; m < ImageMatrix.GetLength(1); m++)
+                {
+                    ImageMatrix_copy[n, m] = ImageMatrix[n, m];
+                }
+            }
+
+            float ratio = 0;
+            tap = (int)comp_tap.Value;
+            seed = comp_seed.Text;
+            width = int.Parse(comp_width.Text);
+            height = int.Parse(comp_height.Text);
+
+
+            if (method == "Huffman")
+            {
+                (ratio, red_root, green_root, blue_root, rgbChannels) = ImageOperations.Huffman_Compress(ImageMatrix_copy, tap, seed);
+                comp_ratio.Text = ratio.ToString() + " %";
+                comp_size.Text = ImageOperations.CalculateCompressedImageSize(seed, tap, red_root, green_root, blue_root, width, height, rgbChannels).ToString() + " Bytes";
+            }
+
+            comp_output.Visible = true;
+
         }
 
-        private void comp_download_Click(object sender, EventArgs e)
+        private void comp_save_Click(object sender, EventArgs e)
         {
+            if (ImageOperations.saveBinary(seed, tap, red_root, green_root, blue_root, width, height, rgbChannels) >= 0)
+            {
+                comp_done.Visible = true;
+            }
+        }
 
+        private void comp_tap_ValueChanged(object sender, EventArgs e)
+        {
+            comp_done.Visible = false;
+            comp_output.Visible = false;
+        }
+
+        private void comp_seed_TextChanged(object sender, EventArgs e)
+        {
+            comp_done.Visible = false;
+            comp_output.Visible = false;
         }
 
         //End of Comp panel

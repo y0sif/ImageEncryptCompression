@@ -173,18 +173,23 @@ namespace ImageEncryptCompress
             this.comp_comp = new System.Windows.Forms.Panel();
             this.panel18 = new System.Windows.Forms.Panel();
             this.comp_method = new System.Windows.Forms.ComboBox();
-            this.label222 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
             this.comp_button = new System.Windows.Forms.Button();
+            this.label45 = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
+            this.comp_tap = new System.Windows.Forms.NumericUpDown();
+            this.comp_seed = new System.Windows.Forms.TextBox();
             this.label59 = new System.Windows.Forms.Label();
             this.comp_clear = new System.Windows.Forms.Button();
-            this.textBox18 = new System.Windows.Forms.TextBox();
-            this.textBox19 = new System.Windows.Forms.TextBox();
+            this.comp_height = new System.Windows.Forms.TextBox();
+            this.comp_width = new System.Windows.Forms.TextBox();
             this.label62 = new System.Windows.Forms.Label();
             this.panel19 = new System.Windows.Forms.Panel();
             this.comp_load = new System.Windows.Forms.Button();
             this.pictureBox12 = new System.Windows.Forms.PictureBox();
             this.comp_output = new System.Windows.Forms.Panel();
-            this.comp_download = new System.Windows.Forms.Button();
+            this.comp_done = new System.Windows.Forms.Label();
+            this.comp_save = new System.Windows.Forms.Button();
             this.comp_size = new System.Windows.Forms.Label();
             this.comp_ratio = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
@@ -233,6 +238,7 @@ namespace ImageEncryptCompress
             this.Comp_Panel.SuspendLayout();
             this.comp_comp.SuspendLayout();
             this.panel18.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.comp_tap)).BeginInit();
             this.panel19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
             this.comp_output.SuspendLayout();
@@ -469,6 +475,7 @@ namespace ImageEncryptCompress
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "Binary",
@@ -884,6 +891,7 @@ namespace ImageEncryptCompress
             this.comp_b.TabIndex = 1;
             this.comp_b.Text = "Compress/Decompress";
             this.comp_b.UseVisualStyleBackColor = true;
+            this.comp_b.Click += new System.EventHandler(this.comp_b_Click);
             // 
             // enc_b
             // 
@@ -1874,6 +1882,7 @@ namespace ImageEncryptCompress
             this.Comp_Panel.Name = "Comp_Panel";
             this.Comp_Panel.Size = new System.Drawing.Size(1416, 726);
             this.Comp_Panel.TabIndex = 3;
+            this.Comp_Panel.Visible = false;
             // 
             // comp_comp
             // 
@@ -1882,58 +1891,111 @@ namespace ImageEncryptCompress
             this.comp_comp.Controls.Add(this.comp_output);
             this.comp_comp.Location = new System.Drawing.Point(20, 69);
             this.comp_comp.Name = "comp_comp";
-            this.comp_comp.Size = new System.Drawing.Size(1239, 645);
+            this.comp_comp.Size = new System.Drawing.Size(1254, 654);
             this.comp_comp.TabIndex = 86;
             // 
             // panel18
             // 
             this.panel18.Controls.Add(this.comp_method);
-            this.panel18.Controls.Add(this.label222);
+            this.panel18.Controls.Add(this.label42);
             this.panel18.Controls.Add(this.comp_button);
+            this.panel18.Controls.Add(this.label45);
+            this.panel18.Controls.Add(this.label52);
+            this.panel18.Controls.Add(this.comp_tap);
+            this.panel18.Controls.Add(this.comp_seed);
             this.panel18.Controls.Add(this.label59);
             this.panel18.Controls.Add(this.comp_clear);
-            this.panel18.Controls.Add(this.textBox18);
-            this.panel18.Controls.Add(this.textBox19);
+            this.panel18.Controls.Add(this.comp_height);
+            this.panel18.Controls.Add(this.comp_width);
             this.panel18.Controls.Add(this.label62);
             this.panel18.Location = new System.Drawing.Point(18, 471);
             this.panel18.Name = "panel18";
-            this.panel18.Size = new System.Drawing.Size(583, 157);
+            this.panel18.Size = new System.Drawing.Size(587, 179);
             this.panel18.TabIndex = 85;
             this.panel18.Visible = false;
             // 
             // comp_method
             // 
+            this.comp_method.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comp_method.FormattingEnabled = true;
             this.comp_method.Items.AddRange(new object[] {
             "Huffman",
             "Run Length Encoding"});
-            this.comp_method.Location = new System.Drawing.Point(106, 83);
+            this.comp_method.Location = new System.Drawing.Point(246, 48);
             this.comp_method.Name = "comp_method";
             this.comp_method.Size = new System.Drawing.Size(121, 24);
-            this.comp_method.TabIndex = 62;
+            this.comp_method.TabIndex = 69;
             // 
-            // label222
+            // label42
             // 
-            this.label222.AutoSize = true;
-            this.label222.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label222.Location = new System.Drawing.Point(24, 83);
-            this.label222.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label222.Name = "label222";
-            this.label222.Size = new System.Drawing.Size(75, 21);
-            this.label222.TabIndex = 61;
-            this.label222.Text = "Method";
+            this.label42.AutoSize = true;
+            this.label42.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label42.Location = new System.Drawing.Point(164, 49);
+            this.label42.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(75, 21);
+            this.label42.TabIndex = 68;
+            this.label42.Text = "Method";
             // 
             // comp_button
             // 
             this.comp_button.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comp_button.Location = new System.Drawing.Point(275, 51);
+            this.comp_button.Location = new System.Drawing.Point(273, 87);
             this.comp_button.Margin = new System.Windows.Forms.Padding(4);
             this.comp_button.Name = "comp_button";
             this.comp_button.Size = new System.Drawing.Size(229, 81);
-            this.comp_button.TabIndex = 33;
+            this.comp_button.TabIndex = 63;
             this.comp_button.Text = "Compress";
             this.comp_button.UseVisualStyleBackColor = true;
             this.comp_button.Click += new System.EventHandler(this.comp_button_Click);
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label45.Location = new System.Drawing.Point(86, 98);
+            this.label45.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(41, 21);
+            this.label45.TabIndex = 64;
+            this.label45.Text = "Tap";
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label52.Location = new System.Drawing.Point(86, 142);
+            this.label52.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(52, 21);
+            this.label52.TabIndex = 65;
+            this.label52.Text = "Seed";
+            // 
+            // comp_tap
+            // 
+            this.comp_tap.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comp_tap.Location = new System.Drawing.Point(150, 98);
+            this.comp_tap.Margin = new System.Windows.Forms.Padding(4);
+            this.comp_tap.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.comp_tap.Name = "comp_tap";
+            this.comp_tap.Size = new System.Drawing.Size(76, 27);
+            this.comp_tap.TabIndex = 66;
+            this.comp_tap.ValueChanged += new System.EventHandler(this.comp_tap_ValueChanged);
+            // 
+            // comp_seed
+            // 
+            this.comp_seed.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comp_seed.Location = new System.Drawing.Point(150, 136);
+            this.comp_seed.Margin = new System.Windows.Forms.Padding(4);
+            this.comp_seed.Name = "comp_seed";
+            this.comp_seed.Size = new System.Drawing.Size(75, 27);
+            this.comp_seed.TabIndex = 67;
+            this.comp_seed.Text = "1";
+            this.comp_seed.TextChanged += new System.EventHandler(this.comp_seed_TextChanged);
             // 
             // label59
             // 
@@ -1956,25 +2018,25 @@ namespace ImageEncryptCompress
             this.comp_clear.UseVisualStyleBackColor = true;
             this.comp_clear.Click += new System.EventHandler(this.comp_clear_Click);
             // 
-            // textBox18
+            // comp_height
             // 
-            this.textBox18.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox18.Location = new System.Drawing.Point(257, 4);
-            this.textBox18.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.ReadOnly = true;
-            this.textBox18.Size = new System.Drawing.Size(75, 27);
-            this.textBox18.TabIndex = 35;
+            this.comp_height.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comp_height.Location = new System.Drawing.Point(257, 4);
+            this.comp_height.Margin = new System.Windows.Forms.Padding(4);
+            this.comp_height.Name = "comp_height";
+            this.comp_height.ReadOnly = true;
+            this.comp_height.Size = new System.Drawing.Size(75, 27);
+            this.comp_height.TabIndex = 35;
             // 
-            // textBox19
+            // comp_width
             // 
-            this.textBox19.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox19.Location = new System.Drawing.Point(77, 6);
-            this.textBox19.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox19.Name = "textBox19";
-            this.textBox19.ReadOnly = true;
-            this.textBox19.Size = new System.Drawing.Size(75, 27);
-            this.textBox19.TabIndex = 38;
+            this.comp_width.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comp_width.Location = new System.Drawing.Point(77, 6);
+            this.comp_width.Margin = new System.Windows.Forms.Padding(4);
+            this.comp_width.Name = "comp_width";
+            this.comp_width.ReadOnly = true;
+            this.comp_width.Size = new System.Drawing.Size(75, 27);
+            this.comp_width.TabIndex = 38;
             // 
             // label62
             // 
@@ -2025,7 +2087,8 @@ namespace ImageEncryptCompress
             // comp_output
             // 
             this.comp_output.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.comp_output.Controls.Add(this.comp_download);
+            this.comp_output.Controls.Add(this.comp_done);
+            this.comp_output.Controls.Add(this.comp_save);
             this.comp_output.Controls.Add(this.comp_size);
             this.comp_output.Controls.Add(this.comp_ratio);
             this.comp_output.Controls.Add(this.label46);
@@ -2033,20 +2096,30 @@ namespace ImageEncryptCompress
             this.comp_output.Controls.Add(this.label48);
             this.comp_output.Location = new System.Drawing.Point(797, 173);
             this.comp_output.Name = "comp_output";
-            this.comp_output.Size = new System.Drawing.Size(298, 257);
+            this.comp_output.Size = new System.Drawing.Size(346, 271);
             this.comp_output.TabIndex = 81;
             this.comp_output.Visible = false;
             // 
-            // comp_download
+            // comp_done
             // 
-            this.comp_download.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comp_download.Location = new System.Drawing.Point(64, 155);
-            this.comp_download.Name = "comp_download";
-            this.comp_download.Size = new System.Drawing.Size(178, 78);
-            this.comp_download.TabIndex = 6;
-            this.comp_download.Text = "Download Binary File";
-            this.comp_download.UseVisualStyleBackColor = true;
-            this.comp_download.Click += new System.EventHandler(this.comp_download_Click);
+            this.comp_done.AutoSize = true;
+            this.comp_done.Location = new System.Drawing.Point(74, 243);
+            this.comp_done.Name = "comp_done";
+            this.comp_done.Size = new System.Drawing.Size(194, 16);
+            this.comp_done.TabIndex = 7;
+            this.comp_done.Text = "Binary File Saved Successfully!";
+            this.comp_done.Visible = false;
+            // 
+            // comp_save
+            // 
+            this.comp_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comp_save.Location = new System.Drawing.Point(82, 156);
+            this.comp_save.Name = "comp_save";
+            this.comp_save.Size = new System.Drawing.Size(178, 78);
+            this.comp_save.TabIndex = 6;
+            this.comp_save.Text = "Save Binary File";
+            this.comp_save.UseVisualStyleBackColor = true;
+            this.comp_save.Click += new System.EventHandler(this.comp_save_Click);
             // 
             // comp_size
             // 
@@ -2105,6 +2178,7 @@ namespace ImageEncryptCompress
             this.decomp_radio.TabIndex = 83;
             this.decomp_radio.Text = "Decompress";
             this.decomp_radio.UseVisualStyleBackColor = true;
+            this.decomp_radio.CheckedChanged += new System.EventHandler(this.decomp_radio_CheckedChanged);
             // 
             // comp_radio
             // 
@@ -2117,6 +2191,7 @@ namespace ImageEncryptCompress
             this.comp_radio.TabStop = true;
             this.comp_radio.Text = "Compress";
             this.comp_radio.UseVisualStyleBackColor = true;
+            this.comp_radio.CheckedChanged += new System.EventHandler(this.comp_radio_CheckedChanged);
             // 
             // comp_back
             // 
@@ -2211,6 +2286,7 @@ namespace ImageEncryptCompress
             this.comp_comp.ResumeLayout(false);
             this.panel18.ResumeLayout(false);
             this.panel18.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.comp_tap)).EndInit();
             this.panel19.ResumeLayout(false);
             this.panel19.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
@@ -2369,23 +2445,28 @@ namespace ImageEncryptCompress
         private System.Windows.Forms.Label label57;
         private System.Windows.Forms.Panel comp_comp;
         private System.Windows.Forms.Panel panel18;
-        private System.Windows.Forms.ComboBox comp_method;
-        private System.Windows.Forms.Label label222;
-        private System.Windows.Forms.Button comp_button;
         private System.Windows.Forms.Label label59;
         private System.Windows.Forms.Button comp_clear;
-        private System.Windows.Forms.TextBox textBox18;
-        private System.Windows.Forms.TextBox textBox19;
+        private System.Windows.Forms.TextBox comp_height;
+        private System.Windows.Forms.TextBox comp_width;
         private System.Windows.Forms.Label label62;
         private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.Button comp_load;
         private System.Windows.Forms.PictureBox pictureBox12;
         private System.Windows.Forms.Panel comp_output;
-        private System.Windows.Forms.Button comp_download;
+        private System.Windows.Forms.Button comp_save;
         private System.Windows.Forms.Label comp_size;
         private System.Windows.Forms.Label comp_ratio;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.ComboBox comp_method;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.Button comp_button;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.NumericUpDown comp_tap;
+        private System.Windows.Forms.TextBox comp_seed;
+        private System.Windows.Forms.Label comp_done;
     }
 }

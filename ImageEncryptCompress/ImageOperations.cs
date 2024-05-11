@@ -118,6 +118,21 @@ namespace ImageEncryptCompress
             return -1; //failed
         }
         
+        public static int saveBinary(string initSeed, int tapPosition,
+            Node<int> red_root, Node<int> green_root, Node<int> blue_root, int imgWidth, int imgHeight, string[] rgbChannels)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Binary files (*.bin)|*.bin|All files (*.*)|*.*";
+            saveFileDialog1.RestoreDirectory = true;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                WriteCompressedImage(saveFileDialog1.FileName, initSeed, tapPosition, red_root, green_root, blue_root, imgWidth, imgHeight, rgbChannels);
+                return 0;
+            }
+
+            return -1; //failed
+        }
+
         /// <summary>
         /// Get the height of the image 
         /// </summary>
@@ -609,7 +624,7 @@ namespace ImageEncryptCompress
             dfs(node.right, binary + '1', tree, freqTree, ref channelSize);
         }
 
-        public static float Huffman_Compress(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
+        public static (float, Node<int>, Node<int>, Node<int>, string[]) Huffman_Compress(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
         {
             Construct_Dictionaries(ImageMatrix);
 
@@ -636,9 +651,9 @@ namespace ImageEncryptCompress
 
             string filePath = "D:\\[1] Image Encryption and Compression\\Startup Code\\[TEMPLATE] ImageEncryptCompress\\compImg.bin";
 
-            WriteCompressedImage(filePath, initSeed, tapPosition, root_red, root_green, root_blue, GetWidth(ImageMatrix), GetHeight(ImageMatrix), arrays);
+            //WriteCompressedImage(filePath, initSeed, tapPosition, root_red, root_green, root_blue, GetWidth(ImageMatrix), GetHeight(ImageMatrix), arrays);
 
-            return compRatio;
+            return (compRatio, root_red, root_green, root_blue, arrays);
         }
 
         private static string[] PixelEncoding(RGBPixel[,] ImageMatrix)
@@ -987,6 +1002,33 @@ namespace ImageEncryptCompress
         public static char XOR(char char1, char char2)
         {
             return (char)(((char1 - '0') ^ (char2 - '0')) + '0');
+        }
+
+        //before writing it disk we can write it to memory first to calculate the size
+        public static long CalculateCompressedImageSize(string initSeed, int tapPosition,
+            Node<int> red_root, Node<int> green_root, Node<int> blue_root, int imgWidth, int imgHeight, string[] rgbChannels)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var writer = new BinaryWriter(memoryStream, Encoding.UTF8, true))
+                {
+                    // Write data to the memory stream
+                    writer.Write(tapPosition);
+                    writer.Write(initSeed);
+                    writer.Write(imgWidth);
+                    writer.Write(imgHeight);
+                    WriteTree(writer, red_root);
+                    WriteTree(writer, green_root);
+                    WriteTree(writer, blue_root);
+                    writer.Write(rgbChannels[0].Length);
+                    writer.Write(rgbChannels[1].Length);
+                    writer.Write(rgbChannels[2].Length);
+                    WriteChannels(writer, rgbChannels);
+                }
+
+                // Get the size of the data in the memory stream
+                return memoryStream.Length;
+            }
         }
     }
 }
