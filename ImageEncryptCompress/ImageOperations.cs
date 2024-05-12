@@ -657,7 +657,9 @@ namespace ImageEncryptCompress
             float rChannel = 0;
             float gChannel = 0;
             float bChannel = 0;
-
+            R_TREE.Clear();
+            G_TREE.Clear();
+            B_TREE.Clear();
             dfs(root_red, "", R_TREE, R,  ref rChannel);
             dfs(root_green, "", G_TREE, G, ref gChannel);
             dfs(root_blue, "", B_TREE, B, ref bChannel);
