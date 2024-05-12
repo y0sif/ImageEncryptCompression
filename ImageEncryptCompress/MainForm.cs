@@ -60,14 +60,7 @@ namespace ImageEncryptCompress
 
 
             //Do not modify the uploaded image, instead take a copy
-            RGBPixel[,] ImageMatrix_copy = new RGBPixel[ImageMatrix.GetLength(0), ImageMatrix.GetLength(1)];
-            for (int n = 0; n < ImageMatrix.GetLength(0); n++)
-            {
-                for (int m = 0; m < ImageMatrix.GetLength(1); m++)
-                {
-                    ImageMatrix_copy[n, m] = ImageMatrix[n, m];
-                }
-            }
+            RGBPixel[,] ImageMatrix_copy = (RGBPixel[,])ImageMatrix.Clone();
 
             string method = comboBox1.SelectedItem.ToString();
 
@@ -196,15 +189,8 @@ namespace ImageEncryptCompress
 
         private void break_display_Click(object sender, EventArgs e)
         {
-            RGBPixel[,] ImageMatrix_copy = new RGBPixel[ImageMatrix.GetLength(0), ImageMatrix.GetLength(1)];
-            for (int n = 0; n < ImageMatrix.GetLength(0); n++)
-            {
-                for (int m = 0; m < ImageMatrix.GetLength(1); m++)
-                {
-                    ImageMatrix_copy[n, m] = ImageMatrix[n, m];
-                }
-            }
-            
+            RGBPixel[,] ImageMatrix_copy = (RGBPixel[,])ImageMatrix.Clone();
+
             ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, int.Parse(break_tap.Text), break_seed.Text, false);
 
             panel14.Visible = !panel14.Visible;
@@ -322,14 +308,7 @@ namespace ImageEncryptCompress
 
             string method = comp_method.SelectedItem.ToString();
 
-            RGBPixel[,] ImageMatrix_copy = new RGBPixel[ImageMatrix.GetLength(0), ImageMatrix.GetLength(1)];
-            for (int n = 0; n < ImageMatrix.GetLength(0); n++)
-            {
-                for (int m = 0; m < ImageMatrix.GetLength(1); m++)
-                {
-                    ImageMatrix_copy[n, m] = ImageMatrix[n, m];
-                }
-            }
+            RGBPixel[,] ImageMatrix_copy = (RGBPixel[,])ImageMatrix.Clone();
 
             float ratio = 0;
             tap = (int)comp_tap.Value;
@@ -395,7 +374,7 @@ namespace ImageEncryptCompress
             if (fileName != null)
             {
                 decomp_name.Text = fileName;
-                decomp_size.Text = fileSize.ToString();
+                decomp_size.Text = fileSize.ToString() + " Bytes";
                 panel6.Visible = true;
             }
         }

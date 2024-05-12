@@ -213,6 +213,14 @@ namespace ImageEncryptCompress
             this.comp_radio = new System.Windows.Forms.RadioButton();
             this.comp_back = new System.Windows.Forms.Button();
             this.label57 = new System.Windows.Forms.Label();
+            this.label56 = new System.Windows.Forms.Label();
+            this.enc_timeBox = new System.Windows.Forms.TextBox();
+            this.comp_timeBox = new System.Windows.Forms.TextBox();
+            this.label58 = new System.Windows.Forms.Label();
+            this.decomp_timeBox = new System.Windows.Forms.TextBox();
+            this.label60 = new System.Windows.Forms.Label();
+            this.break_timeBox = new System.Windows.Forms.TextBox();
+            this.label61 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaskSize)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -402,6 +410,8 @@ namespace ImageEncryptCompress
             // 
             // Enc_Panel
             // 
+            this.Enc_Panel.Controls.Add(this.enc_timeBox);
+            this.Enc_Panel.Controls.Add(this.label56);
             this.Enc_Panel.Controls.Add(this.enc_back);
             this.Enc_Panel.Controls.Add(this.label7);
             this.Enc_Panel.Controls.Add(this.label2);
@@ -410,7 +420,7 @@ namespace ImageEncryptCompress
             this.Enc_Panel.Controls.Add(this.panel2);
             this.Enc_Panel.Controls.Add(this.panel3);
             this.Enc_Panel.Location = new System.Drawing.Point(0, 0);
-            this.Enc_Panel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Enc_Panel.Margin = new System.Windows.Forms.Padding(2);
             this.Enc_Panel.Name = "Enc_Panel";
             this.Enc_Panel.Size = new System.Drawing.Size(1066, 600);
             this.Enc_Panel.TabIndex = 0;
@@ -419,7 +429,7 @@ namespace ImageEncryptCompress
             // enc_back
             // 
             this.enc_back.Location = new System.Drawing.Point(10, 12);
-            this.enc_back.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.enc_back.Margin = new System.Windows.Forms.Padding(2);
             this.enc_back.Name = "enc_back";
             this.enc_back.Size = new System.Drawing.Size(22, 24);
             this.enc_back.TabIndex = 65;
@@ -454,7 +464,7 @@ namespace ImageEncryptCompress
             // 
             this.enc_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.enc_save.Location = new System.Drawing.Point(788, 455);
-            this.enc_save.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.enc_save.Margin = new System.Windows.Forms.Padding(2);
             this.enc_save.Name = "enc_save";
             this.enc_save.Size = new System.Drawing.Size(103, 37);
             this.enc_save.TabIndex = 62;
@@ -478,7 +488,7 @@ namespace ImageEncryptCompress
             this.panel1.Controls.Add(this.txtGaussSigma);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Location = new System.Drawing.Point(32, 431);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(437, 155);
             this.panel1.TabIndex = 61;
@@ -493,7 +503,7 @@ namespace ImageEncryptCompress
             "XOR\t",
             "Concat"});
             this.comboBox1.Location = new System.Drawing.Point(183, 44);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(92, 21);
             this.comboBox1.TabIndex = 62;
@@ -521,7 +531,7 @@ namespace ImageEncryptCompress
             // enc_clear
             // 
             this.enc_clear.Location = new System.Drawing.Point(354, 2);
-            this.enc_clear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.enc_clear.Margin = new System.Windows.Forms.Padding(2);
             this.enc_clear.Name = "enc_clear";
             this.enc_clear.Size = new System.Drawing.Size(80, 23);
             this.enc_clear.TabIndex = 59;
@@ -868,7 +878,7 @@ namespace ImageEncryptCompress
             this.Menu_Panel.Controls.Add(this.comp_b);
             this.Menu_Panel.Controls.Add(this.enc_b);
             this.Menu_Panel.Location = new System.Drawing.Point(0, 0);
-            this.Menu_Panel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Menu_Panel.Margin = new System.Windows.Forms.Padding(2);
             this.Menu_Panel.Name = "Menu_Panel";
             this.Menu_Panel.Size = new System.Drawing.Size(1064, 597);
             this.Menu_Panel.TabIndex = 1;
@@ -877,7 +887,7 @@ namespace ImageEncryptCompress
             // 
             this.break_b.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.break_b.Location = new System.Drawing.Point(345, 445);
-            this.break_b.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.break_b.Margin = new System.Windows.Forms.Padding(2);
             this.break_b.Name = "break_b";
             this.break_b.Size = new System.Drawing.Size(298, 89);
             this.break_b.TabIndex = 4;
@@ -889,7 +899,7 @@ namespace ImageEncryptCompress
             // 
             this.op_b.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.op_b.Location = new System.Drawing.Point(345, 325);
-            this.op_b.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.op_b.Margin = new System.Windows.Forms.Padding(2);
             this.op_b.Name = "op_b";
             this.op_b.Size = new System.Drawing.Size(298, 89);
             this.op_b.TabIndex = 2;
@@ -900,7 +910,7 @@ namespace ImageEncryptCompress
             // 
             this.comp_b.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comp_b.Location = new System.Drawing.Point(345, 205);
-            this.comp_b.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comp_b.Margin = new System.Windows.Forms.Padding(2);
             this.comp_b.Name = "comp_b";
             this.comp_b.Size = new System.Drawing.Size(298, 89);
             this.comp_b.TabIndex = 1;
@@ -912,7 +922,7 @@ namespace ImageEncryptCompress
             // 
             this.enc_b.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.enc_b.Location = new System.Drawing.Point(345, 84);
-            this.enc_b.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.enc_b.Margin = new System.Windows.Forms.Padding(2);
             this.enc_b.Name = "enc_b";
             this.enc_b.Size = new System.Drawing.Size(298, 89);
             this.enc_b.TabIndex = 0;
@@ -1543,6 +1553,8 @@ namespace ImageEncryptCompress
             // 
             // Break_Panel
             // 
+            this.Break_Panel.Controls.Add(this.break_timeBox);
+            this.Break_Panel.Controls.Add(this.label61);
             this.Break_Panel.Controls.Add(this.break_output);
             this.Break_Panel.Controls.Add(this.break_insights);
             this.Break_Panel.Controls.Add(this.panel14);
@@ -1551,7 +1563,7 @@ namespace ImageEncryptCompress
             this.Break_Panel.Controls.Add(this.panel13);
             this.Break_Panel.Controls.Add(this.panel15);
             this.Break_Panel.Location = new System.Drawing.Point(0, 0);
-            this.Break_Panel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Break_Panel.Margin = new System.Windows.Forms.Padding(2);
             this.Break_Panel.Name = "Break_Panel";
             this.Break_Panel.Size = new System.Drawing.Size(1066, 592);
             this.Break_Panel.TabIndex = 2;
@@ -1567,7 +1579,7 @@ namespace ImageEncryptCompress
             this.break_output.Controls.Add(this.label50);
             this.break_output.Controls.Add(this.label51);
             this.break_output.Location = new System.Drawing.Point(704, 87);
-            this.break_output.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.break_output.Margin = new System.Windows.Forms.Padding(2);
             this.break_output.Name = "break_output";
             this.break_output.Size = new System.Drawing.Size(215, 156);
             this.break_output.TabIndex = 74;
@@ -1576,7 +1588,7 @@ namespace ImageEncryptCompress
             // break_display
             // 
             this.break_display.Location = new System.Drawing.Point(51, 116);
-            this.break_display.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.break_display.Margin = new System.Windows.Forms.Padding(2);
             this.break_display.Name = "break_display";
             this.break_display.Size = new System.Drawing.Size(117, 35);
             this.break_display.TabIndex = 6;
@@ -1646,7 +1658,7 @@ namespace ImageEncryptCompress
             this.break_insights.Controls.Add(this.label39);
             this.break_insights.Controls.Add(this.label38);
             this.break_insights.Location = new System.Drawing.Point(418, 87);
-            this.break_insights.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.break_insights.Margin = new System.Windows.Forms.Padding(2);
             this.break_insights.Name = "break_insights";
             this.break_insights.Size = new System.Drawing.Size(272, 156);
             this.break_insights.TabIndex = 73;
@@ -1730,7 +1742,7 @@ namespace ImageEncryptCompress
             // break_back
             // 
             this.break_back.Location = new System.Drawing.Point(17, 9);
-            this.break_back.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.break_back.Margin = new System.Windows.Forms.Padding(2);
             this.break_back.Name = "break_back";
             this.break_back.Size = new System.Drawing.Size(22, 24);
             this.break_back.TabIndex = 72;
@@ -1761,7 +1773,7 @@ namespace ImageEncryptCompress
             this.panel13.Controls.Add(this.textBox17);
             this.panel13.Controls.Add(this.label43);
             this.panel13.Location = new System.Drawing.Point(40, 380);
-            this.panel13.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel13.Margin = new System.Windows.Forms.Padding(2);
             this.panel13.Name = "panel13";
             this.panel13.Size = new System.Drawing.Size(336, 155);
             this.panel13.TabIndex = 68;
@@ -1801,7 +1813,7 @@ namespace ImageEncryptCompress
             // break_clear
             // 
             this.break_clear.Location = new System.Drawing.Point(244, 5);
-            this.break_clear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.break_clear.Margin = new System.Windows.Forms.Padding(2);
             this.break_clear.Name = "break_clear";
             this.break_clear.Size = new System.Drawing.Size(80, 23);
             this.break_clear.TabIndex = 59;
@@ -1895,14 +1907,14 @@ namespace ImageEncryptCompress
             // 
             // Comp_Panel
             // 
-            this.Comp_Panel.Controls.Add(this.comp_decomp);
-            this.Comp_Panel.Controls.Add(this.comp_comp);
             this.Comp_Panel.Controls.Add(this.decomp_radio);
             this.Comp_Panel.Controls.Add(this.comp_radio);
             this.Comp_Panel.Controls.Add(this.comp_back);
             this.Comp_Panel.Controls.Add(this.label57);
+            this.Comp_Panel.Controls.Add(this.comp_decomp);
+            this.Comp_Panel.Controls.Add(this.comp_comp);
             this.Comp_Panel.Location = new System.Drawing.Point(0, 0);
-            this.Comp_Panel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Comp_Panel.Margin = new System.Windows.Forms.Padding(2);
             this.Comp_Panel.Name = "Comp_Panel";
             this.Comp_Panel.Size = new System.Drawing.Size(1062, 590);
             this.Comp_Panel.TabIndex = 3;
@@ -1910,13 +1922,15 @@ namespace ImageEncryptCompress
             // 
             // comp_decomp
             // 
+            this.comp_decomp.Controls.Add(this.decomp_timeBox);
+            this.comp_decomp.Controls.Add(this.label60);
             this.comp_decomp.Controls.Add(this.panel6);
             this.comp_decomp.Controls.Add(this.decomp_load);
             this.comp_decomp.Controls.Add(this.decomp_done);
             this.comp_decomp.Controls.Add(this.decomp_save);
             this.comp_decomp.Controls.Add(this.panel16);
             this.comp_decomp.Location = new System.Drawing.Point(8, 58);
-            this.comp_decomp.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comp_decomp.Margin = new System.Windows.Forms.Padding(2);
             this.comp_decomp.Name = "comp_decomp";
             this.comp_decomp.Size = new System.Drawing.Size(1044, 526);
             this.comp_decomp.TabIndex = 87;
@@ -1933,7 +1947,7 @@ namespace ImageEncryptCompress
             this.panel6.Controls.Add(this.label54);
             this.panel6.Controls.Add(this.decomp_method);
             this.panel6.Location = new System.Drawing.Point(23, 162);
-            this.panel6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel6.Margin = new System.Windows.Forms.Padding(2);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(354, 223);
             this.panel6.TabIndex = 74;
@@ -2010,7 +2024,7 @@ namespace ImageEncryptCompress
             "Huffman",
             "Run Length Decoding"});
             this.decomp_method.Location = new System.Drawing.Point(70, 146);
-            this.decomp_method.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.decomp_method.Margin = new System.Windows.Forms.Padding(2);
             this.decomp_method.Name = "decomp_method";
             this.decomp_method.Size = new System.Drawing.Size(92, 21);
             this.decomp_method.TabIndex = 72;
@@ -2019,7 +2033,7 @@ namespace ImageEncryptCompress
             // 
             this.decomp_load.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.decomp_load.Location = new System.Drawing.Point(133, 108);
-            this.decomp_load.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.decomp_load.Margin = new System.Windows.Forms.Padding(2);
             this.decomp_load.Name = "decomp_load";
             this.decomp_load.Size = new System.Drawing.Size(116, 24);
             this.decomp_load.TabIndex = 73;
@@ -2042,7 +2056,7 @@ namespace ImageEncryptCompress
             // 
             this.decomp_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.decomp_save.Location = new System.Drawing.Point(738, 438);
-            this.decomp_save.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.decomp_save.Margin = new System.Windows.Forms.Padding(2);
             this.decomp_save.Name = "decomp_save";
             this.decomp_save.Size = new System.Drawing.Size(103, 37);
             this.decomp_save.TabIndex = 65;
@@ -2073,11 +2087,13 @@ namespace ImageEncryptCompress
             // 
             // comp_comp
             // 
+            this.comp_comp.Controls.Add(this.comp_timeBox);
+            this.comp_comp.Controls.Add(this.label58);
             this.comp_comp.Controls.Add(this.panel18);
             this.comp_comp.Controls.Add(this.panel19);
             this.comp_comp.Controls.Add(this.comp_output);
             this.comp_comp.Location = new System.Drawing.Point(15, 56);
-            this.comp_comp.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comp_comp.Margin = new System.Windows.Forms.Padding(2);
             this.comp_comp.Name = "comp_comp";
             this.comp_comp.Size = new System.Drawing.Size(940, 531);
             this.comp_comp.TabIndex = 86;
@@ -2097,7 +2113,7 @@ namespace ImageEncryptCompress
             this.panel18.Controls.Add(this.comp_width);
             this.panel18.Controls.Add(this.label62);
             this.panel18.Location = new System.Drawing.Point(14, 383);
-            this.panel18.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel18.Margin = new System.Windows.Forms.Padding(2);
             this.panel18.Name = "panel18";
             this.panel18.Size = new System.Drawing.Size(440, 145);
             this.panel18.TabIndex = 85;
@@ -2111,7 +2127,7 @@ namespace ImageEncryptCompress
             "Huffman",
             "Run Length Encoding"});
             this.comp_method.Location = new System.Drawing.Point(184, 39);
-            this.comp_method.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comp_method.Margin = new System.Windows.Forms.Padding(2);
             this.comp_method.Name = "comp_method";
             this.comp_method.Size = new System.Drawing.Size(92, 21);
             this.comp_method.TabIndex = 69;
@@ -2194,7 +2210,7 @@ namespace ImageEncryptCompress
             // comp_clear
             // 
             this.comp_clear.Location = new System.Drawing.Point(354, 2);
-            this.comp_clear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comp_clear.Margin = new System.Windows.Forms.Padding(2);
             this.comp_clear.Name = "comp_clear";
             this.comp_clear.Size = new System.Drawing.Size(80, 23);
             this.comp_clear.TabIndex = 59;
@@ -2273,7 +2289,7 @@ namespace ImageEncryptCompress
             this.comp_output.Controls.Add(this.label47);
             this.comp_output.Controls.Add(this.label48);
             this.comp_output.Location = new System.Drawing.Point(598, 141);
-            this.comp_output.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comp_output.Margin = new System.Windows.Forms.Padding(2);
             this.comp_output.Name = "comp_output";
             this.comp_output.Size = new System.Drawing.Size(260, 221);
             this.comp_output.TabIndex = 81;
@@ -2294,7 +2310,7 @@ namespace ImageEncryptCompress
             // 
             this.comp_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comp_save.Location = new System.Drawing.Point(62, 127);
-            this.comp_save.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comp_save.Margin = new System.Windows.Forms.Padding(2);
             this.comp_save.Name = "comp_save";
             this.comp_save.Size = new System.Drawing.Size(134, 63);
             this.comp_save.TabIndex = 6;
@@ -2359,7 +2375,7 @@ namespace ImageEncryptCompress
             // 
             this.decomp_radio.AutoSize = true;
             this.decomp_radio.Location = new System.Drawing.Point(118, 37);
-            this.decomp_radio.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.decomp_radio.Margin = new System.Windows.Forms.Padding(2);
             this.decomp_radio.Name = "decomp_radio";
             this.decomp_radio.Size = new System.Drawing.Size(84, 17);
             this.decomp_radio.TabIndex = 83;
@@ -2372,7 +2388,7 @@ namespace ImageEncryptCompress
             this.comp_radio.AutoSize = true;
             this.comp_radio.Checked = true;
             this.comp_radio.Location = new System.Drawing.Point(38, 37);
-            this.comp_radio.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comp_radio.Margin = new System.Windows.Forms.Padding(2);
             this.comp_radio.Name = "comp_radio";
             this.comp_radio.Size = new System.Drawing.Size(71, 17);
             this.comp_radio.TabIndex = 82;
@@ -2384,7 +2400,7 @@ namespace ImageEncryptCompress
             // comp_back
             // 
             this.comp_back.Location = new System.Drawing.Point(8, 6);
-            this.comp_back.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comp_back.Margin = new System.Windows.Forms.Padding(2);
             this.comp_back.Name = "comp_back";
             this.comp_back.Size = new System.Drawing.Size(22, 24);
             this.comp_back.TabIndex = 79;
@@ -2403,6 +2419,90 @@ namespace ImageEncryptCompress
             this.label57.Size = new System.Drawing.Size(270, 25);
             this.label57.TabIndex = 78;
             this.label57.Text = "Compression/Decompression";
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label56.Location = new System.Drawing.Point(867, 549);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(78, 16);
+            this.label56.TabIndex = 66;
+            this.label56.Text = "Time Taken";
+            this.label56.Visible = false;
+            // 
+            // enc_timeBox
+            // 
+            this.enc_timeBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.enc_timeBox.Location = new System.Drawing.Point(951, 546);
+            this.enc_timeBox.Name = "enc_timeBox";
+            this.enc_timeBox.ReadOnly = true;
+            this.enc_timeBox.Size = new System.Drawing.Size(91, 23);
+            this.enc_timeBox.TabIndex = 67;
+            this.enc_timeBox.Visible = false;
+            // 
+            // comp_timeBox
+            // 
+            this.comp_timeBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comp_timeBox.Location = new System.Drawing.Point(836, 478);
+            this.comp_timeBox.Name = "comp_timeBox";
+            this.comp_timeBox.ReadOnly = true;
+            this.comp_timeBox.Size = new System.Drawing.Size(91, 23);
+            this.comp_timeBox.TabIndex = 87;
+            this.comp_timeBox.Visible = false;
+            // 
+            // label58
+            // 
+            this.label58.AutoSize = true;
+            this.label58.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label58.Location = new System.Drawing.Point(752, 481);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(78, 16);
+            this.label58.TabIndex = 86;
+            this.label58.Text = "Time Taken";
+            this.label58.Visible = false;
+            // 
+            // decomp_timeBox
+            // 
+            this.decomp_timeBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.decomp_timeBox.Location = new System.Drawing.Point(895, 484);
+            this.decomp_timeBox.Name = "decomp_timeBox";
+            this.decomp_timeBox.ReadOnly = true;
+            this.decomp_timeBox.Size = new System.Drawing.Size(91, 23);
+            this.decomp_timeBox.TabIndex = 76;
+            this.decomp_timeBox.Visible = false;
+            // 
+            // label60
+            // 
+            this.label60.AutoSize = true;
+            this.label60.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label60.Location = new System.Drawing.Point(811, 487);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(78, 16);
+            this.label60.TabIndex = 75;
+            this.label60.Text = "Time Taken";
+            this.label60.Visible = false;
+            // 
+            // break_timeBox
+            // 
+            this.break_timeBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.break_timeBox.Location = new System.Drawing.Point(909, 549);
+            this.break_timeBox.Name = "break_timeBox";
+            this.break_timeBox.ReadOnly = true;
+            this.break_timeBox.Size = new System.Drawing.Size(91, 23);
+            this.break_timeBox.TabIndex = 76;
+            this.break_timeBox.Visible = false;
+            // 
+            // label61
+            // 
+            this.label61.AutoSize = true;
+            this.label61.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label61.Location = new System.Drawing.Point(825, 552);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(78, 16);
+            this.label61.TabIndex = 75;
+            this.label61.Text = "Time Taken";
+            this.label61.Visible = false;
             // 
             // MainForm
             // 
@@ -2480,6 +2580,7 @@ namespace ImageEncryptCompress
             this.panel16.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             this.comp_comp.ResumeLayout(false);
+            this.comp_comp.PerformLayout();
             this.panel18.ResumeLayout(false);
             this.panel18.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comp_tap)).EndInit();
@@ -2678,5 +2779,13 @@ namespace ImageEncryptCompress
         private System.Windows.Forms.Button decomp_load;
         private System.Windows.Forms.Label decomp_size;
         private System.Windows.Forms.Label decomp_name;
+        private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.TextBox enc_timeBox;
+        private System.Windows.Forms.TextBox break_timeBox;
+        private System.Windows.Forms.Label label61;
+        private System.Windows.Forms.TextBox comp_timeBox;
+        private System.Windows.Forms.Label label58;
+        private System.Windows.Forms.TextBox decomp_timeBox;
+        private System.Windows.Forms.Label label60;
     }
 }

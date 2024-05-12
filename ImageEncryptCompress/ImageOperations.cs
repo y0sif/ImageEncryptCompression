@@ -504,15 +504,7 @@ namespace ImageEncryptCompress
                 
                 for (int tapPosition = 0; tapPosition < N; tapPosition++)
                 {
-                    RGBPixel[,] ImageMatrix_copy = new RGBPixel[ImageMatrix.GetLength(0), ImageMatrix.GetLength(1)];
-
-                    for (int n = 0; n < ImageMatrix.GetLength(0); n++)
-                    {
-                        for (int m = 0; m < ImageMatrix.GetLength(1); m++)
-                        {
-                            ImageMatrix_copy[n, m] = ImageMatrix[n, m];
-                        }
-                    }
+                    RGBPixel[,] ImageMatrix_copy = (RGBPixel[,])ImageMatrix.Clone();
 
                     ImageMatrix_copy = LFSR(ImageMatrix_copy, tapPosition, seed, false);
                     frequency_deviations[(seed, tapPosition)] = 0;
