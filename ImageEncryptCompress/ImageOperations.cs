@@ -705,7 +705,7 @@ namespace ImageEncryptCompress
         }
 
         private static void WriteCompressedImage(string fileName, string initSeed, int tapPosition, 
-            Node<int> red_root, Node<int> green_root, Node<int> blue_root,int imgWidth, int imgHeight, string[] rgbChannels)
+            Node<int> red_root, Node<int> green_root, Node<int> blue_root, int imgWidth, int imgHeight, string[] rgbChannels)
         {
             using (var stream = File.Open(fileName, FileMode.Create))
             {
@@ -966,6 +966,264 @@ namespace ImageEncryptCompress
             return (decompressedImg, tapPosition, initSeed);
         }
 
+        //--------------------------------//
+        //       Run Length Encoding      //
+        //--------------------------------//
+
+        public static (float ratio, List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq) RunLengthEncoding(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
+        {
+            List<int> redVal = new List<int>();
+            List<int> greenVal = new List<int>();
+            List<int> blueVal = new List<int>();
+
+            List<int> redFreq = new List<int>();
+            List<int> greenFreq = new List<int>();
+            List<int> blueFreq = new List<int>();
+
+            int height = GetHeight(ImageMatrix);
+            int width = GetWidth(ImageMatrix);
+
+            int currentRed = 0;
+            int currentGreen = 0;
+            int currentBlue = 0;
+
+            redVal.Add(ImageMatrix[0, 0].red);
+            greenVal.Add(ImageMatrix[0, 0].green);
+            blueVal.Add(ImageMatrix[0, 0].blue);
+
+            redFreq.Add(1);
+            greenFreq.Add(1);
+            blueFreq.Add(1);
+
+            bool first = true;
+
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    if (first)
+                    {
+                        first = false;
+                        continue;
+                    }
+
+                    //red
+                    if (redVal[currentRed] == ImageMatrix[i, j].red)
+                    {
+                        redFreq[currentRed]++;
+                    }
+                    else
+                    {
+                        currentRed++;
+                        redVal.Add(ImageMatrix[i, j].red);
+                        redFreq.Add(1);
+                    }
+
+                    //green
+                    if (greenVal[currentGreen] == ImageMatrix[i, j].green)
+                    {
+                        greenFreq[currentGreen]++;
+                    }
+                    else
+                    {
+                        currentGreen++;
+                        greenVal.Add(ImageMatrix[i, j].green);
+                        greenFreq.Add(1);
+                    }
+
+                    //blue
+                    if (blueVal[currentBlue] == ImageMatrix[i, j].blue)
+                    {
+                        blueFreq[currentBlue]++;
+                    }
+                    else
+                    {
+                        currentBlue++;
+                        blueVal.Add(ImageMatrix[i, j].blue);
+                        blueFreq.Add(1);
+                    }
+
+                }
+            }
+            float imgChannelSize = GetHeight(ImageMatrix) * GetWidth(ImageMatrix);
+
+            float redChannelRatio = (redVal.Count * 8 / imgChannelSize) * 100;
+            float greenChannelRatio = (greenVal.Count * 8 / imgChannelSize) * 100;
+            float blueChannelRatio = (blueVal.Count * 8 / imgChannelSize) * 100;
+            float compRatio = (redChannelRatio + greenChannelRatio + blueChannelRatio) / 3;
+
+            return (compRatio, redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq);
+
+        }
+
+        private static void RLEWrite(string filePath, List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight)
+        {
+
+            using (var stream = File.Open(filePath, FileMode.Create))
+            {
+                using (var writer = new BinaryWriter(stream, Encoding.UTF8, false))
+                {
+                    writer.Write(tapPosition);
+                    writer.Write(initSeed);
+
+                    writer.Write(imgWidth);
+                    writer.Write(imgHeight);
+
+                    writer.Write(redVal.Count);
+                    RLEWriteChannel(writer, redVal, redFreq);
+
+                    writer.Write(greenVal.Count);
+                    RLEWriteChannel(writer, greenVal, greenFreq);
+
+                    writer.Write(blueVal.Count);
+                    RLEWriteChannel(writer, blueVal, blueFreq);
+
+                }
+            }
+        }
+
+        private static void RLEWriteChannel(BinaryWriter writer, List<int> val, List<int> freq)
+        {
+            for(int i = 0; i < val.Count; i++)
+            {
+                writer.Write(freq[i]);
+                writer.Write(val[i]);
+            }
+        }
+
+        private static (List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight) ReadRLE(string filePath)
+        {
+            int tapPosition;
+            string initSeed;
+            int imgWidth;
+            int imgHeight;
+
+            List<int> redVal = new List<int>();
+            List<int> greenVal = new List<int>();
+            List<int> blueVal = new List<int>();
+
+            List<int> redFreq = new List<int>();
+            List<int> greenFreq = new List<int>();
+            List<int> blueFreq = new List<int>();
+
+
+            using (var stream = File.OpenRead(filePath))
+            {
+                using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
+                { 
+
+                    tapPosition = reader.ReadInt32();
+                    initSeed = reader.ReadString();
+
+                    imgWidth = reader.ReadInt32();
+                    imgHeight = reader.ReadInt32();
+
+                    int redCount = reader.ReadInt32();
+
+                    (redVal, redFreq) = ReadRLELists(reader, redCount);
+
+                    int greenCount = reader.ReadInt32();
+
+                    (greenVal, greenFreq) = ReadRLELists(reader, greenCount);
+
+                    int blueCount = reader.ReadInt32();
+
+                    (blueVal, blueFreq) = ReadRLELists(reader, blueCount);
+                }
+            }
+
+            return (redVal,  greenVal, blueVal, redFreq, greenFreq, blueFreq, tapPosition, initSeed, imgWidth, imgHeight);
+        }
+
+        private static (List<int> val, List<int> freq) ReadRLELists(BinaryReader reader, int count)
+        {
+            List<int> val = new List<int>();
+            List<int> freq = new List<int>();
+
+            for (int i = 0; i < count; i++)
+            {
+                freq.Add(reader.ReadInt32());
+                val.Add(reader.ReadInt32());
+            }
+
+            return (val, freq);
+        }
+
+        public static int saveBinaryForRLE(List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Binary files (*.bin)|*.bin|All files (*.*)|*.*";
+            saveFileDialog1.RestoreDirectory = true;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                RLEWrite(saveFileDialog1.FileName, redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq, tapPosition, initSeed, imgWidth, imgHeight);
+                return 0;
+            }
+
+            return -1; //failed
+        }
+
+
+        public static (RGBPixel[,], int, string) RunLengthDecoding(string filePath)
+        {
+
+            (List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight) = ReadRLE(filePath);
+
+            RGBPixel[,] decompressedImg = new RGBPixel[imgHeight, imgWidth];
+
+            int currentRed = 0;
+            int currentGreen = 0;
+            int currentBlue = 0;
+
+            for (int i = 0; i < imgHeight; i++)
+            {
+                for(int j = 0; j < imgWidth; j++)
+                {
+                    //red
+                    if (redFreq[currentRed] != 0)
+                    {
+                        decompressedImg[i, j].red = (byte)redVal[currentRed];
+                        redFreq[currentRed]--;
+                    }
+                    else
+                    {
+                        currentRed++;
+                        decompressedImg[i, j].red = (byte)redVal[currentRed];
+                        redFreq[currentRed]--;
+                    }
+
+                    //green
+                    if (greenFreq[currentGreen] != 0)
+                    {
+                        decompressedImg[i, j].green = (byte)greenVal[currentGreen];
+                        greenFreq[currentGreen]--;
+                    }
+                    else
+                    {
+                        currentGreen++;
+                        decompressedImg[i, j].green = (byte)greenVal[currentGreen];
+                        greenFreq[currentGreen]--;
+                    }
+
+                    //blue
+                    if (blueFreq[currentBlue] != 0)
+                    {
+                        decompressedImg[i, j].blue = (byte)blueVal[currentBlue];
+                        blueFreq[currentBlue]--;
+                    }
+                    else
+                    {
+                        currentBlue++;
+                        decompressedImg[i, j].blue = (byte)blueVal[currentBlue];
+                        blueFreq[currentBlue]--;
+                    }
+                }
+            }
+
+            return (decompressedImg, tapPosition, initSeed);
+
+        }
+
 
         //--------------------------------//
         //       AUXILLARY FUNCTIONS      //
@@ -1045,6 +1303,34 @@ namespace ImageEncryptCompress
                     writer.Write(rgbChannels[1].Length);
                     writer.Write(rgbChannels[2].Length);
                     WriteChannels(writer, rgbChannels);
+                }
+
+                //Get the size of the data in the memory stream
+                return memoryStream.Length;
+            }
+        }
+
+        public static long CalculateCompressedImageSizeForRLE(List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var writer = new BinaryWriter(memoryStream, Encoding.UTF8, true))
+                {
+                    // Write data to the memory stream
+                    writer.Write(tapPosition);
+                    writer.Write(initSeed);
+
+                    writer.Write(imgWidth);
+                    writer.Write(imgHeight);
+
+                    writer.Write(redVal.Count);
+                    RLEWriteChannel(writer, redVal, redFreq);
+
+                    writer.Write(greenVal.Count);
+                    RLEWriteChannel(writer, greenVal, greenFreq);
+
+                    writer.Write(blueVal.Count);
+                    RLEWriteChannel(writer, blueVal, blueFreq);
                 }
 
                 //Get the size of the data in the memory stream

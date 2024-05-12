@@ -75,7 +75,6 @@ namespace ImageEncryptCompress
                 ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, tap, initSeed, true);
 
 
-
             panel2.Visible = true;
             enc_save.Visible = true;
             label2.Visible = false;
@@ -205,7 +204,6 @@ namespace ImageEncryptCompress
                     ImageMatrix_copy[n, m] = ImageMatrix[n, m];
                 }
             }
-
             
             ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, int.Parse(break_tap.Text), break_seed.Text, false);
 
@@ -312,6 +310,8 @@ namespace ImageEncryptCompress
         string seed;
         int width ;
         int height ;
+        List<int> redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq;
+
 
 
         private void comp_button_Click(object sender, EventArgs e)
@@ -344,6 +344,13 @@ namespace ImageEncryptCompress
                 comp_ratio.Text = ratio.ToString() + " %";
                 comp_size.Text = ImageOperations.CalculateCompressedImageSize(seed, tap, red_root, green_root, blue_root, width, height, rgbChannels).ToString() + " Bytes";
             }
+            else
+            {
+                (ratio, redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq) = ImageOperations.RunLengthEncoding(ImageMatrix, tap, seed);
+                comp_ratio.Text = ratio.ToString() + " %";
+                comp_size.Text = ImageOperations.CalculateCompressedImageSizeForRLE(redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq, tap, seed, width, height).ToString() + " Bytes";
+
+            }
 
             comp_output.Visible = true;
 
@@ -351,10 +358,22 @@ namespace ImageEncryptCompress
 
         private void comp_save_Click(object sender, EventArgs e)
         {
-            if (ImageOperations.saveBinary(seed, tap, red_root, green_root, blue_root, width, height, rgbChannels) >= 0)
+            string method = comp_method.SelectedItem.ToString();
+            if (method == "Huffman")
             {
-                comp_done.Visible = true;
+                if (ImageOperations.saveBinary(seed, tap, red_root, green_root, blue_root, width, height, rgbChannels) >= 0)
+                {
+                    comp_done.Visible = true;
+                }
             }
+            else
+            {
+                if(ImageOperations.saveBinaryForRLE(redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq, tap, seed, width, height) >= 0)
+                {
+                    comp_done.Visible = true;
+                }
+            }
+            
         }
 
 
@@ -388,9 +407,19 @@ namespace ImageEncryptCompress
             panel16.Visible = false;
 
             string filePath = decomp_name.Text;
+            string method = decomp_method.Text.ToString();
+            if(method == "Huffman")
+            {
+                (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.Huffman_Decompress(filePath);
+                ImageOperations.DisplayImage(decompressedImage, pictureBox11);
+            }
+            else
+            {
+                (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.RunLengthDecoding(filePath);
+                ImageOperations.DisplayImage(decompressedImage, pictureBox11);
 
-            (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.Huffman_Decompress(filePath);
-            ImageOperations.DisplayImage(decompressedImage, pictureBox11);
+            }
+            
 
             decomp_save.Visible = true;
             panel16.Visible = true;
