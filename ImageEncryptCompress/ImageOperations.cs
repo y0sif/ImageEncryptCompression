@@ -984,12 +984,12 @@ namespace ImageEncryptCompress
         //       Run Length Encoding      //
         //--------------------------------//
 
-        public static (float ratio, List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq,
+        public static (float ratio, List<byte> redVal, List<byte> greenVal, List<byte> blueVal, List<int> redFreq, List<int> greenFreq,
             List<int> blueFreq) RunLengthEncoding(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
         {
-            List<int> redVal = new List<int>();
-            List<int> greenVal = new List<int>();
-            List<int> blueVal = new List<int>();
+            List<byte> redVal = new List<byte>();
+            List<byte> greenVal = new List<byte>();
+            List<byte> blueVal = new List<byte>();
 
             List<int> redFreq = new List<int>();
             List<int> greenFreq = new List<int>();
@@ -1062,16 +1062,16 @@ namespace ImageEncryptCompress
             }
             float imgChannelSize = GetHeight(ImageMatrix) * GetWidth(ImageMatrix);
 
-            float redChannelRatio = (redVal.Count * 8 / imgChannelSize) * 100;
-            float greenChannelRatio = (greenVal.Count * 8 / imgChannelSize) * 100;
-            float blueChannelRatio = (blueVal.Count * 8 / imgChannelSize) * 100;
+            float redChannelRatio = (redVal.Count * 5 / imgChannelSize) * 100;
+            float greenChannelRatio = (greenVal.Count * 5 / imgChannelSize) * 100;
+            float blueChannelRatio = (blueVal.Count * 5 / imgChannelSize) * 100;
             float compRatio = (redChannelRatio + greenChannelRatio + blueChannelRatio) / 3;
 
             return (compRatio, redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq);
 
         }
 
-        private static void RLEWrite(string filePath, List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq,
+        private static void RLEWrite(string filePath, List<byte> redVal, List<byte> greenVal, List<byte> blueVal, List<int> redFreq,
             List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight)
         {
 
@@ -1098,7 +1098,7 @@ namespace ImageEncryptCompress
             }
         }
 
-        private static void RLEWriteChannel(BinaryWriter writer, List<int> val, List<int> freq)
+        private static void RLEWriteChannel(BinaryWriter writer, List<byte> val, List<int> freq)
         {
             for(int i = 0; i < val.Count; i++)
             {
@@ -1107,7 +1107,7 @@ namespace ImageEncryptCompress
             }
         }
 
-        private static (List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq,
+        private static (List<byte> redVal, List<byte> greenVal, List<byte> blueVal, List<int> redFreq, List<int> greenFreq,
             List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight) ReadRLE(string filePath)
         {
             int tapPosition;
@@ -1115,9 +1115,9 @@ namespace ImageEncryptCompress
             int imgWidth;
             int imgHeight;
 
-            List<int> redVal = new List<int>();
-            List<int> greenVal = new List<int>();
-            List<int> blueVal = new List<int>();
+            List<byte> redVal = new List<byte>();
+            List<byte> greenVal = new List<byte>();
+            List<byte> blueVal = new List<byte>();
 
             List<int> redFreq = new List<int>();
             List<int> greenFreq = new List<int>();
@@ -1152,21 +1152,21 @@ namespace ImageEncryptCompress
             return (redVal,  greenVal, blueVal, redFreq, greenFreq, blueFreq, tapPosition, initSeed, imgWidth, imgHeight);
         }
 
-        private static (List<int> val, List<int> freq) ReadRLELists(BinaryReader reader, int count)
+        private static (List<byte> val, List<int> freq) ReadRLELists(BinaryReader reader, int count)
         {
-            List<int> val = new List<int>();
+            List<byte> val = new List<byte>();
             List<int> freq = new List<int>();
 
             for (int i = 0; i < count; i++)
             {
                 freq.Add(reader.ReadInt32());
-                val.Add(reader.ReadInt32());
+                val.Add(reader.ReadByte());
             }
 
             return (val, freq);
         }
 
-        public static int saveBinaryForRLE(List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight)
+        public static int saveBinaryForRLE(List<byte> redVal, List<byte> greenVal, List<byte> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Filter = "Binary files (*.bin)|*.bin|All files (*.*)|*.*";
@@ -1184,7 +1184,7 @@ namespace ImageEncryptCompress
         public static (RGBPixel[,], int, string) RunLengthDecoding(string filePath)
         {
 
-            (List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight) = ReadRLE(filePath);
+            (List<byte> redVal, List<byte> greenVal, List<byte> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight) = ReadRLE(filePath);
 
             RGBPixel[,] decompressedImg = new RGBPixel[imgHeight, imgWidth];
 
@@ -1268,7 +1268,7 @@ namespace ImageEncryptCompress
             }
         }
 
-        public static long CalculateCompressedImageSizeForRLE(List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight)
+        public static long CalculateCompressedImageSizeForRLE(List<byte> redVal, List<byte> greenVal, List<byte> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight)
         {
             using (var memoryStream = new MemoryStream())
             {

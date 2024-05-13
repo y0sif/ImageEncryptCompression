@@ -300,7 +300,8 @@ namespace ImageEncryptCompress
         string seed;
         int width ;
         int height ;
-        List<int> redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq;
+        List<byte> redVal, greenVal, blueVal;
+        List<int> redFreq, greenFreq, blueFreq;
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
