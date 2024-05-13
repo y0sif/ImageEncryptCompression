@@ -294,7 +294,7 @@ namespace ImageEncryptCompress
         // Compression global variables
         // Useful because this function only calculated size but doesn't save file
         // So any change of seed after compression will ruin the new binary file
-        Node<int> red_root, green_root, blue_root;
+        Node<short> red_root, green_root, blue_root;
         string[] rgbChannels;
         int tap;
         string seed;

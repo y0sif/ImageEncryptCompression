@@ -120,7 +120,7 @@ namespace ImageEncryptCompress
         }
         
         public static int saveBinary(string initSeed, int tapPosition,
-            Node<int> red_root, Node<int> green_root, Node<int> blue_root, int imgWidth, int imgHeight, string[] rgbChannels)
+            Node<short> red_root, Node<short> green_root, Node<short> blue_root, int imgWidth, int imgHeight, string[] rgbChannels)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Filter = "Binary files (*.bin)|*.bin|All files (*.*)|*.*";
@@ -565,13 +565,13 @@ namespace ImageEncryptCompress
 
         //use binarywriter to write the image to the file
 
-        public static Dictionary<int, int> R = new Dictionary<int, int>();
-        public static Dictionary<int, int> G = new Dictionary<int, int>();
-        public static Dictionary<int, int> B = new Dictionary<int, int>();
+        public static Dictionary<short, int> R = new Dictionary<short, int>();
+        public static Dictionary<short, int> G = new Dictionary<short, int>();
+        public static Dictionary<short, int> B = new Dictionary<short, int>();
 
-        public static Dictionary<int, string> R_TREE = new Dictionary<int, string>();
-        public static Dictionary<int, string> G_TREE = new Dictionary<int, string>();
-        public static Dictionary<int, string> B_TREE = new Dictionary<int, string>();
+        public static Dictionary<short, string> R_TREE = new Dictionary<short, string>();
+        public static Dictionary<short, string> G_TREE = new Dictionary<short, string>();
+        public static Dictionary<short, string> B_TREE = new Dictionary<short, string>();
 
         private static void Construct_Dictionaries(RGBPixel[,] ImageMatrix)
         {
@@ -617,21 +617,21 @@ namespace ImageEncryptCompress
             }
         }
 
-        private static Node<int> BuildHuffmanTree(Dictionary<int, int> color)
+        private static Node<short> BuildHuffmanTree(Dictionary<short, int> color)
         {
-            PriorityQueue<int, Node<int>> pq = new PriorityQueue<int, Node<int>>();
+            PriorityQueue<int, Node<short>> pq = new PriorityQueue<int, Node<short>>();
 
-            foreach(int value in color.Keys)
+            foreach(short value in color.Keys)
             {
                 int freq = color[value];
-                Node<int> node = new Node<int>(value, freq);
+                Node<short> node = new Node<short>(value, freq);
                 pq.Enqueue(freq, node);
             }
             for(int i = 0; i < color.Count - 1;  i++)
             {
-                Node<int> node = new Node<int>(256, 0);
-                Node<int> firstMin = pq.Dequeue();
-                Node<int> secondMin = pq.Dequeue();  
+                Node<short> node = new Node<short>(256, 0);
+                Node<short> firstMin = pq.Dequeue();
+                Node<short> secondMin = pq.Dequeue();  
                 node.left = secondMin;
                 node.right = firstMin;
                 node.freq = firstMin.freq + secondMin.freq;
@@ -640,7 +640,7 @@ namespace ImageEncryptCompress
             return pq.Dequeue();
         }
 
-        private static void dfs(Node<int> node, string binary, Dictionary<int, string> tree, Dictionary<int, int> freqTree, ref float channelSize)
+        private static void dfs(Node<short> node, string binary, Dictionary<short, string> tree, Dictionary<short, int> freqTree, ref float channelSize)
         {
             if (node == null)
             {
@@ -658,13 +658,13 @@ namespace ImageEncryptCompress
             dfs(node.right, binary + '1', tree, freqTree, ref channelSize);
         }
 
-        public static (float, Node<int>, Node<int>, Node<int>, string[]) Huffman_Compress(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
+        public static (float, Node<short>, Node<short>, Node<short>, string[]) Huffman_Compress(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
         {
             Construct_Dictionaries(ImageMatrix);
 
-            Node<int> root_red = BuildHuffmanTree(R);
-            Node<int> root_green = BuildHuffmanTree(G);
-            Node<int> root_blue = BuildHuffmanTree(B);
+            Node<short> root_red = BuildHuffmanTree(R);
+            Node<short> root_green = BuildHuffmanTree(G);
+            Node<short> root_blue = BuildHuffmanTree(B);
 
             float rChannel = 0;
             float gChannel = 0;
@@ -717,7 +717,7 @@ namespace ImageEncryptCompress
         }
 
         private static void WriteCompressedImage(string fileName, string initSeed, int tapPosition, 
-            Node<int> red_root, Node<int> green_root, Node<int> blue_root, int imgWidth, int imgHeight, string[] rgbChannels)
+            Node<short> red_root, Node<short> green_root, Node<short> blue_root, int imgWidth, int imgHeight, string[] rgbChannels)
         {
             using (var stream = File.Open(fileName, FileMode.Create))
             {
@@ -748,7 +748,7 @@ namespace ImageEncryptCompress
         }
 
 
-        private static void WriteTree(BinaryWriter writer, Node<int> node)
+        private static void WriteTree(BinaryWriter writer, Node<short> node)
         {
             if (node == null)
             {
@@ -793,12 +793,12 @@ namespace ImageEncryptCompress
             }
         }
 
-        private static (int tapPosition, string initSeed, int imgWidth, int imgHeight, Node<int> red_root, Node<int> green_root,
-            Node<int> blue_root, string[] rgbChannels) ReadCompressedImage(string fileName)
+        private static (int tapPosition, string initSeed, int imgWidth, int imgHeight, Node<short> red_root, Node<short> green_root,
+            Node<short> blue_root, string[] rgbChannels) ReadCompressedImage(string fileName)
         {
             int tapPosition;
             string initSeed;
-            Node<int> red_root, green_root, blue_root;
+            Node<short> red_root, green_root, blue_root;
             int imgWidth, imgHeight;
             string[] rgbChannels = new string[3];
             int[] channelLength = new int[3];
@@ -834,21 +834,21 @@ namespace ImageEncryptCompress
             return (tapPosition, initSeed, imgWidth, imgHeight, red_root, green_root, blue_root, rgbChannels);
         }
 
-        private static Node<int> ReadTree(BinaryReader reader)
+        private static Node<short> ReadTree(BinaryReader reader)
         {
-            
-            int value = reader.ReadInt32();
+
+            short value = reader.ReadInt16();
 
             if (value == 256) // Indicates a null node
             {
-                Node<int> node = new Node<int>(value, 0);
+                Node<short> node = new Node<short>(value, 0);
                 node.left = ReadTree(reader);
                 node.right = ReadTree(reader);
                 return node;
             }
             else
             {
-                return new Node<int>(value, 0);
+                return new Node<short>(value, 0);
             }
         }
 
@@ -904,8 +904,8 @@ namespace ImageEncryptCompress
         {
             //throw new NotImplementedException();
 
-            (int tapPosition, string initSeed, int imgWidth, int imgHeight, Node<int> red_root, Node<int> green_root,
-                Node<int> blue_root, string[] rgbChannels) = ReadCompressedImage(filePath);
+            (int tapPosition, string initSeed, int imgWidth, int imgHeight, Node<short> red_root, Node<short> green_root,
+                Node<short> blue_root, string[] rgbChannels) = ReadCompressedImage(filePath);
 
             RGBPixel[,] decompressedImg = new RGBPixel[imgHeight, imgWidth];
             int r = 0;
@@ -915,9 +915,9 @@ namespace ImageEncryptCompress
             {
                 for (int j = 0; j < imgWidth; j++)
                 {
-                    Node<int> red_node = red_root;
-                    Node<int> green_node = green_root;
-                    Node<int> blue_node = blue_root;
+                    Node<short> red_node = red_root;
+                    Node<short> green_node = green_root;
+                    Node<short> blue_node = blue_root;
                     for(int k = r; k < rgbChannels[0].Length; k++)
                     {
                         if(red_node.left == null || red_node.right == null)
@@ -1243,7 +1243,7 @@ namespace ImageEncryptCompress
 
         //before writing it disk we can write it to memory first to calculate the size
         public static long CalculateCompressedImageSize(string initSeed, int tapPosition,
-            Node<int> red_root, Node<int> green_root, Node<int> blue_root, int imgWidth, int imgHeight, string[] rgbChannels)
+            Node<short> red_root, Node<short> green_root, Node<short> blue_root, int imgWidth, int imgHeight, string[] rgbChannels)
         {
             using (var memoryStream = new MemoryStream())
             {
