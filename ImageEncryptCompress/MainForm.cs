@@ -65,7 +65,11 @@ namespace ImageEncryptCompress
             string method = comboBox1.SelectedItem.ToString();
 
             if (method == "Binary")
-                ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, tap, initSeed, true);
+                ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, tap, initSeed);
+            else if (method == "Concat")
+                ImageMatrix_copy = ImageOperations.AlphaNumLFSR(ImageMatrix_copy, tap, initSeed, false);
+            else if (method == "XOR")
+                ImageMatrix_copy = ImageOperations.AlphaNumLFSR(ImageMatrix_copy, tap, initSeed, true);
 
 
             panel2.Visible = true;
@@ -191,7 +195,7 @@ namespace ImageEncryptCompress
         {
             RGBPixel[,] ImageMatrix_copy = (RGBPixel[,])ImageMatrix.Clone();
 
-            ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, int.Parse(break_tap.Text), break_seed.Text, false);
+            ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, int.Parse(break_tap.Text), break_seed.Text);
 
             panel14.Visible = !panel14.Visible;
 
@@ -298,7 +302,10 @@ namespace ImageEncryptCompress
         int height ;
         List<int> redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq;
 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
 
         private void comp_button_Click(object sender, EventArgs e)
         {

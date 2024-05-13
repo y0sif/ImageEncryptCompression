@@ -66,7 +66,8 @@ namespace ImageEncryptCompress
                     Format24 = true;
                     nWidth = Width * 3;
                 }
-                else if (original_bm.PixelFormat == PixelFormat.Format32bppArgb || original_bm.PixelFormat == PixelFormat.Format32bppRgb || original_bm.PixelFormat == PixelFormat.Format32bppPArgb)
+                else if (original_bm.PixelFormat == PixelFormat.Format32bppArgb || original_bm.PixelFormat == PixelFormat.Format32bppRgb ||
+                    original_bm.PixelFormat == PixelFormat.Format32bppPArgb)
                 {
                     Format32 = true;
                     nWidth = Width * 4;
@@ -312,8 +313,6 @@ namespace ImageEncryptCompress
 
         //Global Attributes
         private static char[][] RGBKeys = new char[3][];
-        private static bool keyFlag;
-
         private const int KEY_SIZE = 8;
 
         public static void KeyGeneration(int tapPosition, char[] seed)
@@ -342,62 +341,33 @@ namespace ImageEncryptCompress
             }
                         
         }
-        public static void AlphaNumKeyGeneration(int tapPosition, char[] seed, char[][] alphaBinarySeed, char[] concatSeed, byte alphaMethod)
+        public static void XORKeyGeneration(int tapPosition, char[][] alphaBinarySeed)
         {
-            if (alphaMethod == 0)
+            int bitSize = alphaBinarySeed.Length;
+
+            for (int k = 0; k < RGBKeys.Length; k++)
             {
-                int bitSize = concatSeed.Length;
+                char[] shiftOut = alphaBinarySeed[0];
+                char[] keyString = new char[KEY_SIZE];
 
-                for (int k = 0; k < RGBKeys.Length; k++)
+                for (int i = 0; i < 8; i++)
                 {
-                    char[] keyString = new char[KEY_SIZE];
-                    for (int i = 0; i < KEY_SIZE; i++)
-                    {
-                        char shiftOut = concatSeed[0];
-                        char res = XOR(concatSeed[(bitSize - tapPosition) - 1], shiftOut);
-
-                        for (int j = 1; j < bitSize; j++)
-                        {
-                            concatSeed[j - 1] = concatSeed[j];
-                        }
-
-                        concatSeed[bitSize - 1] = res;
-                        keyString[i] = res;
-                    }
-
-                    RGBKeys[k] = keyString;
+                    keyString[i] = XOR(alphaBinarySeed[(bitSize - tapPosition) - 1][i], shiftOut[i]);
                 }
-            }
-            else if (alphaMethod == 1)
-            {
-                int bitSize = alphaBinarySeed.Length;
 
-                for (int k = 0; k < RGBKeys.Length; k++)
+                for (int j = 1; j < bitSize; j++)
                 {
-                    char[] shiftOut = alphaBinarySeed[0];
-
-                    char[] result = new char[KEY_SIZE];
-
-                    for (int i = 0; i < 8; i++)
-                    {
-                        result[i] = XOR(alphaBinarySeed[(bitSize - tapPosition) - 1][i], shiftOut[i]);
-                    }
-
-                    for (int j = 1; j < bitSize; j++)
-                    {
-                        alphaBinarySeed[j - 1] = alphaBinarySeed[j];
-                    }
-
-                    alphaBinarySeed[bitSize - 1] = result;
-
-                    RGBKeys[k] = result;
+                    alphaBinarySeed[j - 1] = alphaBinarySeed[j];
                 }
+
+                alphaBinarySeed[bitSize - 1] = keyString;
+
+                RGBKeys[k] = keyString;
             }
         }
 
-        public static RGBPixel[,] LFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed, bool encrypt)
+        public static RGBPixel[,] LFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
         {
-
             char[] seed = initSeed.ToCharArray();
 
             int height = GetHeight(ImageMatrix);
@@ -425,9 +395,9 @@ namespace ImageEncryptCompress
 
                     for (int i = 0; i < KEY_SIZE; i++)
                     {
-                        redVal[i] = (char)(((red[i] - '0') ^ (redKey[i] - '0')) + '0');
-                        greenVal[i] = (char)(((green[i] - '0') ^ (greenKey[i] - '0')) + '0');
-                        blueVal[i] = (char)(((blue[i] - '0') ^ (blueKey[i] - '0')) + '0');
+                        redVal[i] = XOR(red[i], redKey[i]);
+                        greenVal[i] = XOR(green[i], greenKey[i]);
+                        blueVal[i] = XOR(blue[i], blueKey[i]);
                     }
 
                     pixel.red = ConvertToDecimal(redVal);
@@ -439,14 +409,15 @@ namespace ImageEncryptCompress
             return ImageMatrix;
         }
 
-        public static RGBPixel[,] alphaNumLFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed, bool encrypt, byte alphaMethod)
+        public static RGBPixel[,] AlphaNumLFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed, bool isXOR)
         {
             char[] seed = initSeed.ToCharArray();
             char[][] alphaBinarySeed = new char[seed.Length][];
-            StringBuilder concatBinaryASCII = new StringBuilder();
+            StringBuilder concatBinaryASCII = (isXOR) ? null : new StringBuilder();
 
             CheckAlpha(seed, alphaBinarySeed, concatBinaryASCII);
-            char[] concatSeed = concatBinaryASCII.ToString().ToCharArray();
+
+            char[] concatSeed = (isXOR) ? null : concatBinaryASCII.ToString().ToCharArray();
 
             int height = GetHeight(ImageMatrix);
             int width = GetWidth(ImageMatrix);
@@ -457,8 +428,15 @@ namespace ImageEncryptCompress
                 {
                     ref RGBPixel pixel = ref ImageMatrix[row, col];
 
-                    AlphaNumKeyGeneration(tapPosition, seed, alphaBinarySeed, concatSeed, alphaMethod);
-                
+                    if(isXOR)
+                    {
+                        XORKeyGeneration(tapPosition, alphaBinarySeed);
+                    }
+                    else
+                    {
+                        KeyGeneration(tapPosition, concatSeed);
+                    }
+
                     char[] redKey = RGBKeys[0];
                     char[] greenKey = RGBKeys[1];
                     char[] blueKey = RGBKeys[2];
@@ -473,9 +451,9 @@ namespace ImageEncryptCompress
 
                     for (int i = 0; i < KEY_SIZE; i++)
                     {
-                        redVal[i] = (char)(((red[i] - '0') ^ (redKey[i] - '0')) + '0');
-                        greenVal[i] = (char)(((green[i] - '0') ^ (greenKey[i] - '0')) + '0');
-                        blueVal[i] = (char)(((blue[i] - '0') ^ (blueKey[i] - '0')) + '0');
+                        redVal[i] = XOR(red[i], redKey[i]);
+                        greenVal[i] = XOR(green[i], greenKey[i]);
+                        blueVal[i] = XOR(blue[i], blueKey[i]);
                     }
 
                     pixel.red = ConvertToDecimal(redVal);
@@ -484,9 +462,6 @@ namespace ImageEncryptCompress
                 }
             }
 
-            /*if(encrypt)
-                Huffman_Compress(ImageMatrix, tapPosition, initSeed);                
-            else*/
             return ImageMatrix;
         }
 
@@ -506,7 +481,7 @@ namespace ImageEncryptCompress
                 {
                     RGBPixel[,] ImageMatrix_copy = (RGBPixel[,])ImageMatrix.Clone();
 
-                    ImageMatrix_copy = LFSR(ImageMatrix_copy, tapPosition, seed, false);
+                    ImageMatrix_copy = LFSR(ImageMatrix_copy, tapPosition, seed);
                     frequency_deviations[(seed, tapPosition)] = 0;
 
                     for (int row = 0; row < height ; row++)
@@ -537,6 +512,51 @@ namespace ImageEncryptCompress
             }
 
             return best_seed_and_tap;
+        }
+
+        //--------------------------------//
+        //       AUXILLARY FUNCTIONS      //
+        //--------------------------------//
+        public static void CheckAlpha(char[] seed, char[][] alphaBinarySeed, StringBuilder concatBinaryASCII)
+        {
+            byte[] alphaSeed;
+
+            foreach (char c in seed)
+            {
+                if (!char.IsLetterOrDigit(c))
+                {
+                    throw new Exception("Alphanumeric encryption must have alphanum seed");
+                }
+            }
+
+            alphaSeed = Encoding.ASCII.GetBytes(seed);
+
+            for (int i = 0; i < alphaSeed.Length; i++)
+            {
+                alphaBinarySeed[i] = Convert.ToString(alphaSeed[i], 2).PadLeft(8, '0').ToCharArray();
+            }
+            if (concatBinaryASCII != null)
+            {
+                foreach (char[] bytes in alphaBinarySeed)
+                {
+                    concatBinaryASCII.Append(bytes);
+                }
+            }
+        }
+
+        public static byte ConvertToDecimal(char[] binary)
+        {
+            byte total = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                total += (byte)((binary[i] - '0') * Math.Pow(2, 7 - i));
+            }
+
+            return total;
+        }
+        public static char XOR(char op1Char, char op2Char)
+        {
+            return (char)(((op1Char - '0') ^ (op2Char - '0')) + '0');
         }
 
         //--------------------------------//
@@ -773,7 +793,8 @@ namespace ImageEncryptCompress
             }
         }
 
-        private static (int tapPosition, string initSeed, int imgWidth, int imgHeight, Node<int> red_root, Node<int> green_root, Node<int> blue_root, string[] rgbChannels) ReadCompressedImage(string fileName)
+        private static (int tapPosition, string initSeed, int imgWidth, int imgHeight, Node<int> red_root, Node<int> green_root,
+            Node<int> blue_root, string[] rgbChannels) ReadCompressedImage(string fileName)
         {
             int tapPosition;
             string initSeed;
@@ -883,7 +904,8 @@ namespace ImageEncryptCompress
         {
             //throw new NotImplementedException();
 
-            (int tapPosition, string initSeed, int imgWidth, int imgHeight, Node<int> red_root, Node<int> green_root, Node<int> blue_root, string[] rgbChannels) = ReadCompressedImage(filePath);
+            (int tapPosition, string initSeed, int imgWidth, int imgHeight, Node<int> red_root, Node<int> green_root,
+                Node<int> blue_root, string[] rgbChannels) = ReadCompressedImage(filePath);
 
             RGBPixel[,] decompressedImg = new RGBPixel[imgHeight, imgWidth];
             int r = 0;
@@ -962,7 +984,8 @@ namespace ImageEncryptCompress
         //       Run Length Encoding      //
         //--------------------------------//
 
-        public static (float ratio, List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq) RunLengthEncoding(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
+        public static (float ratio, List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq,
+            List<int> blueFreq) RunLengthEncoding(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
         {
             List<int> redVal = new List<int>();
             List<int> greenVal = new List<int>();
@@ -1048,7 +1071,8 @@ namespace ImageEncryptCompress
 
         }
 
-        private static void RLEWrite(string filePath, List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight)
+        private static void RLEWrite(string filePath, List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq,
+            List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight)
         {
 
             using (var stream = File.Open(filePath, FileMode.Create))
@@ -1083,7 +1107,8 @@ namespace ImageEncryptCompress
             }
         }
 
-        private static (List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq, List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight) ReadRLE(string filePath)
+        private static (List<int> redVal, List<int> greenVal, List<int> blueVal, List<int> redFreq, List<int> greenFreq,
+            List<int> blueFreq, int tapPosition, string initSeed, int imgWidth, int imgHeight) ReadRLE(string filePath)
         {
             int tapPosition;
             string initSeed;
@@ -1214,65 +1239,6 @@ namespace ImageEncryptCompress
 
             return (decompressedImg, tapPosition, initSeed);
 
-        }
-
-
-        //--------------------------------//
-        //       AUXILLARY FUNCTIONS      //
-        //--------------------------------//
-        public static void CheckAlpha(char[] seed, char[][] alphaBinarySeed, StringBuilder concatBinaryASCII)
-        {
-            byte[] alphaSeed;               
-            keyFlag = false;
-
-            foreach (char c in seed)
-            {
-                if (char.IsLetterOrDigit(c))
-                {
-                    keyFlag = true;
-                    break;
-                }
-            }
-            if (keyFlag)
-            {
-                alphaSeed = Encoding.ASCII.GetBytes(seed);
-
-                for (int i = 0; i < alphaSeed.Length; i++)
-                {
-                    alphaBinarySeed[i] = ConvertToBinary(alphaSeed[i]);
-                }    
-                               
-                foreach(char[] arr in alphaBinarySeed)
-                {
-                    concatBinaryASCII.Append(arr);
-                }                                                                                                                       
-            }
-        }
-        public static char[] ConvertToBinary(byte dec)
-        {
-            StringBuilder Byte = new StringBuilder();
-            for (int i = 0; i < 8; i++)
-            {
-                char remainder = (dec % 2 == 0) ? '0' : '1';
-                Byte.Insert(0, remainder);
-
-                dec /= 2;
-            }
-            return Byte.ToString().ToCharArray();
-        }
-        public static byte ConvertToDecimal(char[] binary)
-        {
-            byte total = 0;
-            for (int i = 0; i < 8; i++)
-            {
-                total += (byte)((binary[i] - '0') * Math.Pow(2, 7 - i));
-            }
-
-            return total;
-        }
-        public static char XOR(char char1, char char2)
-        {
-            return (char)(((char1 - '0') ^ (char2 - '0')) + '0');
         }
 
         //before writing it disk we can write it to memory first to calculate the size
