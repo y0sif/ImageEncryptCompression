@@ -731,12 +731,15 @@ namespace ImageEncryptCompress
 
                     Console.WriteLine("=============== red tree ======================");
                     WriteTree(writer, red_root);
+                    PrintTree(red_root);
 
                     Console.WriteLine("=============== green tree ======================");
                     WriteTree(writer, green_root);
+                    PrintTree(green_root);
 
                     Console.WriteLine("=============== blue tree ======================");
                     WriteTree(writer, blue_root);
+                    PrintTree(blue_root);
 
                     writer.Write(rgbChannels[0].Length);
                     writer.Write(rgbChannels[1].Length);
@@ -757,13 +760,13 @@ namespace ImageEncryptCompress
             if(node.value == 256)
             {
                 writer.Write(node.value);
-                Console.WriteLine("node freq: " + node.freq);
+                //Console.WriteLine("node freq: " + node.freq);
             }
             else
             {
                 writer.Write(node.value);
-                Console.WriteLine("leaf freq: " + node.freq);
-                Console.WriteLine("leaf value: " + node.value);
+                //Console.WriteLine("leaf freq: " + node.freq);
+                //Console.WriteLine("leaf value: " + node.value);
             }
 
             WriteTree(writer, node.left);
@@ -815,12 +818,15 @@ namespace ImageEncryptCompress
 
                     Console.WriteLine("=============== red tree ======================");
                     red_root = ReadTree(reader);
+                    PrintTree(red_root);
 
                     Console.WriteLine("============== green tree=============");
                     green_root = ReadTree(reader);
+                    PrintTree(green_root);
 
                     Console.WriteLine("============= blue tree ==============");
                     blue_root = ReadTree(reader);
+                    PrintTree(blue_root);
 
                     channelLength[0] = reader.ReadInt32();
                     channelLength[1] = reader.ReadInt32();
@@ -876,7 +882,7 @@ namespace ImageEncryptCompress
             return channels.ToArray();
         }
 
-        static void PrintTree(Node<int> node)
+        static void PrintTree(Node<short> node)
         {
             if (node == null)
             {
@@ -911,6 +917,10 @@ namespace ImageEncryptCompress
             int r = 0;
             int g = 0;
             int b = 0;
+            int rLen = rgbChannels[0].Length;
+            int gLen = rgbChannels[1].Length;
+            int bLen = rgbChannels[2].Length;
+            
             for (int i = 0; i < imgHeight; i++)
             {
                 for (int j = 0; j < imgWidth; j++)
@@ -918,9 +928,9 @@ namespace ImageEncryptCompress
                     Node<short> red_node = red_root;
                     Node<short> green_node = green_root;
                     Node<short> blue_node = blue_root;
-                    for(int k = r; k < rgbChannels[0].Length; k++)
+                    for (int k = r; k <= rLen; k++)
                     {
-                        if(red_node.left == null || red_node.right == null)
+                        if (red_node.left == null || red_node.right == null)
                         {
                             decompressedImg[i, j].red = (byte)red_node.value;
                             break;
@@ -937,7 +947,7 @@ namespace ImageEncryptCompress
                         }
                     }
 
-                    for (int k = g; k < rgbChannels[1].Length; k++)
+                    for (int k = g; k <= gLen; k++)
                     {
                         if (green_node.left == null || green_node.right == null)
                         {
@@ -956,7 +966,7 @@ namespace ImageEncryptCompress
                         }
                     }
 
-                    for (int k = b; k < rgbChannels[2].Length; k++)
+                    for (int k = b; k <= bLen; k++)
                     {
                         if (blue_node.left == null || blue_node.right == null)
                         {
