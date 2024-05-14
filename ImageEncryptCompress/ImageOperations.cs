@@ -371,7 +371,6 @@ namespace ImageEncryptCompress
         public static RGBPixel[,] LFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed)
         {
             char[] seed = initSeed.ToCharArray();
-
             int height = GetHeight(ImageMatrix);
             int width = GetWidth(ImageMatrix);
 
@@ -381,34 +380,30 @@ namespace ImageEncryptCompress
                 {
                     ref RGBPixel pixel = ref ImageMatrix[row, col];
 
+                    // Generate keys for the current pixel
                     KeyGeneration(tapPosition, seed);
 
                     char[] redKey = RGBKeys[0];
                     char[] greenKey = RGBKeys[1];
                     char[] blueKey = RGBKeys[2];
 
-                    string red = Convert.ToString(pixel.red, 2).PadLeft(8, '0');
-                    string green = Convert.ToString(pixel.green, 2).PadLeft(8, '0'); ;
-                    string blue = Convert.ToString(pixel.blue, 2).PadLeft(8, '0');
-
-                    char[] redVal = new char[8];
-                    char[] greenVal = new char[8];
-                    char[] blueVal = new char[8];
-
-                    for (int i = 0; i < KEY_SIZE; i++)
-                    {
-                        redVal[i] = (char)(((red[i] - '0') ^ (redKey[i] - '0')) + '0');
-                        greenVal[i] = (char)(((green[i] - '0') ^ (greenKey[i] - '0')) + '0');
-                        blueVal[i] = (char)(((blue[i] - '0') ^ (blueKey[i] - '0')) + '0');
-                    }
-
-                    pixel.red = ConvertToDecimal(redVal);
-                    pixel.green = ConvertToDecimal(greenVal);
-                    pixel.blue = ConvertToDecimal(blueVal);
+                    pixel.red = (byte)(pixel.red ^ ConvertToByte(redKey));
+                    pixel.green = (byte)(pixel.green ^ ConvertToByte(greenKey));
+                    pixel.blue = (byte)(pixel.blue ^ ConvertToByte(blueKey));
                 }
             }
-            
+
             return ImageMatrix;
+        }
+
+        private static byte ConvertToByte(char[] binaryKey)
+        {
+            byte result = 0;
+            for (int i = 0; i < binaryKey.Length; i++)
+            {
+                result = (byte)((result << 1) | (binaryKey[i] - '0'));
+            }
+            return result;
         }
 
         public static RGBPixel[,] AlphaNumLFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed, bool isXOR)
