@@ -178,22 +178,6 @@ namespace ImageEncryptCompress
             this.comp_radio = new System.Windows.Forms.RadioButton();
             this.comp_back = new System.Windows.Forms.Button();
             this.label57 = new System.Windows.Forms.Label();
-            this.comp_decomp = new System.Windows.Forms.Panel();
-            this.decomp_timeBox = new System.Windows.Forms.TextBox();
-            this.label60 = new System.Windows.Forms.Label();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.decomp_size = new System.Windows.Forms.Label();
-            this.decomp_name = new System.Windows.Forms.Label();
-            this.label55 = new System.Windows.Forms.Label();
-            this.label53 = new System.Windows.Forms.Label();
-            this.decomp_button = new System.Windows.Forms.Button();
-            this.label54 = new System.Windows.Forms.Label();
-            this.decomp_method = new System.Windows.Forms.ComboBox();
-            this.decomp_load = new System.Windows.Forms.Button();
-            this.decomp_done = new System.Windows.Forms.Label();
-            this.decomp_save = new System.Windows.Forms.Button();
-            this.panel16 = new System.Windows.Forms.Panel();
-            this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.comp_comp = new System.Windows.Forms.Panel();
             this.comp_timeBox = new System.Windows.Forms.TextBox();
             this.label58 = new System.Windows.Forms.Label();
@@ -221,6 +205,67 @@ namespace ImageEncryptCompress
             this.label46 = new System.Windows.Forms.Label();
             this.label47 = new System.Windows.Forms.Label();
             this.label48 = new System.Windows.Forms.Label();
+            this.comp_decomp = new System.Windows.Forms.Panel();
+            this.decomp_timeBox = new System.Windows.Forms.TextBox();
+            this.label60 = new System.Windows.Forms.Label();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.decomp_size = new System.Windows.Forms.Label();
+            this.decomp_name = new System.Windows.Forms.Label();
+            this.label55 = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
+            this.decomp_button = new System.Windows.Forms.Button();
+            this.label54 = new System.Windows.Forms.Label();
+            this.decomp_method = new System.Windows.Forms.ComboBox();
+            this.decomp_load = new System.Windows.Forms.Button();
+            this.decomp_done = new System.Windows.Forms.Label();
+            this.decomp_save = new System.Windows.Forms.Button();
+            this.panel16 = new System.Windows.Forms.Panel();
+            this.pictureBox11 = new System.Windows.Forms.PictureBox();
+            this.Complete_Panel = new System.Windows.Forms.Panel();
+            this.complete_bck = new System.Windows.Forms.RadioButton();
+            this.complete_fwd = new System.Windows.Forms.RadioButton();
+            this.complete_back = new System.Windows.Forms.Button();
+            this.label63 = new System.Windows.Forms.Label();
+            this.bck_panel = new System.Windows.Forms.Panel();
+            this.bck_timeBox = new System.Windows.Forms.TextBox();
+            this.label65 = new System.Windows.Forms.Label();
+            this.panel20 = new System.Windows.Forms.Panel();
+            this.bck_size = new System.Windows.Forms.Label();
+            this.bck_file = new System.Windows.Forms.Label();
+            this.label72 = new System.Windows.Forms.Label();
+            this.label76 = new System.Windows.Forms.Label();
+            this.bck_button = new System.Windows.Forms.Button();
+            this.bck_load = new System.Windows.Forms.Button();
+            this.bck_done = new System.Windows.Forms.Label();
+            this.bck_save = new System.Windows.Forms.Button();
+            this.panel21 = new System.Windows.Forms.Panel();
+            this.pictureBox14 = new System.Windows.Forms.PictureBox();
+            this.fwd_panel = new System.Windows.Forms.Panel();
+            this.fwd_panel2 = new System.Windows.Forms.Panel();
+            this.fwd_button = new System.Windows.Forms.Button();
+            this.fwd_seed = new System.Windows.Forms.TextBox();
+            this.fwd_tap = new System.Windows.Forms.NumericUpDown();
+            this.label66 = new System.Windows.Forms.Label();
+            this.label67 = new System.Windows.Forms.Label();
+            this.fwd_timeBox = new System.Windows.Forms.TextBox();
+            this.label64 = new System.Windows.Forms.Label();
+            this.fwd_panel1 = new System.Windows.Forms.Panel();
+            this.label68 = new System.Windows.Forms.Label();
+            this.fwd_clear = new System.Windows.Forms.Button();
+            this.fwd_height = new System.Windows.Forms.TextBox();
+            this.fwd_width = new System.Windows.Forms.TextBox();
+            this.label69 = new System.Windows.Forms.Label();
+            this.panel22 = new System.Windows.Forms.Panel();
+            this.fwd_load = new System.Windows.Forms.Button();
+            this.pictureBox13 = new System.Windows.Forms.PictureBox();
+            this.fwd_output = new System.Windows.Forms.Panel();
+            this.fwd_done = new System.Windows.Forms.Label();
+            this.fwd_save = new System.Windows.Forms.Button();
+            this.fwd_size = new System.Windows.Forms.Label();
+            this.fwd_ratio = new System.Windows.Forms.Label();
+            this.label73 = new System.Windows.Forms.Label();
+            this.label74 = new System.Windows.Forms.Label();
+            this.label75 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaskSize)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -258,23 +303,35 @@ namespace ImageEncryptCompress
             this.panel15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             this.Comp_Panel.SuspendLayout();
-            this.comp_decomp.SuspendLayout();
-            this.panel6.SuspendLayout();
-            this.panel16.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             this.comp_comp.SuspendLayout();
             this.panel18.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comp_tap)).BeginInit();
             this.panel19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
             this.comp_output.SuspendLayout();
+            this.comp_decomp.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.panel16.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
+            this.Complete_Panel.SuspendLayout();
+            this.bck_panel.SuspendLayout();
+            this.panel20.SuspendLayout();
+            this.panel21.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
+            this.fwd_panel.SuspendLayout();
+            this.fwd_panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fwd_tap)).BeginInit();
+            this.fwd_panel1.SuspendLayout();
+            this.panel22.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
+            this.fwd_output.SuspendLayout();
             this.SuspendLayout();
             // 
             // enc_load
             // 
             this.enc_load.Font = new System.Drawing.Font("Tahoma", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.enc_load.Location = new System.Drawing.Point(-3, -2);
-            this.enc_load.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.enc_load.Margin = new System.Windows.Forms.Padding(4);
             this.enc_load.Name = "enc_load";
             this.enc_load.Size = new System.Drawing.Size(579, 450);
             this.enc_load.TabIndex = 30;
@@ -286,7 +343,7 @@ namespace ImageEncryptCompress
             // 
             this.btnGaussSmooth.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGaussSmooth.Location = new System.Drawing.Point(271, 103);
-            this.btnGaussSmooth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnGaussSmooth.Margin = new System.Windows.Forms.Padding(4);
             this.btnGaussSmooth.Name = "btnGaussSmooth";
             this.btnGaussSmooth.Size = new System.Drawing.Size(229, 81);
             this.btnGaussSmooth.TabIndex = 33;
@@ -309,7 +366,7 @@ namespace ImageEncryptCompress
             // 
             this.txtHeight.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtHeight.Location = new System.Drawing.Point(257, 4);
-            this.txtHeight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtHeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtHeight.Name = "txtHeight";
             this.txtHeight.ReadOnly = true;
             this.txtHeight.Size = new System.Drawing.Size(75, 27);
@@ -330,7 +387,7 @@ namespace ImageEncryptCompress
             // 
             this.nudMaskSize.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nudMaskSize.Location = new System.Drawing.Point(148, 114);
-            this.nudMaskSize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nudMaskSize.Margin = new System.Windows.Forms.Padding(4);
             this.nudMaskSize.Maximum = new decimal(new int[] {
             99,
             0,
@@ -349,7 +406,7 @@ namespace ImageEncryptCompress
             // 
             this.txtWidth.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtWidth.Location = new System.Drawing.Point(77, 6);
-            this.txtWidth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtWidth.Margin = new System.Windows.Forms.Padding(4);
             this.txtWidth.Name = "txtWidth";
             this.txtWidth.ReadOnly = true;
             this.txtWidth.Size = new System.Drawing.Size(75, 27);
@@ -370,7 +427,7 @@ namespace ImageEncryptCompress
             // 
             this.txtGaussSigma.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtGaussSigma.Location = new System.Drawing.Point(148, 153);
-            this.txtGaussSigma.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtGaussSigma.Margin = new System.Windows.Forms.Padding(4);
             this.txtGaussSigma.Name = "txtGaussSigma";
             this.txtGaussSigma.Size = new System.Drawing.Size(75, 27);
             this.txtGaussSigma.TabIndex = 42;
@@ -384,7 +441,7 @@ namespace ImageEncryptCompress
             this.panel3.Controls.Add(this.enc_load);
             this.panel3.Controls.Add(this.pictureBox1);
             this.panel3.Location = new System.Drawing.Point(43, 66);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(583, 456);
             this.panel3.TabIndex = 43;
@@ -392,7 +449,7 @@ namespace ImageEncryptCompress
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(427, 360);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -405,7 +462,7 @@ namespace ImageEncryptCompress
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel2.Controls.Add(this.pictureBox2);
             this.panel2.Location = new System.Drawing.Point(769, 66);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(619, 456);
             this.panel2.TabIndex = 44;
@@ -414,7 +471,7 @@ namespace ImageEncryptCompress
             // pictureBox2
             // 
             this.pictureBox2.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(412, 360);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -443,7 +500,7 @@ namespace ImageEncryptCompress
             // 
             this.enc_timeBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.enc_timeBox.Location = new System.Drawing.Point(1268, 672);
-            this.enc_timeBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.enc_timeBox.Margin = new System.Windows.Forms.Padding(4);
             this.enc_timeBox.Name = "enc_timeBox";
             this.enc_timeBox.ReadOnly = true;
             this.enc_timeBox.Size = new System.Drawing.Size(120, 27);
@@ -941,6 +998,7 @@ namespace ImageEncryptCompress
             this.op_b.TabIndex = 2;
             this.op_b.Text = "Complete Operation";
             this.op_b.UseVisualStyleBackColor = true;
+            this.op_b.Click += new System.EventHandler(this.op_b_Click);
             // 
             // comp_b
             // 
@@ -1609,7 +1667,7 @@ namespace ImageEncryptCompress
             // 
             this.break_timeBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.break_timeBox.Location = new System.Drawing.Point(1212, 676);
-            this.break_timeBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.break_timeBox.Margin = new System.Windows.Forms.Padding(4);
             this.break_timeBox.Name = "break_timeBox";
             this.break_timeBox.ReadOnly = true;
             this.break_timeBox.Size = new System.Drawing.Size(120, 27);
@@ -1774,7 +1832,7 @@ namespace ImageEncryptCompress
             this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel14.Controls.Add(this.pictureBox9);
             this.panel14.Location = new System.Drawing.Point(668, 327);
-            this.panel14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel14.Margin = new System.Windows.Forms.Padding(4);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(425, 374);
             this.panel14.TabIndex = 67;
@@ -1783,7 +1841,7 @@ namespace ImageEncryptCompress
             // pictureBox9
             // 
             this.pictureBox9.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox9.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(412, 360);
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -1833,7 +1891,7 @@ namespace ImageEncryptCompress
             // 
             this.attack.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.attack.Location = new System.Drawing.Point(220, 75);
-            this.attack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.attack.Margin = new System.Windows.Forms.Padding(4);
             this.attack.Name = "attack";
             this.attack.Size = new System.Drawing.Size(200, 73);
             this.attack.TabIndex = 33;
@@ -1878,7 +1936,7 @@ namespace ImageEncryptCompress
             // 
             this.textBox16.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox16.Location = new System.Drawing.Point(231, 7);
-            this.textBox16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox16.Margin = new System.Windows.Forms.Padding(4);
             this.textBox16.Name = "textBox16";
             this.textBox16.ReadOnly = true;
             this.textBox16.Size = new System.Drawing.Size(65, 27);
@@ -1888,7 +1946,7 @@ namespace ImageEncryptCompress
             // 
             this.break_bits.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.break_bits.Location = new System.Drawing.Point(69, 103);
-            this.break_bits.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.break_bits.Margin = new System.Windows.Forms.Padding(4);
             this.break_bits.Maximum = new decimal(new int[] {
             256,
             0,
@@ -1913,7 +1971,7 @@ namespace ImageEncryptCompress
             // 
             this.textBox17.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox17.Location = new System.Drawing.Point(77, 6);
-            this.textBox17.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox17.Margin = new System.Windows.Forms.Padding(4);
             this.textBox17.Name = "textBox17";
             this.textBox17.ReadOnly = true;
             this.textBox17.Size = new System.Drawing.Size(63, 27);
@@ -1938,7 +1996,7 @@ namespace ImageEncryptCompress
             this.panel15.Controls.Add(this.break_load);
             this.panel15.Controls.Add(this.pictureBox10);
             this.panel15.Location = new System.Drawing.Point(52, 63);
-            this.panel15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel15.Margin = new System.Windows.Forms.Padding(4);
             this.panel15.Name = "panel15";
             this.panel15.Size = new System.Drawing.Size(449, 379);
             this.panel15.TabIndex = 66;
@@ -1947,7 +2005,7 @@ namespace ImageEncryptCompress
             // 
             this.break_load.Font = new System.Drawing.Font("Tahoma", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.break_load.Location = new System.Drawing.Point(-3, -2);
-            this.break_load.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.break_load.Margin = new System.Windows.Forms.Padding(4);
             this.break_load.Name = "break_load";
             this.break_load.Size = new System.Drawing.Size(443, 373);
             this.break_load.TabIndex = 30;
@@ -1958,7 +2016,7 @@ namespace ImageEncryptCompress
             // pictureBox10
             // 
             this.pictureBox10.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox10.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox10.Name = "pictureBox10";
             this.pictureBox10.Size = new System.Drawing.Size(427, 360);
             this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -2028,193 +2086,6 @@ namespace ImageEncryptCompress
             this.label57.TabIndex = 78;
             this.label57.Text = "Compression/Decompression";
             // 
-            // comp_decomp
-            // 
-            this.comp_decomp.Controls.Add(this.decomp_timeBox);
-            this.comp_decomp.Controls.Add(this.label60);
-            this.comp_decomp.Controls.Add(this.panel6);
-            this.comp_decomp.Controls.Add(this.decomp_load);
-            this.comp_decomp.Controls.Add(this.decomp_done);
-            this.comp_decomp.Controls.Add(this.decomp_save);
-            this.comp_decomp.Controls.Add(this.panel16);
-            this.comp_decomp.Location = new System.Drawing.Point(11, 71);
-            this.comp_decomp.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.comp_decomp.Name = "comp_decomp";
-            this.comp_decomp.Size = new System.Drawing.Size(1392, 647);
-            this.comp_decomp.TabIndex = 87;
-            this.comp_decomp.Visible = false;
-            // 
-            // decomp_timeBox
-            // 
-            this.decomp_timeBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.decomp_timeBox.Location = new System.Drawing.Point(1193, 596);
-            this.decomp_timeBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.decomp_timeBox.Name = "decomp_timeBox";
-            this.decomp_timeBox.ReadOnly = true;
-            this.decomp_timeBox.Size = new System.Drawing.Size(120, 27);
-            this.decomp_timeBox.TabIndex = 76;
-            this.decomp_timeBox.Visible = false;
-            // 
-            // label60
-            // 
-            this.label60.AutoSize = true;
-            this.label60.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label60.Location = new System.Drawing.Point(1081, 599);
-            this.label60.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(107, 21);
-            this.label60.TabIndex = 75;
-            this.label60.Text = "Time Taken";
-            this.label60.Visible = false;
-            // 
-            // panel6
-            // 
-            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel6.Controls.Add(this.decomp_size);
-            this.panel6.Controls.Add(this.decomp_name);
-            this.panel6.Controls.Add(this.label55);
-            this.panel6.Controls.Add(this.label53);
-            this.panel6.Controls.Add(this.decomp_button);
-            this.panel6.Controls.Add(this.label54);
-            this.panel6.Controls.Add(this.decomp_method);
-            this.panel6.Location = new System.Drawing.Point(31, 199);
-            this.panel6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(471, 274);
-            this.panel6.TabIndex = 74;
-            this.panel6.Visible = false;
-            // 
-            // decomp_size
-            // 
-            this.decomp_size.AutoSize = true;
-            this.decomp_size.Location = new System.Drawing.Point(169, 78);
-            this.decomp_size.Name = "decomp_size";
-            this.decomp_size.Size = new System.Drawing.Size(51, 16);
-            this.decomp_size.TabIndex = 76;
-            this.decomp_size.Text = "label58";
-            // 
-            // decomp_name
-            // 
-            this.decomp_name.AutoSize = true;
-            this.decomp_name.Location = new System.Drawing.Point(169, 30);
-            this.decomp_name.Name = "decomp_name";
-            this.decomp_name.Size = new System.Drawing.Size(51, 16);
-            this.decomp_name.TabIndex = 75;
-            this.decomp_name.Text = "label56";
-            // 
-            // label55
-            // 
-            this.label55.AutoSize = true;
-            this.label55.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label55.Location = new System.Drawing.Point(75, 75);
-            this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(79, 20);
-            this.label55.TabIndex = 74;
-            this.label55.Text = "File Size:";
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label53.Location = new System.Drawing.Point(75, 30);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(41, 20);
-            this.label53.TabIndex = 73;
-            this.label53.Text = "File:";
-            // 
-            // decomp_button
-            // 
-            this.decomp_button.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.decomp_button.Location = new System.Drawing.Point(235, 155);
-            this.decomp_button.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.decomp_button.Name = "decomp_button";
-            this.decomp_button.Size = new System.Drawing.Size(229, 81);
-            this.decomp_button.TabIndex = 70;
-            this.decomp_button.Text = "Decompress";
-            this.decomp_button.UseVisualStyleBackColor = true;
-            this.decomp_button.Click += new System.EventHandler(this.decomp_button_Click);
-            // 
-            // label54
-            // 
-            this.label54.AutoSize = true;
-            this.label54.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label54.Location = new System.Drawing.Point(11, 181);
-            this.label54.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(75, 21);
-            this.label54.TabIndex = 71;
-            this.label54.Text = "Method";
-            // 
-            // decomp_method
-            // 
-            this.decomp_method.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.decomp_method.FormattingEnabled = true;
-            this.decomp_method.Items.AddRange(new object[] {
-            "Huffman",
-            "Run Length Decoding"});
-            this.decomp_method.Location = new System.Drawing.Point(93, 180);
-            this.decomp_method.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.decomp_method.Name = "decomp_method";
-            this.decomp_method.Size = new System.Drawing.Size(121, 24);
-            this.decomp_method.TabIndex = 72;
-            // 
-            // decomp_load
-            // 
-            this.decomp_load.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.decomp_load.Location = new System.Drawing.Point(177, 133);
-            this.decomp_load.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.decomp_load.Name = "decomp_load";
-            this.decomp_load.Size = new System.Drawing.Size(155, 30);
-            this.decomp_load.TabIndex = 73;
-            this.decomp_load.Text = "Load Binary File";
-            this.decomp_load.UseVisualStyleBackColor = true;
-            this.decomp_load.Click += new System.EventHandler(this.decomp_load_Click);
-            // 
-            // decomp_done
-            // 
-            this.decomp_done.AutoSize = true;
-            this.decomp_done.Location = new System.Drawing.Point(971, 512);
-            this.decomp_done.Name = "decomp_done";
-            this.decomp_done.Size = new System.Drawing.Size(169, 16);
-            this.decomp_done.TabIndex = 66;
-            this.decomp_done.Text = "Image Saved Successfully!";
-            this.decomp_done.Visible = false;
-            // 
-            // decomp_save
-            // 
-            this.decomp_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.decomp_save.Location = new System.Drawing.Point(984, 539);
-            this.decomp_save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.decomp_save.Name = "decomp_save";
-            this.decomp_save.Size = new System.Drawing.Size(137, 46);
-            this.decomp_save.TabIndex = 65;
-            this.decomp_save.Text = "Save Image";
-            this.decomp_save.UseVisualStyleBackColor = true;
-            this.decomp_save.Visible = false;
-            this.decomp_save.Click += new System.EventHandler(this.decomp_save_Click);
-            // 
-            // panel16
-            // 
-            this.panel16.AutoScroll = true;
-            this.panel16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel16.Controls.Add(this.pictureBox11);
-            this.panel16.Location = new System.Drawing.Point(703, 46);
-            this.panel16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.panel16.Name = "panel16";
-            this.panel16.Size = new System.Drawing.Size(619, 456);
-            this.panel16.TabIndex = 64;
-            this.panel16.Visible = false;
-            // 
-            // pictureBox11
-            // 
-            this.pictureBox11.Location = new System.Drawing.Point(-5, -2);
-            this.pictureBox11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.pictureBox11.Name = "pictureBox11";
-            this.pictureBox11.Size = new System.Drawing.Size(412, 360);
-            this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox11.TabIndex = 1;
-            this.pictureBox11.TabStop = false;
-            // 
             // comp_comp
             // 
             this.comp_comp.Controls.Add(this.comp_timeBox);
@@ -2225,14 +2096,14 @@ namespace ImageEncryptCompress
             this.comp_comp.Location = new System.Drawing.Point(20, 69);
             this.comp_comp.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comp_comp.Name = "comp_comp";
-            this.comp_comp.Size = new System.Drawing.Size(1253, 654);
+            this.comp_comp.Size = new System.Drawing.Size(1332, 654);
             this.comp_comp.TabIndex = 86;
             // 
             // comp_timeBox
             // 
             this.comp_timeBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comp_timeBox.Location = new System.Drawing.Point(1115, 588);
-            this.comp_timeBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comp_timeBox.Location = new System.Drawing.Point(1159, 588);
+            this.comp_timeBox.Margin = new System.Windows.Forms.Padding(4);
             this.comp_timeBox.Name = "comp_timeBox";
             this.comp_timeBox.ReadOnly = true;
             this.comp_timeBox.Size = new System.Drawing.Size(120, 27);
@@ -2243,7 +2114,7 @@ namespace ImageEncryptCompress
             // 
             this.label58.AutoSize = true;
             this.label58.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label58.Location = new System.Drawing.Point(1003, 592);
+            this.label58.Location = new System.Drawing.Point(1047, 592);
             this.label58.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label58.Name = "label58";
             this.label58.Size = new System.Drawing.Size(107, 21);
@@ -2300,7 +2171,7 @@ namespace ImageEncryptCompress
             // 
             this.comp_button.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comp_button.Location = new System.Drawing.Point(273, 87);
-            this.comp_button.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comp_button.Margin = new System.Windows.Forms.Padding(4);
             this.comp_button.Name = "comp_button";
             this.comp_button.Size = new System.Drawing.Size(229, 81);
             this.comp_button.TabIndex = 63;
@@ -2334,7 +2205,7 @@ namespace ImageEncryptCompress
             // 
             this.comp_tap.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comp_tap.Location = new System.Drawing.Point(149, 98);
-            this.comp_tap.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comp_tap.Margin = new System.Windows.Forms.Padding(4);
             this.comp_tap.Maximum = new decimal(new int[] {
             99,
             0,
@@ -2349,7 +2220,7 @@ namespace ImageEncryptCompress
             // 
             this.comp_seed.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comp_seed.Location = new System.Drawing.Point(149, 135);
-            this.comp_seed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comp_seed.Margin = new System.Windows.Forms.Padding(4);
             this.comp_seed.Name = "comp_seed";
             this.comp_seed.Size = new System.Drawing.Size(75, 27);
             this.comp_seed.TabIndex = 67;
@@ -2382,7 +2253,7 @@ namespace ImageEncryptCompress
             // 
             this.comp_height.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comp_height.Location = new System.Drawing.Point(257, 4);
-            this.comp_height.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comp_height.Margin = new System.Windows.Forms.Padding(4);
             this.comp_height.Name = "comp_height";
             this.comp_height.ReadOnly = true;
             this.comp_height.Size = new System.Drawing.Size(75, 27);
@@ -2392,7 +2263,7 @@ namespace ImageEncryptCompress
             // 
             this.comp_width.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comp_width.Location = new System.Drawing.Point(77, 6);
-            this.comp_width.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comp_width.Margin = new System.Windows.Forms.Padding(4);
             this.comp_width.Name = "comp_width";
             this.comp_width.ReadOnly = true;
             this.comp_width.Size = new System.Drawing.Size(75, 27);
@@ -2417,7 +2288,7 @@ namespace ImageEncryptCompress
             this.panel19.Controls.Add(this.comp_load);
             this.panel19.Controls.Add(this.pictureBox12);
             this.panel19.Location = new System.Drawing.Point(19, 7);
-            this.panel19.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel19.Margin = new System.Windows.Forms.Padding(4);
             this.panel19.Name = "panel19";
             this.panel19.Size = new System.Drawing.Size(583, 456);
             this.panel19.TabIndex = 84;
@@ -2426,7 +2297,7 @@ namespace ImageEncryptCompress
             // 
             this.comp_load.Font = new System.Drawing.Font("Tahoma", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comp_load.Location = new System.Drawing.Point(-3, -2);
-            this.comp_load.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comp_load.Margin = new System.Windows.Forms.Padding(4);
             this.comp_load.Name = "comp_load";
             this.comp_load.Size = new System.Drawing.Size(579, 450);
             this.comp_load.TabIndex = 30;
@@ -2437,7 +2308,7 @@ namespace ImageEncryptCompress
             // pictureBox12
             // 
             this.pictureBox12.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox12.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox12.Name = "pictureBox12";
             this.pictureBox12.Size = new System.Drawing.Size(427, 360);
             this.pictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -2454,7 +2325,7 @@ namespace ImageEncryptCompress
             this.comp_output.Controls.Add(this.label46);
             this.comp_output.Controls.Add(this.label47);
             this.comp_output.Controls.Add(this.label48);
-            this.comp_output.Location = new System.Drawing.Point(797, 174);
+            this.comp_output.Location = new System.Drawing.Point(923, 119);
             this.comp_output.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comp_output.Name = "comp_output";
             this.comp_output.Size = new System.Drawing.Size(346, 272);
@@ -2531,16 +2402,723 @@ namespace ImageEncryptCompress
             this.label48.TabIndex = 0;
             this.label48.Text = "Output:";
             // 
+            // comp_decomp
+            // 
+            this.comp_decomp.Controls.Add(this.decomp_timeBox);
+            this.comp_decomp.Controls.Add(this.label60);
+            this.comp_decomp.Controls.Add(this.panel6);
+            this.comp_decomp.Controls.Add(this.decomp_load);
+            this.comp_decomp.Controls.Add(this.decomp_done);
+            this.comp_decomp.Controls.Add(this.decomp_save);
+            this.comp_decomp.Controls.Add(this.panel16);
+            this.comp_decomp.Location = new System.Drawing.Point(11, 71);
+            this.comp_decomp.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.comp_decomp.Name = "comp_decomp";
+            this.comp_decomp.Size = new System.Drawing.Size(1392, 647);
+            this.comp_decomp.TabIndex = 87;
+            this.comp_decomp.Visible = false;
+            // 
+            // decomp_timeBox
+            // 
+            this.decomp_timeBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.decomp_timeBox.Location = new System.Drawing.Point(1193, 596);
+            this.decomp_timeBox.Margin = new System.Windows.Forms.Padding(4);
+            this.decomp_timeBox.Name = "decomp_timeBox";
+            this.decomp_timeBox.ReadOnly = true;
+            this.decomp_timeBox.Size = new System.Drawing.Size(120, 27);
+            this.decomp_timeBox.TabIndex = 76;
+            this.decomp_timeBox.Visible = false;
+            // 
+            // label60
+            // 
+            this.label60.AutoSize = true;
+            this.label60.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label60.Location = new System.Drawing.Point(1081, 599);
+            this.label60.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(107, 21);
+            this.label60.TabIndex = 75;
+            this.label60.Text = "Time Taken";
+            this.label60.Visible = false;
+            // 
+            // panel6
+            // 
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Controls.Add(this.decomp_size);
+            this.panel6.Controls.Add(this.decomp_name);
+            this.panel6.Controls.Add(this.label55);
+            this.panel6.Controls.Add(this.label53);
+            this.panel6.Controls.Add(this.decomp_button);
+            this.panel6.Controls.Add(this.label54);
+            this.panel6.Controls.Add(this.decomp_method);
+            this.panel6.Location = new System.Drawing.Point(31, 199);
+            this.panel6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(575, 274);
+            this.panel6.TabIndex = 74;
+            this.panel6.Visible = false;
+            // 
+            // decomp_size
+            // 
+            this.decomp_size.AutoSize = true;
+            this.decomp_size.Location = new System.Drawing.Point(141, 78);
+            this.decomp_size.Name = "decomp_size";
+            this.decomp_size.Size = new System.Drawing.Size(51, 16);
+            this.decomp_size.TabIndex = 76;
+            this.decomp_size.Text = "label58";
+            // 
+            // decomp_name
+            // 
+            this.decomp_name.AutoSize = true;
+            this.decomp_name.Location = new System.Drawing.Point(141, 30);
+            this.decomp_name.Name = "decomp_name";
+            this.decomp_name.Size = new System.Drawing.Size(51, 16);
+            this.decomp_name.TabIndex = 75;
+            this.decomp_name.Text = "label56";
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label55.Location = new System.Drawing.Point(47, 75);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(79, 20);
+            this.label55.TabIndex = 74;
+            this.label55.Text = "File Size:";
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label53.Location = new System.Drawing.Point(47, 30);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(41, 20);
+            this.label53.TabIndex = 73;
+            this.label53.Text = "File:";
+            // 
+            // decomp_button
+            // 
+            this.decomp_button.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.decomp_button.Location = new System.Drawing.Point(235, 155);
+            this.decomp_button.Margin = new System.Windows.Forms.Padding(4);
+            this.decomp_button.Name = "decomp_button";
+            this.decomp_button.Size = new System.Drawing.Size(229, 81);
+            this.decomp_button.TabIndex = 70;
+            this.decomp_button.Text = "Decompress";
+            this.decomp_button.UseVisualStyleBackColor = true;
+            this.decomp_button.Click += new System.EventHandler(this.decomp_button_Click);
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label54.Location = new System.Drawing.Point(11, 181);
+            this.label54.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(75, 21);
+            this.label54.TabIndex = 71;
+            this.label54.Text = "Method";
+            // 
+            // decomp_method
+            // 
+            this.decomp_method.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.decomp_method.FormattingEnabled = true;
+            this.decomp_method.Items.AddRange(new object[] {
+            "Huffman",
+            "Run Length Decoding"});
+            this.decomp_method.Location = new System.Drawing.Point(93, 180);
+            this.decomp_method.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.decomp_method.Name = "decomp_method";
+            this.decomp_method.Size = new System.Drawing.Size(121, 24);
+            this.decomp_method.TabIndex = 72;
+            // 
+            // decomp_load
+            // 
+            this.decomp_load.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.decomp_load.Location = new System.Drawing.Point(177, 133);
+            this.decomp_load.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.decomp_load.Name = "decomp_load";
+            this.decomp_load.Size = new System.Drawing.Size(155, 30);
+            this.decomp_load.TabIndex = 73;
+            this.decomp_load.Text = "Load Binary File";
+            this.decomp_load.UseVisualStyleBackColor = true;
+            this.decomp_load.Click += new System.EventHandler(this.decomp_load_Click);
+            // 
+            // decomp_done
+            // 
+            this.decomp_done.AutoSize = true;
+            this.decomp_done.Location = new System.Drawing.Point(971, 512);
+            this.decomp_done.Name = "decomp_done";
+            this.decomp_done.Size = new System.Drawing.Size(169, 16);
+            this.decomp_done.TabIndex = 66;
+            this.decomp_done.Text = "Image Saved Successfully!";
+            this.decomp_done.Visible = false;
+            // 
+            // decomp_save
+            // 
+            this.decomp_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.decomp_save.Location = new System.Drawing.Point(984, 539);
+            this.decomp_save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.decomp_save.Name = "decomp_save";
+            this.decomp_save.Size = new System.Drawing.Size(137, 46);
+            this.decomp_save.TabIndex = 65;
+            this.decomp_save.Text = "Save Image";
+            this.decomp_save.UseVisualStyleBackColor = true;
+            this.decomp_save.Visible = false;
+            this.decomp_save.Click += new System.EventHandler(this.decomp_save_Click);
+            // 
+            // panel16
+            // 
+            this.panel16.AutoScroll = true;
+            this.panel16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel16.Controls.Add(this.pictureBox11);
+            this.panel16.Location = new System.Drawing.Point(703, 46);
+            this.panel16.Margin = new System.Windows.Forms.Padding(4);
+            this.panel16.Name = "panel16";
+            this.panel16.Size = new System.Drawing.Size(619, 456);
+            this.panel16.TabIndex = 64;
+            this.panel16.Visible = false;
+            // 
+            // pictureBox11
+            // 
+            this.pictureBox11.Location = new System.Drawing.Point(-5, -2);
+            this.pictureBox11.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox11.Name = "pictureBox11";
+            this.pictureBox11.Size = new System.Drawing.Size(412, 360);
+            this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox11.TabIndex = 1;
+            this.pictureBox11.TabStop = false;
+            // 
+            // Complete_Panel
+            // 
+            this.Complete_Panel.Controls.Add(this.complete_bck);
+            this.Complete_Panel.Controls.Add(this.complete_fwd);
+            this.Complete_Panel.Controls.Add(this.complete_back);
+            this.Complete_Panel.Controls.Add(this.label63);
+            this.Complete_Panel.Controls.Add(this.bck_panel);
+            this.Complete_Panel.Controls.Add(this.fwd_panel);
+            this.Complete_Panel.Location = new System.Drawing.Point(2, 3);
+            this.Complete_Panel.Name = "Complete_Panel";
+            this.Complete_Panel.Size = new System.Drawing.Size(1414, 727);
+            this.Complete_Panel.TabIndex = 4;
+            this.Complete_Panel.Visible = false;
+            // 
+            // complete_bck
+            // 
+            this.complete_bck.AutoSize = true;
+            this.complete_bck.Location = new System.Drawing.Point(155, 40);
+            this.complete_bck.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.complete_bck.Name = "complete_bck";
+            this.complete_bck.Size = new System.Drawing.Size(95, 20);
+            this.complete_bck.TabIndex = 90;
+            this.complete_bck.Text = "Backwards";
+            this.complete_bck.UseVisualStyleBackColor = true;
+            this.complete_bck.CheckedChanged += new System.EventHandler(this.complete_bck_CheckedChanged);
+            // 
+            // complete_fwd
+            // 
+            this.complete_fwd.AutoSize = true;
+            this.complete_fwd.Checked = true;
+            this.complete_fwd.Location = new System.Drawing.Point(49, 40);
+            this.complete_fwd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.complete_fwd.Name = "complete_fwd";
+            this.complete_fwd.Size = new System.Drawing.Size(77, 20);
+            this.complete_fwd.TabIndex = 89;
+            this.complete_fwd.TabStop = true;
+            this.complete_fwd.Text = "Forward";
+            this.complete_fwd.UseVisualStyleBackColor = true;
+            this.complete_fwd.CheckedChanged += new System.EventHandler(this.complete_fwd_CheckedChanged);
+            // 
+            // complete_back
+            // 
+            this.complete_back.Location = new System.Drawing.Point(9, 1);
+            this.complete_back.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.complete_back.Name = "complete_back";
+            this.complete_back.Size = new System.Drawing.Size(29, 30);
+            this.complete_back.TabIndex = 88;
+            this.complete_back.Text = "<";
+            this.complete_back.UseVisualStyleBackColor = true;
+            this.complete_back.Click += new System.EventHandler(this.complete_back_Click);
+            // 
+            // label63
+            // 
+            this.label63.AutoSize = true;
+            this.label63.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label63.ForeColor = System.Drawing.SystemColors.InfoText;
+            this.label63.Location = new System.Drawing.Point(41, 1);
+            this.label63.Name = "label63";
+            this.label63.Size = new System.Drawing.Size(252, 29);
+            this.label63.TabIndex = 87;
+            this.label63.Text = "Complete Operations";
+            // 
+            // bck_panel
+            // 
+            this.bck_panel.Controls.Add(this.bck_timeBox);
+            this.bck_panel.Controls.Add(this.label65);
+            this.bck_panel.Controls.Add(this.panel20);
+            this.bck_panel.Controls.Add(this.bck_load);
+            this.bck_panel.Controls.Add(this.bck_done);
+            this.bck_panel.Controls.Add(this.bck_save);
+            this.bck_panel.Controls.Add(this.panel21);
+            this.bck_panel.Location = new System.Drawing.Point(23, 71);
+            this.bck_panel.Name = "bck_panel";
+            this.bck_panel.Size = new System.Drawing.Size(1363, 645);
+            this.bck_panel.TabIndex = 92;
+            this.bck_panel.Visible = false;
+            // 
+            // bck_timeBox
+            // 
+            this.bck_timeBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bck_timeBox.Location = new System.Drawing.Point(1198, 584);
+            this.bck_timeBox.Margin = new System.Windows.Forms.Padding(4);
+            this.bck_timeBox.Name = "bck_timeBox";
+            this.bck_timeBox.ReadOnly = true;
+            this.bck_timeBox.Size = new System.Drawing.Size(120, 27);
+            this.bck_timeBox.TabIndex = 83;
+            this.bck_timeBox.Visible = false;
+            // 
+            // label65
+            // 
+            this.label65.AutoSize = true;
+            this.label65.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label65.Location = new System.Drawing.Point(1086, 587);
+            this.label65.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(107, 21);
+            this.label65.TabIndex = 82;
+            this.label65.Text = "Time Taken";
+            this.label65.Visible = false;
+            // 
+            // panel20
+            // 
+            this.panel20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel20.Controls.Add(this.bck_size);
+            this.panel20.Controls.Add(this.bck_file);
+            this.panel20.Controls.Add(this.label72);
+            this.panel20.Controls.Add(this.label76);
+            this.panel20.Controls.Add(this.bck_button);
+            this.panel20.Location = new System.Drawing.Point(36, 187);
+            this.panel20.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel20.Name = "panel20";
+            this.panel20.Size = new System.Drawing.Size(575, 274);
+            this.panel20.TabIndex = 81;
+            this.panel20.Visible = false;
+            // 
+            // bck_size
+            // 
+            this.bck_size.AutoSize = true;
+            this.bck_size.Location = new System.Drawing.Point(141, 78);
+            this.bck_size.Name = "bck_size";
+            this.bck_size.Size = new System.Drawing.Size(51, 16);
+            this.bck_size.TabIndex = 76;
+            this.bck_size.Text = "label58";
+            // 
+            // bck_file
+            // 
+            this.bck_file.AutoSize = true;
+            this.bck_file.Location = new System.Drawing.Point(141, 30);
+            this.bck_file.Name = "bck_file";
+            this.bck_file.Size = new System.Drawing.Size(51, 16);
+            this.bck_file.TabIndex = 75;
+            this.bck_file.Text = "label56";
+            // 
+            // label72
+            // 
+            this.label72.AutoSize = true;
+            this.label72.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label72.Location = new System.Drawing.Point(47, 75);
+            this.label72.Name = "label72";
+            this.label72.Size = new System.Drawing.Size(79, 20);
+            this.label72.TabIndex = 74;
+            this.label72.Text = "File Size:";
+            // 
+            // label76
+            // 
+            this.label76.AutoSize = true;
+            this.label76.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label76.Location = new System.Drawing.Point(47, 30);
+            this.label76.Name = "label76";
+            this.label76.Size = new System.Drawing.Size(41, 20);
+            this.label76.TabIndex = 73;
+            this.label76.Text = "File:";
+            // 
+            // bck_button
+            // 
+            this.bck_button.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bck_button.Location = new System.Drawing.Point(152, 162);
+            this.bck_button.Margin = new System.Windows.Forms.Padding(4);
+            this.bck_button.Name = "bck_button";
+            this.bck_button.Size = new System.Drawing.Size(229, 81);
+            this.bck_button.TabIndex = 70;
+            this.bck_button.Text = "Decompress";
+            this.bck_button.UseVisualStyleBackColor = true;
+            this.bck_button.Click += new System.EventHandler(this.bck_button_Click);
+            // 
+            // bck_load
+            // 
+            this.bck_load.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bck_load.Location = new System.Drawing.Point(182, 121);
+            this.bck_load.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.bck_load.Name = "bck_load";
+            this.bck_load.Size = new System.Drawing.Size(155, 30);
+            this.bck_load.TabIndex = 80;
+            this.bck_load.Text = "Load Binary File";
+            this.bck_load.UseVisualStyleBackColor = true;
+            this.bck_load.Click += new System.EventHandler(this.bck_load_Click);
+            // 
+            // bck_done
+            // 
+            this.bck_done.AutoSize = true;
+            this.bck_done.Location = new System.Drawing.Point(976, 500);
+            this.bck_done.Name = "bck_done";
+            this.bck_done.Size = new System.Drawing.Size(169, 16);
+            this.bck_done.TabIndex = 79;
+            this.bck_done.Text = "Image Saved Successfully!";
+            this.bck_done.Visible = false;
+            // 
+            // bck_save
+            // 
+            this.bck_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bck_save.Location = new System.Drawing.Point(989, 527);
+            this.bck_save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.bck_save.Name = "bck_save";
+            this.bck_save.Size = new System.Drawing.Size(137, 46);
+            this.bck_save.TabIndex = 78;
+            this.bck_save.Text = "Save Image";
+            this.bck_save.UseVisualStyleBackColor = true;
+            this.bck_save.Visible = false;
+            this.bck_save.Click += new System.EventHandler(this.bck_save_Click);
+            // 
+            // panel21
+            // 
+            this.panel21.AutoScroll = true;
+            this.panel21.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel21.Controls.Add(this.pictureBox14);
+            this.panel21.Location = new System.Drawing.Point(708, 34);
+            this.panel21.Margin = new System.Windows.Forms.Padding(4);
+            this.panel21.Name = "panel21";
+            this.panel21.Size = new System.Drawing.Size(619, 456);
+            this.panel21.TabIndex = 77;
+            this.panel21.Visible = false;
+            // 
+            // pictureBox14
+            // 
+            this.pictureBox14.Location = new System.Drawing.Point(-5, -2);
+            this.pictureBox14.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox14.Name = "pictureBox14";
+            this.pictureBox14.Size = new System.Drawing.Size(412, 360);
+            this.pictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox14.TabIndex = 1;
+            this.pictureBox14.TabStop = false;
+            // 
+            // fwd_panel
+            // 
+            this.fwd_panel.Controls.Add(this.fwd_panel2);
+            this.fwd_panel.Controls.Add(this.fwd_timeBox);
+            this.fwd_panel.Controls.Add(this.label64);
+            this.fwd_panel.Controls.Add(this.fwd_panel1);
+            this.fwd_panel.Controls.Add(this.panel22);
+            this.fwd_panel.Controls.Add(this.fwd_output);
+            this.fwd_panel.Location = new System.Drawing.Point(18, 63);
+            this.fwd_panel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.fwd_panel.Name = "fwd_panel";
+            this.fwd_panel.Size = new System.Drawing.Size(1253, 654);
+            this.fwd_panel.TabIndex = 91;
+            // 
+            // fwd_panel2
+            // 
+            this.fwd_panel2.Controls.Add(this.fwd_button);
+            this.fwd_panel2.Controls.Add(this.fwd_seed);
+            this.fwd_panel2.Controls.Add(this.fwd_tap);
+            this.fwd_panel2.Controls.Add(this.label66);
+            this.fwd_panel2.Controls.Add(this.label67);
+            this.fwd_panel2.Location = new System.Drawing.Point(612, 122);
+            this.fwd_panel2.Name = "fwd_panel2";
+            this.fwd_panel2.Size = new System.Drawing.Size(247, 250);
+            this.fwd_panel2.TabIndex = 88;
+            this.fwd_panel2.Visible = false;
+            // 
+            // fwd_button
+            // 
+            this.fwd_button.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fwd_button.Location = new System.Drawing.Point(14, 135);
+            this.fwd_button.Margin = new System.Windows.Forms.Padding(4);
+            this.fwd_button.Name = "fwd_button";
+            this.fwd_button.Size = new System.Drawing.Size(229, 81);
+            this.fwd_button.TabIndex = 63;
+            this.fwd_button.Text = "Encrypt + Compress";
+            this.fwd_button.UseVisualStyleBackColor = true;
+            this.fwd_button.Click += new System.EventHandler(this.fwd_button_Click);
+            // 
+            // fwd_seed
+            // 
+            this.fwd_seed.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fwd_seed.Location = new System.Drawing.Point(151, 47);
+            this.fwd_seed.Margin = new System.Windows.Forms.Padding(4);
+            this.fwd_seed.Name = "fwd_seed";
+            this.fwd_seed.Size = new System.Drawing.Size(75, 27);
+            this.fwd_seed.TabIndex = 67;
+            this.fwd_seed.Text = "1";
+            // 
+            // fwd_tap
+            // 
+            this.fwd_tap.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fwd_tap.Location = new System.Drawing.Point(150, 90);
+            this.fwd_tap.Margin = new System.Windows.Forms.Padding(4);
+            this.fwd_tap.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.fwd_tap.Name = "fwd_tap";
+            this.fwd_tap.Size = new System.Drawing.Size(76, 27);
+            this.fwd_tap.TabIndex = 66;
+            // 
+            // label66
+            // 
+            this.label66.AutoSize = true;
+            this.label66.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label66.Location = new System.Drawing.Point(55, 90);
+            this.label66.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label66.Name = "label66";
+            this.label66.Size = new System.Drawing.Size(41, 21);
+            this.label66.TabIndex = 64;
+            this.label66.Text = "Tap";
+            // 
+            // label67
+            // 
+            this.label67.AutoSize = true;
+            this.label67.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label67.Location = new System.Drawing.Point(29, 47);
+            this.label67.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label67.Name = "label67";
+            this.label67.Size = new System.Drawing.Size(112, 21);
+            this.label67.TabIndex = 65;
+            this.label67.Text = "Binary Seed";
+            // 
+            // fwd_timeBox
+            // 
+            this.fwd_timeBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fwd_timeBox.Location = new System.Drawing.Point(1115, 588);
+            this.fwd_timeBox.Margin = new System.Windows.Forms.Padding(4);
+            this.fwd_timeBox.Name = "fwd_timeBox";
+            this.fwd_timeBox.ReadOnly = true;
+            this.fwd_timeBox.Size = new System.Drawing.Size(120, 27);
+            this.fwd_timeBox.TabIndex = 87;
+            this.fwd_timeBox.Visible = false;
+            // 
+            // label64
+            // 
+            this.label64.AutoSize = true;
+            this.label64.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label64.Location = new System.Drawing.Point(1003, 592);
+            this.label64.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label64.Name = "label64";
+            this.label64.Size = new System.Drawing.Size(107, 21);
+            this.label64.TabIndex = 86;
+            this.label64.Text = "Time Taken";
+            this.label64.Visible = false;
+            // 
+            // fwd_panel1
+            // 
+            this.fwd_panel1.Controls.Add(this.label68);
+            this.fwd_panel1.Controls.Add(this.fwd_clear);
+            this.fwd_panel1.Controls.Add(this.fwd_height);
+            this.fwd_panel1.Controls.Add(this.fwd_width);
+            this.fwd_panel1.Controls.Add(this.label69);
+            this.fwd_panel1.Location = new System.Drawing.Point(22, 524);
+            this.fwd_panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.fwd_panel1.Name = "fwd_panel1";
+            this.fwd_panel1.Size = new System.Drawing.Size(584, 41);
+            this.fwd_panel1.TabIndex = 85;
+            this.fwd_panel1.Visible = false;
+            // 
+            // label68
+            // 
+            this.label68.AutoSize = true;
+            this.label68.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label68.Location = new System.Drawing.Point(183, 7);
+            this.label68.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label68.Name = "label68";
+            this.label68.Size = new System.Drawing.Size(67, 21);
+            this.label68.TabIndex = 60;
+            this.label68.Text = "Height";
+            // 
+            // fwd_clear
+            // 
+            this.fwd_clear.Location = new System.Drawing.Point(472, 2);
+            this.fwd_clear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.fwd_clear.Name = "fwd_clear";
+            this.fwd_clear.Size = new System.Drawing.Size(107, 28);
+            this.fwd_clear.TabIndex = 59;
+            this.fwd_clear.Text = "Clear Image";
+            this.fwd_clear.UseVisualStyleBackColor = true;
+            this.fwd_clear.Click += new System.EventHandler(this.fwd_clear_Click);
+            // 
+            // fwd_height
+            // 
+            this.fwd_height.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fwd_height.Location = new System.Drawing.Point(257, 4);
+            this.fwd_height.Margin = new System.Windows.Forms.Padding(4);
+            this.fwd_height.Name = "fwd_height";
+            this.fwd_height.ReadOnly = true;
+            this.fwd_height.Size = new System.Drawing.Size(75, 27);
+            this.fwd_height.TabIndex = 35;
+            // 
+            // fwd_width
+            // 
+            this.fwd_width.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fwd_width.Location = new System.Drawing.Point(77, 6);
+            this.fwd_width.Margin = new System.Windows.Forms.Padding(4);
+            this.fwd_width.Name = "fwd_width";
+            this.fwd_width.ReadOnly = true;
+            this.fwd_width.Size = new System.Drawing.Size(75, 27);
+            this.fwd_width.TabIndex = 38;
+            // 
+            // label69
+            // 
+            this.label69.AutoSize = true;
+            this.label69.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label69.Location = new System.Drawing.Point(9, 10);
+            this.label69.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label69.Name = "label69";
+            this.label69.Size = new System.Drawing.Size(61, 21);
+            this.label69.TabIndex = 39;
+            this.label69.Text = "Width";
+            // 
+            // panel22
+            // 
+            this.panel22.AutoScroll = true;
+            this.panel22.AutoScrollMinSize = new System.Drawing.Size(1, 1);
+            this.panel22.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel22.Controls.Add(this.fwd_load);
+            this.panel22.Controls.Add(this.pictureBox13);
+            this.panel22.Location = new System.Drawing.Point(22, 60);
+            this.panel22.Margin = new System.Windows.Forms.Padding(4);
+            this.panel22.Name = "panel22";
+            this.panel22.Size = new System.Drawing.Size(583, 456);
+            this.panel22.TabIndex = 84;
+            // 
+            // fwd_load
+            // 
+            this.fwd_load.Font = new System.Drawing.Font("Tahoma", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fwd_load.Location = new System.Drawing.Point(-3, -2);
+            this.fwd_load.Margin = new System.Windows.Forms.Padding(4);
+            this.fwd_load.Name = "fwd_load";
+            this.fwd_load.Size = new System.Drawing.Size(576, 450);
+            this.fwd_load.TabIndex = 30;
+            this.fwd_load.Text = "[+] ADD IMAGE";
+            this.fwd_load.UseVisualStyleBackColor = true;
+            this.fwd_load.Click += new System.EventHandler(this.fwd_load_Click);
+            // 
+            // pictureBox13
+            // 
+            this.pictureBox13.Location = new System.Drawing.Point(4, 4);
+            this.pictureBox13.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox13.Name = "pictureBox13";
+            this.pictureBox13.Size = new System.Drawing.Size(427, 360);
+            this.pictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox13.TabIndex = 0;
+            this.pictureBox13.TabStop = false;
+            // 
+            // fwd_output
+            // 
+            this.fwd_output.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.fwd_output.Controls.Add(this.fwd_done);
+            this.fwd_output.Controls.Add(this.fwd_save);
+            this.fwd_output.Controls.Add(this.fwd_size);
+            this.fwd_output.Controls.Add(this.fwd_ratio);
+            this.fwd_output.Controls.Add(this.label73);
+            this.fwd_output.Controls.Add(this.label74);
+            this.fwd_output.Controls.Add(this.label75);
+            this.fwd_output.Location = new System.Drawing.Point(889, 113);
+            this.fwd_output.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.fwd_output.Name = "fwd_output";
+            this.fwd_output.Size = new System.Drawing.Size(346, 272);
+            this.fwd_output.TabIndex = 81;
+            this.fwd_output.Visible = false;
+            // 
+            // fwd_done
+            // 
+            this.fwd_done.AutoSize = true;
+            this.fwd_done.Location = new System.Drawing.Point(75, 242);
+            this.fwd_done.Name = "fwd_done";
+            this.fwd_done.Size = new System.Drawing.Size(194, 16);
+            this.fwd_done.TabIndex = 7;
+            this.fwd_done.Text = "Binary File Saved Successfully!";
+            this.fwd_done.Visible = false;
+            // 
+            // fwd_save
+            // 
+            this.fwd_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fwd_save.Location = new System.Drawing.Point(83, 156);
+            this.fwd_save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.fwd_save.Name = "fwd_save";
+            this.fwd_save.Size = new System.Drawing.Size(179, 78);
+            this.fwd_save.TabIndex = 6;
+            this.fwd_save.Text = "Save Binary File";
+            this.fwd_save.UseVisualStyleBackColor = true;
+            this.fwd_save.Click += new System.EventHandler(this.fwd_save_Click);
+            // 
+            // fwd_size
+            // 
+            this.fwd_size.AutoSize = true;
+            this.fwd_size.Location = new System.Drawing.Point(191, 114);
+            this.fwd_size.Name = "fwd_size";
+            this.fwd_size.Size = new System.Drawing.Size(51, 16);
+            this.fwd_size.TabIndex = 5;
+            this.fwd_size.Text = "label45";
+            // 
+            // fwd_ratio
+            // 
+            this.fwd_ratio.AutoSize = true;
+            this.fwd_ratio.Location = new System.Drawing.Point(191, 79);
+            this.fwd_ratio.Name = "fwd_ratio";
+            this.fwd_ratio.Size = new System.Drawing.Size(51, 16);
+            this.fwd_ratio.TabIndex = 4;
+            this.fwd_ratio.Text = "label45";
+            // 
+            // label73
+            // 
+            this.label73.AutoSize = true;
+            this.label73.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label73.Location = new System.Drawing.Point(43, 113);
+            this.label73.Name = "label73";
+            this.label73.Size = new System.Drawing.Size(113, 18);
+            this.label73.TabIndex = 2;
+            this.label73.Text = "Binary File Size:";
+            // 
+            // label74
+            // 
+            this.label74.AutoSize = true;
+            this.label74.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label74.Location = new System.Drawing.Point(43, 78);
+            this.label74.Name = "label74";
+            this.label74.Size = new System.Drawing.Size(141, 18);
+            this.label74.TabIndex = 1;
+            this.label74.Text = "Compression Ratio:";
+            // 
+            // label75
+            // 
+            this.label75.AutoSize = true;
+            this.label75.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label75.Location = new System.Drawing.Point(15, 12);
+            this.label75.Name = "label75";
+            this.label75.Size = new System.Drawing.Size(97, 29);
+            this.label75.TabIndex = 0;
+            this.label75.Text = "Output:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1423, 731);
-            this.Controls.Add(this.Menu_Panel);
-            this.Controls.Add(this.Enc_Panel);
+            this.Controls.Add(this.Complete_Panel);
             this.Controls.Add(this.Comp_Panel);
             this.Controls.Add(this.Break_Panel);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Controls.Add(this.Menu_Panel);
+            this.Controls.Add(this.Enc_Panel);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "Image Encryption and Compression...";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -2600,13 +3178,6 @@ namespace ImageEncryptCompress
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             this.Comp_Panel.ResumeLayout(false);
             this.Comp_Panel.PerformLayout();
-            this.comp_decomp.ResumeLayout(false);
-            this.comp_decomp.PerformLayout();
-            this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
-            this.panel16.ResumeLayout(false);
-            this.panel16.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             this.comp_comp.ResumeLayout(false);
             this.comp_comp.PerformLayout();
             this.panel18.ResumeLayout(false);
@@ -2617,6 +3188,34 @@ namespace ImageEncryptCompress
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
             this.comp_output.ResumeLayout(false);
             this.comp_output.PerformLayout();
+            this.comp_decomp.ResumeLayout(false);
+            this.comp_decomp.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            this.panel16.ResumeLayout(false);
+            this.panel16.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
+            this.Complete_Panel.ResumeLayout(false);
+            this.Complete_Panel.PerformLayout();
+            this.bck_panel.ResumeLayout(false);
+            this.bck_panel.PerformLayout();
+            this.panel20.ResumeLayout(false);
+            this.panel20.PerformLayout();
+            this.panel21.ResumeLayout(false);
+            this.panel21.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
+            this.fwd_panel.ResumeLayout(false);
+            this.fwd_panel.PerformLayout();
+            this.fwd_panel2.ResumeLayout(false);
+            this.fwd_panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fwd_tap)).EndInit();
+            this.fwd_panel1.ResumeLayout(false);
+            this.fwd_panel1.PerformLayout();
+            this.panel22.ResumeLayout(false);
+            this.panel22.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
+            this.fwd_output.ResumeLayout(false);
+            this.fwd_output.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2815,5 +3414,50 @@ namespace ImageEncryptCompress
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.TextBox decomp_timeBox;
         private System.Windows.Forms.Label label60;
+        private System.Windows.Forms.Panel Complete_Panel;
+        private System.Windows.Forms.RadioButton complete_bck;
+        private System.Windows.Forms.RadioButton complete_fwd;
+        private System.Windows.Forms.Button complete_back;
+        private System.Windows.Forms.Label label63;
+        private System.Windows.Forms.Panel fwd_panel;
+        private System.Windows.Forms.Panel fwd_panel2;
+        private System.Windows.Forms.Button fwd_button;
+        private System.Windows.Forms.TextBox fwd_seed;
+        private System.Windows.Forms.NumericUpDown fwd_tap;
+        private System.Windows.Forms.Label label66;
+        private System.Windows.Forms.Label label67;
+        private System.Windows.Forms.TextBox fwd_timeBox;
+        private System.Windows.Forms.Label label64;
+        private System.Windows.Forms.Panel fwd_panel1;
+        private System.Windows.Forms.Label label68;
+        private System.Windows.Forms.Button fwd_clear;
+        private System.Windows.Forms.TextBox fwd_height;
+        private System.Windows.Forms.TextBox fwd_width;
+        private System.Windows.Forms.Label label69;
+        private System.Windows.Forms.Panel panel22;
+        private System.Windows.Forms.Button fwd_load;
+        private System.Windows.Forms.PictureBox pictureBox13;
+        private System.Windows.Forms.Panel fwd_output;
+        private System.Windows.Forms.Label fwd_done;
+        private System.Windows.Forms.Button fwd_save;
+        private System.Windows.Forms.Label fwd_size;
+        private System.Windows.Forms.Label fwd_ratio;
+        private System.Windows.Forms.Label label73;
+        private System.Windows.Forms.Label label74;
+        private System.Windows.Forms.Label label75;
+        private System.Windows.Forms.Panel bck_panel;
+        private System.Windows.Forms.TextBox bck_timeBox;
+        private System.Windows.Forms.Label label65;
+        private System.Windows.Forms.Panel panel20;
+        private System.Windows.Forms.Label bck_size;
+        private System.Windows.Forms.Label bck_file;
+        private System.Windows.Forms.Label label72;
+        private System.Windows.Forms.Label label76;
+        private System.Windows.Forms.Button bck_button;
+        private System.Windows.Forms.Button bck_load;
+        private System.Windows.Forms.Label bck_done;
+        private System.Windows.Forms.Button bck_save;
+        private System.Windows.Forms.Panel panel21;
+        private System.Windows.Forms.PictureBox pictureBox14;
     }
 }
