@@ -326,7 +326,9 @@ namespace ImageEncryptCompress
                 for (int i = 0; i < KEY_SIZE; i++)
                 {
                     char shiftOut = seed[0];
-                    char res = XOR(seed[(bitSize - tapPosition) - 1], shiftOut);
+
+                    //XOR
+                    char res = (char)(((seed[(bitSize - tapPosition) - 1] - '0') ^ (shiftOut - '0')) + '0');
 
                     for (int j = 1; j < bitSize; j++)
                     {
@@ -352,7 +354,7 @@ namespace ImageEncryptCompress
 
                 for (int i = 0; i < 8; i++)
                 {
-                    keyString[i] = XOR(alphaBinarySeed[(bitSize - tapPosition) - 1][i], shiftOut[i]);
+                    keyString[i] = (char)(((alphaBinarySeed[(bitSize - tapPosition) - 1][i] - '0') ^ (shiftOut[i] - '0')) + '0');
                 }
 
                 for (int j = 1; j < bitSize; j++)
@@ -395,9 +397,9 @@ namespace ImageEncryptCompress
 
                     for (int i = 0; i < KEY_SIZE; i++)
                     {
-                        redVal[i] = XOR(red[i], redKey[i]);
-                        greenVal[i] = XOR(green[i], greenKey[i]);
-                        blueVal[i] = XOR(blue[i], blueKey[i]);
+                        redVal[i] = (char)(((red[i] - '0') ^ (redKey[i] - '0')) + '0');
+                        greenVal[i] = (char)(((green[i] - '0') ^ (greenKey[i] - '0')) + '0');
+                        blueVal[i] = (char)(((blue[i] - '0') ^ (blueKey[i] - '0')) + '0');
                     }
 
                     pixel.red = ConvertToDecimal(redVal);
@@ -451,9 +453,9 @@ namespace ImageEncryptCompress
 
                     for (int i = 0; i < KEY_SIZE; i++)
                     {
-                        redVal[i] = XOR(red[i], redKey[i]);
-                        greenVal[i] = XOR(green[i], greenKey[i]);
-                        blueVal[i] = XOR(blue[i], blueKey[i]);
+                        redVal[i] = (char)(((red[i] - '0') ^ (redKey[i] - '0')) + '0');
+                        greenVal[i] = (char)(((green[i] - '0') ^ (greenKey[i] - '0')) + '0');
+                        blueVal[i] = (char)(((blue[i] - '0') ^ (blueKey[i] - '0')) + '0');
                     }
 
                     pixel.red = ConvertToDecimal(redVal);
@@ -472,7 +474,9 @@ namespace ImageEncryptCompress
             int height = GetHeight(ImageMatrix);
             int width = GetWidth(ImageMatrix);
 
-            for (int i=0; i < Math.Pow(2, N); i++)
+            int posibilities = (int)Math.Pow(2, N);
+
+            for (int i=0; i < posibilities; i++)
             {
 
                 string seed = Convert.ToString(i, 2).PadLeft(N, '0');

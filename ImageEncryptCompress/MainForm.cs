@@ -84,7 +84,9 @@ namespace ImageEncryptCompress
 
             label56.Visible = true;
             enc_timeBox.Visible = true;
-            enc_timeBox.Text = elapsedTimeInSeconds.ToString();
+            int minutes = (int)elapsedTimeInSeconds / 60;
+            int seconds = (int)elapsedTimeInSeconds % 60;
+            enc_timeBox.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
 
             panel2.Visible = true;
             enc_save.Visible = true;
@@ -224,7 +226,9 @@ namespace ImageEncryptCompress
 
             label61.Visible = true;
             break_timeBox.Visible = true;
-            break_timeBox.Text = elapsedTimeInSeconds.ToString();
+            int minutes = (int)elapsedTimeInSeconds / 60;
+            int seconds = (int)elapsedTimeInSeconds % 60;
+            break_timeBox.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
 
             break_output.Visible = true;
             break_seed.Text = seed;
@@ -388,7 +392,9 @@ namespace ImageEncryptCompress
             double elapsedTimeInSeconds = stopwatch.Elapsed.TotalSeconds;
             label58.Visible = true;
             comp_timeBox.Visible = true;
-            comp_timeBox.Text = elapsedTimeInSeconds.ToString();
+            int minutes = (int)elapsedTimeInSeconds / 60;
+            int seconds = (int)elapsedTimeInSeconds % 60;
+            comp_timeBox.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
 
             comp_ratio.Text = ratio.ToString() + " %";
             comp_size.Text = ImageOperations.CalculateCompressedImageSize(seed, tap, red_root, green_root, blue_root, width, height, rgbChannels).ToString() + " Bytes";
@@ -477,7 +483,9 @@ namespace ImageEncryptCompress
             label60.Visible = true;
             decomp_timeBox.Visible = true;
 
-            decomp_timeBox.Text = elapsedTimeInSeconds.ToString();
+            int minutes = (int)elapsedTimeInSeconds / 60;
+            int seconds = (int)elapsedTimeInSeconds % 60;
+            decomp_timeBox.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
 
             decomp_save.Visible = true;
             panel16.Visible = true;
@@ -595,15 +603,19 @@ namespace ImageEncryptCompress
             ImageOperations.LFSR(ImageMatrix_copy, tap, seed);
             
             (ratio, red_root, green_root, blue_root, rgbChannels) = ImageOperations.Huffman_Compress(ImageMatrix_copy, tap, seed);
-            stopwatch.Stop();
-            double elapsedTimeInSeconds = stopwatch.Elapsed.TotalSeconds;
-
+            
             fwd_ratio.Text = ratio.ToString() + " %";
             fwd_size.Text = ImageOperations.CalculateCompressedImageSize(seed, tap, red_root, green_root, blue_root, width, height, rgbChannels).ToString() + " Bytes";
 
+            stopwatch.Stop();
+            double elapsedTimeInSeconds = stopwatch.Elapsed.TotalSeconds;
+
             label64.Visible = false;
             fwd_timeBox.Visible = false;
-            fwd_timeBox.Text = elapsedTimeInSeconds.ToString();
+
+            int minutes = (int)elapsedTimeInSeconds / 60;
+            int seconds = (int)elapsedTimeInSeconds % 60;
+            fwd_timeBox.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
 
             fwd_output.Visible = true;
             label64.Visible = true;
@@ -660,7 +672,10 @@ namespace ImageEncryptCompress
             panel21.Visible = true;
             bck_timeBox.Visible = true;
             label65.Visible = true;
-            bck_timeBox.Text = elapsedTimeInSeconds.ToString();
+
+            int minutes = (int)elapsedTimeInSeconds / 60;
+            int seconds = (int)elapsedTimeInSeconds % 60;
+            bck_timeBox.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
         }
 
         private void bck_save_Click(object sender, EventArgs e)
