@@ -640,7 +640,7 @@ namespace ImageEncryptCompress
             return arrays;
         }
 
-        private static void WriteCompressedImage(string fileName, string initSeed, int tapPosition, 
+        public static void WriteCompressedImage(string fileName, string initSeed, int tapPosition, 
             Node<short> red_root, Node<short> green_root, Node<short> blue_root, int imgWidth, int imgHeight, string[] rgbChannels)
         {
             using (var stream = File.Open(fileName, FileMode.Create))

@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -211,13 +215,143 @@ namespace ImageEncryptCompress
             complete_fwd.Checked = true;
         }
 
+        static string folderPath;
 
-        private void test_b_Click(object sender, EventArgs e)
+        private string getFolderPath()
+        {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            {
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedPath = folderDialog.SelectedPath;
+
+                    return selectedPath;
+                }
+            }
+
+            return null;
+        }
+
+        private async void test_b_Click(object sender, EventArgs e)
         {
             //box
+            //try
+            {
+                folderPath = getFolderPath();
 
-            Test_Panel.Visible = true;
-            Menu_Panel.Visible = false;
+                if (folderPath != null)
+                {
+                    Test_Panel.Visible = true;
+                    Menu_Panel.Visible = false;
+                    using (StreamReader reader = new StreamReader("..\\..\\testScript.txt"))
+                    {
+                        int numberOfCases = int.Parse(reader.ReadLine());
+
+                        int completedTime = 0;
+                        int completedSize = 0;
+
+                        for (int i = 0; i < numberOfCases; i++)
+                        {
+                            
+                            test_case.Text = "Running Case " + (i + 1).ToString() + ": ";
+                            await Task.Delay(1000);
+
+                            string imgPath = reader.ReadLine();
+                            string imgName = reader.ReadLine();
+                            string binarySeed = reader.ReadLine();
+                            int tapPosition = int.Parse(reader.ReadLine());
+                            int time1 = int.Parse(reader.ReadLine());
+                            int time2 = int.Parse(reader.ReadLine());
+                            long outputSize = long.Parse(reader.ReadLine());
+
+                            ImageMatrix = ImageOperations.OpenImage(imgPath);
+                            int imgWidth = ImageOperations.GetWidth(ImageMatrix);
+                            int imgHeigh = ImageOperations.GetHeight(ImageMatrix);
+                            ImageOperations.DisplayImage(ImageMatrix, test_original);
+                            RGBPixel[,] ImageMatrix_copy = (RGBPixel[,])ImageMatrix.Clone();
+
+                            Stopwatch fwdSw = Stopwatch.StartNew();
+
+                            ImageOperations.LFSR(ImageMatrix_copy, tapPosition, binarySeed);
+                            ImageOperations.DisplayImage(ImageMatrix_copy, test_enc);
+                            test_enc.Image.Save(folderPath + "\\" + imgName + "_enc", ImageFormat.Bmp);
+
+                            await Task.Delay(100);
+
+                            float ratio = 0;
+                            (ratio, red_root, green_root, blue_root, rgbChannels) = ImageOperations.Huffman_Compress(ImageMatrix_copy, tapPosition, binarySeed);
+                            long size = ImageOperations.CalculateCompressedImageSize(binarySeed, tapPosition, red_root, green_root, blue_root, imgWidth, imgHeigh, rgbChannels);
+                            test_size.Text = size.ToString() + " Bytes";
+                            test_ratio.Text = ratio.ToString() + " %";
+
+                            ImageOperations.WriteCompressedImage(folderPath + "\\" + imgName + ".bin", binarySeed, tapPosition, red_root, green_root, blue_root, imgWidth, imgHeigh, rgbChannels);
+
+                            fwdSw.Stop();
+
+                            double elapsedTimeInSeconds = fwdSw.Elapsed.TotalSeconds;
+                            int minutes = (int)elapsedTimeInSeconds / 60;
+                            int seconds = (int)elapsedTimeInSeconds % 60;
+                            test_fwd_time.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
+
+                            await Task.Delay(100);
+
+                            Stopwatch bckSw = Stopwatch.StartNew();
+
+                            (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.Huffman_Decompress(folderPath + "\\" + imgName + ".bin");
+                            ImageOperations.DisplayImage(decompressedImage, test_decomp);
+                            test_decomp.Image.Save(folderPath + "\\" + imgName + "_decopm", ImageFormat.Bmp);
+
+                            await Task.Delay(100);
+
+                            ImageOperations.LFSR(decompressedImage, tap, seed);
+                            ImageOperations.DisplayImage(decompressedImage, test_dec);
+                            test_dec.Image.Save(folderPath + "\\" + imgName + "_dec", ImageFormat.Bmp);
+
+                            bckSw.Stop();
+
+                            double elapsedTimeInSecondsBck = bckSw.Elapsed.TotalSeconds;
+                            int minutesBck = (int)elapsedTimeInSecondsBck / 60;
+                            int secondsBcl = (int)elapsedTimeInSecondsBck % 60;
+                            test_bck_time.Text = minutesBck.ToString() + " min, " + secondsBcl.ToString() + " sec";
+
+                            await Task.Delay(100);
+
+                            if (outputSize >= size)
+                            {
+                                completedSize++;
+                            }
+                            if(elapsedTimeInSeconds <= time1 && elapsedTimeInSecondsBck <= time2)
+                            {
+                                completedTime++;
+                            }
+
+                            await Task.Delay(3000);
+                            test_dec.Image = null;
+                            test_enc.Image = null;
+                            test_original.Image = null;
+                            test_decomp.Image = null;
+                            test_bck_time.Text = "";
+                            test_fwd_time.Text = "";
+                            test_size.Text = "";
+                            test_ratio.Text = "";
+
+                        }
+
+                        test_result1.Text = "Correct Time => " + completedTime.ToString() + "/" + numberOfCases.ToString();
+                        test_result2.Text = "Correct Size => " + completedSize.ToString() + "/" + numberOfCases.ToString();
+
+                    }
+
+                }
+            }
+            /*catch
+            {
+                Console.WriteLine("negawatt");
+            }*/
+            
+
+
+            
         }
         //End of Menu Panel
 
@@ -455,6 +589,7 @@ namespace ImageEncryptCompress
                 Stopwatch stopwatch = Stopwatch.StartNew();
                 if (method == "Huffman")
                 {
+                    //
                     (ratio, red_root, green_root, blue_root, rgbChannels) = ImageOperations.Huffman_Compress(ImageMatrix_copy, tap, seed);
 
                 }
@@ -568,6 +703,7 @@ namespace ImageEncryptCompress
             {
                 if (method == "Huffman")
                 {
+                    //
                     (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.Huffman_Decompress(filePath);
                     stopwatch.Stop();
                     ImageOperations.DisplayImage(decompressedImage, pictureBox11);
@@ -857,6 +993,7 @@ namespace ImageEncryptCompress
 
         private void test_back_Click(object sender, EventArgs e)
         {
+            folderPath = null;
             Test_Panel.Visible = false;
             Menu_Panel.Visible = true;
 

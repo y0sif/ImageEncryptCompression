@@ -1,0 +1,43 @@
+6
+..\..\Complete Test\Small\Small.Case1.bmp
+Small.Case1
+0011001101010101
+8
+1
+1
+77000
+..\..\Complete Test\Small\Small.Case2.bmp
+Small.Case2
+111111110000000011111111000000001111111100000000
+47
+2
+2
+754000
+..\..\Complete Test\Medium\Medium.Case1.bmp
+Medium.Case1
+01101000010100010000
+16
+30
+30
+9441000
+..\..\Complete Test\Medium\Medium.Case2.bmp
+Medium.Case2
+00101
+0
+30
+30
+21506000
+..\..\Complete Test\Large\Large.Case1.bmp
+Large.Case1
+00101
+3
+120
+150
+124881000
+..\..\Complete Test\Large\Large.Case2.bmp
+Large.Case2
+0000
+3
+180
+180
+195188000
