@@ -95,6 +95,25 @@ namespace ImageEncryptCompress
 
 
         }
+        private void nudMaskSize_ValueChanged(object sender, EventArgs e)
+        {
+            panel2.Visible = false;
+            label2.Visible = false;
+            enc_save.Visible = false;
+            enc_timeBox.Visible = false;
+            label56.Visible = false;
+        }
+
+        private void txtGaussSigma_TextChanged(object sender, EventArgs e)
+        {
+            nudMaskSize.Maximum = txtGaussSigma.Text.Length - 1;
+            panel2.Visible = false;
+            label2.Visible = false;
+            enc_save.Visible = false;
+            enc_timeBox.Visible = false;
+            label56.Visible = false;
+        }
+
         private void enc_save_Click(object sender, EventArgs e)
         {
             if (ImageOperations.saveImage(pictureBox2) >= 0)
@@ -117,6 +136,16 @@ namespace ImageEncryptCompress
             label56.Visible = false;
             enc_timeBox.Visible = false;
         }
+
+        private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            panel2.Visible = false;
+            label2.Visible = false;
+            enc_save.Visible = false;
+            label56.Visible = false;
+            enc_timeBox.Visible = false;
+        }
+
         //End of Enc Panel
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -249,9 +278,12 @@ namespace ImageEncryptCompress
         private void break_bits_ValueChanged(object sender, EventArgs e)
         {
             int bits = (int)break_bits.Value;
-            long possibilities = bits * (int)Math.Pow(2, bits);
+ 
+            long possibilities = bits * (long)Math.Pow(2, bits);
+
             break_possibilities.Text = possibilities.ToString();
-            double time = int.Parse(textBox16.Text) * int.Parse(textBox17.Text) * bits * Math.Pow(2, bits) / 470000;
+
+            double time = int.Parse(textBox16.Text) * int.Parse(textBox17.Text) * bits * Math.Pow(2, bits) / 1000000;
             time = Math.Ceiling(time + (time / 10));
             if (time < 60)
                 break_time.Text = time.ToString() + " seconds";
@@ -259,8 +291,10 @@ namespace ImageEncryptCompress
                 break_time.Text = Math.Ceiling(time/60).ToString() + " minutes";
             else if (time < 86400)
                 break_time.Text = Math.Ceiling(time/3600).ToString() + " hours";
-            else
+            else if (time < 31536000)
                 break_time.Text = Math.Ceiling(time/86400).ToString() + " days";
+            else
+                break_time.Text = Math.Ceiling(time / 31536000).ToString() + " years";
 
 
 
@@ -281,6 +315,8 @@ namespace ImageEncryptCompress
             comp_done.Visible = false;
             comp_timeBox.Visible = false;
             label58.Visible = false;
+            panel18.Visible = false;
+            comp_load.Visible = true;
             comp_method.SelectedItem = "Huffman";
         }
 
@@ -428,12 +464,26 @@ namespace ImageEncryptCompress
         {
             comp_done.Visible = false;
             comp_output.Visible = false;
+            comp_timeBox.Visible = false;
+            label60.Visible = false;
+
         }
 
         private void comp_seed_TextChanged(object sender, EventArgs e)
         {
             comp_done.Visible = false;
             comp_output.Visible = false;
+            comp_timeBox.Visible = false;
+            label60.Visible = false;
+            comp_tap.Maximum = comp_seed.Text.Length - 1;
+        }
+
+
+        private void comp_method_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            comp_output.Visible = false;
+            comp_timeBox.Visible = false;
+            label58.Visible = false;
         }
 
         private void decomp_load_Click(object sender, EventArgs e)
@@ -499,6 +549,15 @@ namespace ImageEncryptCompress
             }
         }
 
+        private void decomp_method_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            panel16.Visible = false;
+            decomp_save.Visible = false;
+            decomp_done.Visible = false;
+            decomp_timeBox.Visible = false;
+            label60.Visible = false;
+        }
+
         //End of Comp panel
 
 
@@ -547,6 +606,7 @@ namespace ImageEncryptCompress
             fwd_panel2.Visible = false;
             label64.Visible = false;
             fwd_timeBox.Visible = false;
+            fwd_load.Visible = true;
         }
 
         private void fwd_load_Click(object sender, EventArgs e)
@@ -566,6 +626,20 @@ namespace ImageEncryptCompress
             }
         }
 
+        private void fwd_seed_TextChanged(object sender, EventArgs e)
+        {
+            fwd_tap.Maximum = fwd_seed.Text.Length - 1;
+            fwd_output.Visible = false;
+            fwd_timeBox.Visible = false;
+            label64.Visible = false;
+        }
+
+        private void fwd_tap_ValueChanged(object sender, EventArgs e)
+        {
+            fwd_output.Visible = false;
+            fwd_timeBox.Visible = false;
+            label64.Visible = false;
+        }
 
         private void fwd_clear_Click(object sender, EventArgs e)
         {

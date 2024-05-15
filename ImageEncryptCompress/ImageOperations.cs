@@ -553,10 +553,7 @@ namespace ImageEncryptCompress
 
             return total;
         }
-        public static char XOR(char op1Char, char op2Char)
-        {
-            return (char)(((op1Char - '0') ^ (op2Char - '0')) + '0');
-        }
+
 
         //--------------------------------//
         // COMPRESSION & DECOMPRESSION    //
