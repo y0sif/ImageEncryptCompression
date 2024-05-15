@@ -23,8 +23,8 @@ namespace ImageEncryptCompress
     {
         public double red, green, blue;
     }
-    
-  
+
+
     /// <summary>
     /// Library of static functions that deal with images
     /// </summary>
@@ -100,7 +100,7 @@ namespace ImageEncryptCompress
         }
 
 
-  
+
         public static int saveImage(PictureBox PicBox)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
@@ -109,12 +109,12 @@ namespace ImageEncryptCompress
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 PicBox.Image.Save(saveFileDialog1.FileName, ImageFormat.Bmp);
-                return 0; 
+                return 0;
             }
 
             return -1; //failed
         }
-        
+
         public static int saveBinary(string initSeed, int tapPosition,
             Node<short> red_root, Node<short> green_root, Node<short> blue_root, int imgWidth, int imgHeight, string[] rgbChannels)
         {
@@ -213,13 +213,13 @@ namespace ImageEncryptCompress
         }
 
 
-       /// <summary>
-       /// Apply Gaussian smoothing filter to enhance the edge detection 
-       /// </summary>
-       /// <param name="ImageMatrix">Colored image matrix</param>
-       /// <param name="filterSize">Gaussian mask size</param>
-       /// <param name="sigma">Gaussian sigma</param>
-       /// <returns>smoothed color image</returns>
+        /// <summary>
+        /// Apply Gaussian smoothing filter to enhance the edge detection 
+        /// </summary>
+        /// <param name="ImageMatrix">Colored image matrix</param>
+        /// <param name="filterSize">Gaussian mask size</param>
+        /// <param name="sigma">Gaussian sigma</param>
+        /// <returns>smoothed color image</returns>
         public static RGBPixel[,] GaussianFilter1D(RGBPixel[,] ImageMatrix, int filterSize, double sigma)
         {
             int Height = GetHeight(ImageMatrix);
@@ -228,7 +228,7 @@ namespace ImageEncryptCompress
             RGBPixelD[,] VerFiltered = new RGBPixelD[Height, Width];
             RGBPixel[,] Filtered = new RGBPixel[Height, Width];
 
-           
+
             // Create Filter in Spatial Domain:
             //=================================
             //make the filter ODD size
@@ -337,7 +337,7 @@ namespace ImageEncryptCompress
 
                 RGBKeys[k] = keyString;
             }
-                        
+
         }
         public static void XORKeyGeneration(int tapPosition, char[][] alphaBinarySeed)
         {
@@ -410,7 +410,7 @@ namespace ImageEncryptCompress
                 {
                     ref RGBPixel pixel = ref ImageMatrix[row, col];
 
-                    if(isXOR)
+                    if (isXOR)
                     {
                         XORKeyGeneration(tapPosition, alphaBinarySeed);
                     }
@@ -441,11 +441,11 @@ namespace ImageEncryptCompress
 
             int posibilities = (int)Math.Pow(2, N);
 
-            for (int i=0; i < posibilities; i++)
+            for (int i = 0; i < posibilities; i++)
             {
 
                 string seed = Convert.ToString(i, 2).PadLeft(N, '0');
-                
+
                 for (int tapPosition = 0; tapPosition < N; tapPosition++)
                 {
                     RGBPixel[,] ImageMatrix_copy = (RGBPixel[,])ImageMatrix.Clone();
@@ -453,7 +453,7 @@ namespace ImageEncryptCompress
                     ImageMatrix_copy = LFSR(ImageMatrix_copy, tapPosition, seed);
                     frequency_deviations[(seed, tapPosition)] = 0;
 
-                    for (int row = 0; row < height ; row++)
+                    for (int row = 0; row < height; row++)
                     {
                         for (int col = 0; col < width; col++)
                         {
@@ -461,8 +461,8 @@ namespace ImageEncryptCompress
 
                             frequency_deviations[(seed, tapPosition)] += Math.Abs(pixel.red - 128);
                             frequency_deviations[(seed, tapPosition)] += Math.Abs(pixel.green - 128);
-                            frequency_deviations[(seed, tapPosition)] += Math.Abs(pixel.blue - 128);     
-                            
+                            frequency_deviations[(seed, tapPosition)] += Math.Abs(pixel.blue - 128);
+
                         }
                     }
                 }
@@ -481,7 +481,7 @@ namespace ImageEncryptCompress
             }
 
             return best_seed_and_tap;
-        }   
+        }
 
         //--------------------------------//
         // COMPRESSION & DECOMPRESSION    //
@@ -511,7 +511,7 @@ namespace ImageEncryptCompress
                 {
                     RGBPixel pixel = ImageMatrix[i, j];
                     // red dictionary
-                    if(R.ContainsKey(pixel.red))
+                    if (R.ContainsKey(pixel.red))
                     {
                         R[pixel.red]++;
                     }
@@ -545,17 +545,17 @@ namespace ImageEncryptCompress
         {
             PriorityQueue<int, Node<short>> pq = new PriorityQueue<int, Node<short>>();
 
-            foreach(short value in color.Keys)
+            foreach (short value in color.Keys)
             {
                 int freq = color[value];
                 Node<short> node = new Node<short>(value, freq);
                 pq.Enqueue(freq, node);
             }
-            for(int i = 0; i < color.Count - 1;  i++)
+            for (int i = 0; i < color.Count - 1; i++)
             {
                 Node<short> node = new Node<short>(256, 0);
                 Node<short> firstMin = pq.Dequeue();
-                Node<short> secondMin = pq.Dequeue();  
+                Node<short> secondMin = pq.Dequeue();
                 node.left = secondMin;
                 node.right = firstMin;
                 node.freq = firstMin.freq + secondMin.freq;
@@ -596,7 +596,7 @@ namespace ImageEncryptCompress
             R_TREE.Clear();
             G_TREE.Clear();
             B_TREE.Clear();
-            dfs(root_red, "", R_TREE, R,  ref rChannel);
+            dfs(root_red, "", R_TREE, R, ref rChannel);
             dfs(root_green, "", G_TREE, G, ref gChannel);
             dfs(root_blue, "", B_TREE, B, ref bChannel);
 
@@ -636,11 +636,11 @@ namespace ImageEncryptCompress
             string green = greenBuilder.ToString();
             string blue = blueBuilder.ToString();
 
-            string[] arrays = new string[]{ red, green, blue };
+            string[] arrays = new string[] { red, green, blue };
             return arrays;
         }
 
-        public static void WriteCompressedImage(string fileName, string initSeed, int tapPosition, 
+        public static void WriteCompressedImage(string fileName, string initSeed, int tapPosition,
             Node<short> red_root, Node<short> green_root, Node<short> blue_root, int imgWidth, int imgHeight, string[] rgbChannels)
         {
             using (var stream = File.Open(fileName, FileMode.Create))
@@ -681,7 +681,7 @@ namespace ImageEncryptCompress
             {
                 return;
             }
-            if(node.value == 256)
+            if (node.value == 256)
             {
                 writer.Write(node.value);
                 //Console.WriteLine("node freq: " + node.freq);
@@ -830,7 +830,7 @@ namespace ImageEncryptCompress
             PrintTree(node.right);
         }
 
-        public static (RGBPixel[,] , int , string) Huffman_Decompress(string filePath)
+        public static (RGBPixel[,], int, string) Huffman_Decompress(string filePath)
         {
             //throw new NotImplementedException();
 
@@ -844,7 +844,7 @@ namespace ImageEncryptCompress
             int rLen = rgbChannels[0].Length;
             int gLen = rgbChannels[1].Length;
             int bLen = rgbChannels[2].Length;
-            
+
             for (int i = 0; i < imgHeight; i++)
             {
                 for (int j = 0; j < imgWidth; j++)
@@ -1034,7 +1034,7 @@ namespace ImageEncryptCompress
 
         private static void RLEWriteChannel(BinaryWriter writer, List<byte> val, List<int> freq)
         {
-            for(int i = 0; i < val.Count; i++)
+            for (int i = 0; i < val.Count; i++)
             {
                 writer.Write(freq[i]);
                 writer.Write(val[i]);
@@ -1061,7 +1061,7 @@ namespace ImageEncryptCompress
             using (var stream = File.OpenRead(filePath))
             {
                 using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
-                { 
+                {
 
                     tapPosition = reader.ReadInt32();
                     initSeed = reader.ReadString();
@@ -1083,7 +1083,7 @@ namespace ImageEncryptCompress
                 }
             }
 
-            return (redVal,  greenVal, blueVal, redFreq, greenFreq, blueFreq, tapPosition, initSeed, imgWidth, imgHeight);
+            return (redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq, tapPosition, initSeed, imgWidth, imgHeight);
         }
 
         private static (List<byte> val, List<int> freq) ReadRLELists(BinaryReader reader, int count)
@@ -1128,7 +1128,7 @@ namespace ImageEncryptCompress
 
             for (int i = 0; i < imgHeight; i++)
             {
-                for(int j = 0; j < imgWidth; j++)
+                for (int j = 0; j < imgWidth; j++)
                 {
                     //red
                     if (redFreq[currentRed] != 0)

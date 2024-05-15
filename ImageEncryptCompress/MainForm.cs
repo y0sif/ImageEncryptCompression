@@ -41,7 +41,7 @@ namespace ImageEncryptCompress
             {
                 enc_load.Visible = true;
             }
-            
+
         }
         private void enc_clear_Click(object sender, EventArgs e)
         {
@@ -76,7 +76,7 @@ namespace ImageEncryptCompress
                 ImageMatrix_copy = ImageOperations.AlphaNumLFSR(ImageMatrix_copy, tap, initSeed, false);
             else if (method == "Alphanumerical XOR")
                 ImageMatrix_copy = ImageOperations.AlphaNumLFSR(ImageMatrix_copy, tap, initSeed, true);
-            
+
             stopwatch.Stop();
 
             double elapsedTimeInSeconds = stopwatch.Elapsed.TotalSeconds;
@@ -188,7 +188,7 @@ namespace ImageEncryptCompress
             Menu_Panel.Visible = false;
             Enc_Panel.Visible = true;
             comboBox1.SelectedItem = "Binary";
-        }        
+        }
         private void break_b_Click(object sender, EventArgs e)
         {
             Menu_Panel.Visible = false;
@@ -252,7 +252,7 @@ namespace ImageEncryptCompress
 
                         for (int i = 0; i < numberOfCases; i++)
                         {
-                            
+
                             test_case.Text = "Running Case " + (i + 1).ToString() + ": ";
                             await Task.Delay(1000);
 
@@ -320,7 +320,7 @@ namespace ImageEncryptCompress
                             {
                                 completedSize++;
                             }
-                            if(elapsedTimeInSeconds <= time1 && elapsedTimeInSecondsBck <= time2)
+                            if (elapsedTimeInSeconds <= time1 && elapsedTimeInSecondsBck <= time2)
                             {
                                 completedTime++;
                             }
@@ -348,10 +348,10 @@ namespace ImageEncryptCompress
             {
                 Console.WriteLine("negawatt");
             }*/
-            
 
 
-            
+
+
         }
         //End of Menu Panel
 
@@ -444,7 +444,7 @@ namespace ImageEncryptCompress
         private void break_bits_ValueChanged(object sender, EventArgs e)
         {
             int bits = (int)break_bits.Value;
- 
+
             long possibilities = bits * (long)Math.Pow(2, bits);
 
             break_possibilities.Text = possibilities.ToString();
@@ -454,11 +454,11 @@ namespace ImageEncryptCompress
             if (time < 60)
                 break_time.Text = time.ToString() + " seconds";
             else if (time < 3600)
-                break_time.Text = Math.Ceiling(time/60).ToString() + " minutes";
+                break_time.Text = Math.Ceiling(time / 60).ToString() + " minutes";
             else if (time < 86400)
-                break_time.Text = Math.Ceiling(time/3600).ToString() + " hours";
+                break_time.Text = Math.Ceiling(time / 3600).ToString() + " hours";
             else if (time < 31536000)
-                break_time.Text = Math.Ceiling(time/86400).ToString() + " days";
+                break_time.Text = Math.Ceiling(time / 86400).ToString() + " days";
             else
                 break_time.Text = Math.Ceiling(time / 31536000).ToString() + " years";
 
@@ -559,8 +559,8 @@ namespace ImageEncryptCompress
         string[] rgbChannels;
         int tap;
         string seed;
-        int width ;
-        int height ;
+        int width;
+        int height;
         List<byte> redVal, greenVal, blueVal;
         List<int> redFreq, greenFreq, blueFreq;
 
@@ -617,7 +617,8 @@ namespace ImageEncryptCompress
 
                 comp_output.Visible = true;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 comp_fail.Visible = true;
             }
         }
@@ -634,12 +635,12 @@ namespace ImageEncryptCompress
             }
             else
             {
-                if(ImageOperations.saveBinaryForRLE(redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq, tap, seed, width, height) >= 0)
+                if (ImageOperations.saveBinaryForRLE(redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq, tap, seed, width, height) >= 0)
                 {
                     comp_done.Visible = true;
                 }
             }
-            
+
         }
 
 
@@ -732,8 +733,8 @@ namespace ImageEncryptCompress
                 decomp_fail.Visible = true;
             }
 
-            
-        } 
+
+        }
 
         private void decomp_save_Click(object sender, EventArgs e)
         {
@@ -770,7 +771,7 @@ namespace ImageEncryptCompress
             fwd_panel2.Visible = false;
             fwd_timeBox.Visible = false;
             label64.Visible = false;
-            fwd_load.Visible = true; 
+            fwd_load.Visible = true;
 
         }
 
@@ -909,12 +910,12 @@ namespace ImageEncryptCompress
 
         private void fwd_save_Click(object sender, EventArgs e)
         {
-           
+
             if (ImageOperations.saveBinary(seed, tap, red_root, green_root, blue_root, width, height, rgbChannels) >= 0)
             {
                 fwd_done.Visible = true;
             }
-            
+
         }
 
 
