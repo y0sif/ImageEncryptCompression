@@ -5,15 +5,6 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
-using System.Collections;
-using System.Runtime.InteropServices.ComTypes;
-using System.IO.Pipes;
-using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Channels;
-using System.Reflection.Emit;
 
 ///Algorithms Project
 ///Intelligent Scissors
@@ -39,6 +30,9 @@ namespace ImageEncryptCompress
     /// </summary>
     public class ImageOperations
     {
+
+        #region File Writing & Loading
+
         /// <summary>
         /// Open an image and load it into 2D array of colors (size: Height x Width)
         /// </summary>
@@ -105,6 +99,8 @@ namespace ImageEncryptCompress
             return Buffer;
         }
 
+
+  
         public static int saveImage(PictureBox PicBox)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
@@ -155,7 +151,9 @@ namespace ImageEncryptCompress
             }
             return (null, 0); //failed
         }
+        #endregion
 
+        #region Image Operations
         /// <summary>
         /// Get the height of the image 
         /// </summary>
@@ -306,10 +304,9 @@ namespace ImageEncryptCompress
 
             return Filtered;
         }
+        #endregion
 
-        //--------------------------------//
-        // ENCRYPTION & DECRYPTION CODE   //
-        //--------------------------------//
+        #region Encryption & Decryption Code
 
         //Global Attributes
         private static char[][] RGBKeys = new char[3][];
@@ -327,7 +324,6 @@ namespace ImageEncryptCompress
                 {
                     char shiftOut = seed[0];
 
-                    //XOR
                     char res = (char)(((seed[(bitSize - tapPosition) - 1] - '0') ^ (shiftOut - '0')) + '0');
 
                     for (int j = 1; j < bitSize; j++)
@@ -380,7 +376,6 @@ namespace ImageEncryptCompress
                 {
                     ref RGBPixel pixel = ref ImageMatrix[row, col];
 
-                    // Generate keys for the current pixel
                     KeyGeneration(tapPosition, seed);
 
                     char[] redKey = RGBKeys[0];
@@ -394,16 +389,6 @@ namespace ImageEncryptCompress
             }
 
             return ImageMatrix;
-        }
-
-        private static byte ConvertToByte(char[] binaryKey)
-        {
-            byte result = 0;
-            for (int i = 0; i < binaryKey.Length; i++)
-            {
-                result = (byte)((result << 1) | (binaryKey[i] - '0'));
-            }
-            return result;
         }
 
         public static RGBPixel[,] AlphaNumLFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed, bool isXOR)
@@ -438,24 +423,9 @@ namespace ImageEncryptCompress
                     char[] greenKey = RGBKeys[1];
                     char[] blueKey = RGBKeys[2];
 
-                    string red = Convert.ToString(pixel.red, 2).PadLeft(8, '0');
-                    string green = Convert.ToString(pixel.green, 2).PadLeft(8, '0'); ;
-                    string blue = Convert.ToString(pixel.blue, 2).PadLeft(8, '0');
-
-                    char[] redVal = new char[8];
-                    char[] greenVal = new char[8];
-                    char[] blueVal = new char[8];
-
-                    for (int i = 0; i < KEY_SIZE; i++)
-                    {
-                        redVal[i] = (char)(((red[i] - '0') ^ (redKey[i] - '0')) + '0');
-                        greenVal[i] = (char)(((green[i] - '0') ^ (greenKey[i] - '0')) + '0');
-                        blueVal[i] = (char)(((blue[i] - '0') ^ (blueKey[i] - '0')) + '0');
-                    }
-
-                    pixel.red = ConvertToDecimal(redVal);
-                    pixel.green = ConvertToDecimal(greenVal);
-                    pixel.blue = ConvertToDecimal(blueVal);
+                    pixel.red = (byte)(pixel.red ^ ConvertToByte(redKey));
+                    pixel.green = (byte)(pixel.green ^ ConvertToByte(greenKey));
+                    pixel.blue = (byte)(pixel.blue ^ ConvertToByte(blueKey));
                 }
             }
 
@@ -543,21 +513,18 @@ namespace ImageEncryptCompress
             }
         }
 
-        public static byte ConvertToDecimal(char[] binary)
+        private static byte ConvertToByte(char[] binaryKey)
         {
-            byte total = 0;
-            for (int i = 0; i < 8; i++)
+            byte result = 0;
+            for (int i = 0; i < binaryKey.Length; i++)
             {
-                total += (byte)((binary[i] - '0') * Math.Pow(2, 7 - i));
+                result = (byte)((result << 1) | (binaryKey[i] - '0'));
             }
-
-            return total;
+            return result;
         }
+        #endregion                                                              //------------------------------//
 
-
-        //--------------------------------//
-        // COMPRESSION & DECOMPRESSION    //
-        //--------------------------------//
+        #region Compression & Decompression
 
         //use binarywriter to write the image to the file
 
@@ -1303,3 +1270,4 @@ namespace ImageEncryptCompress
         }
     }
 }
+#endregion

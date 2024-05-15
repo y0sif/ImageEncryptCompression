@@ -1,15 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+
 
 namespace ImageEncryptCompress
 {
@@ -53,11 +46,6 @@ namespace ImageEncryptCompress
 
         private void btnGaussSmooth_Click(object sender, EventArgs e)
         {
-            /*double sigma = double.Parse(txtGaussSigma.Text);
-            int maskSize = (int)nudMaskSize.Value ;
-            ImageMatrix = ImageOperations.GaussianFilter1D(ImageMatrix, maskSize, sigma);
-            ImageOperations.DisplayImage(ImageMatrix, pictureBox2);*/
-
             string initSeed = txtGaussSigma.Text;
             int tap = (int)nudMaskSize.Value;
 
