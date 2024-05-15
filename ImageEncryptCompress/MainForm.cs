@@ -211,6 +211,14 @@ namespace ImageEncryptCompress
             complete_fwd.Checked = true;
         }
 
+
+        private void test_b_Click(object sender, EventArgs e)
+        {
+            //box
+
+            Test_Panel.Visible = true;
+            Menu_Panel.Visible = false;
+        }
         //End of Menu Panel
 
 
@@ -713,6 +721,7 @@ namespace ImageEncryptCompress
             fwd_timeBox.Visible = false;
         }
 
+
         private void fwd_button_Click(object sender, EventArgs e)
         {
             fwd_output.Visible = false;
@@ -843,6 +852,17 @@ namespace ImageEncryptCompress
         }
         //End of complete panel
 
+
+        // Test Panel
+
+        private void test_back_Click(object sender, EventArgs e)
+        {
+            Test_Panel.Visible = false;
+            Menu_Panel.Visible = true;
+
+        }
+
+        //End of Test Panel
 
     }
 }

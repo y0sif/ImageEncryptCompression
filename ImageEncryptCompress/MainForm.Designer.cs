@@ -84,6 +84,7 @@ namespace ImageEncryptCompress
             this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.radioButton6 = new System.Windows.Forms.RadioButton();
             this.Menu_Panel = new System.Windows.Forms.Panel();
+            this.test_b = new System.Windows.Forms.Button();
             this.break_b = new System.Windows.Forms.Button();
             this.op_b = new System.Windows.Forms.Button();
             this.comp_b = new System.Windows.Forms.Button();
@@ -182,6 +183,7 @@ namespace ImageEncryptCompress
             this.comp_timeBox = new System.Windows.Forms.TextBox();
             this.label58 = new System.Windows.Forms.Label();
             this.panel18 = new System.Windows.Forms.Panel();
+            this.comp_fail = new System.Windows.Forms.Label();
             this.comp_method = new System.Windows.Forms.ComboBox();
             this.label42 = new System.Windows.Forms.Label();
             this.comp_button = new System.Windows.Forms.Button();
@@ -209,6 +211,7 @@ namespace ImageEncryptCompress
             this.decomp_timeBox = new System.Windows.Forms.TextBox();
             this.label60 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.decomp_fail = new System.Windows.Forms.Label();
             this.decomp_name = new System.Windows.Forms.TextBox();
             this.decomp_size = new System.Windows.Forms.Label();
             this.label55 = new System.Windows.Forms.Label();
@@ -226,22 +229,9 @@ namespace ImageEncryptCompress
             this.complete_fwd = new System.Windows.Forms.RadioButton();
             this.complete_back = new System.Windows.Forms.Button();
             this.label63 = new System.Windows.Forms.Label();
-            this.bck_panel = new System.Windows.Forms.Panel();
-            this.bck_timeBox = new System.Windows.Forms.TextBox();
-            this.label65 = new System.Windows.Forms.Label();
-            this.panel20 = new System.Windows.Forms.Panel();
-            this.bck_file = new System.Windows.Forms.TextBox();
-            this.bck_size = new System.Windows.Forms.Label();
-            this.label72 = new System.Windows.Forms.Label();
-            this.label76 = new System.Windows.Forms.Label();
-            this.bck_button = new System.Windows.Forms.Button();
-            this.bck_load = new System.Windows.Forms.Button();
-            this.bck_done = new System.Windows.Forms.Label();
-            this.bck_save = new System.Windows.Forms.Button();
-            this.panel21 = new System.Windows.Forms.Panel();
-            this.pictureBox14 = new System.Windows.Forms.PictureBox();
             this.fwd_panel = new System.Windows.Forms.Panel();
             this.fwd_panel2 = new System.Windows.Forms.Panel();
+            this.fwd_fail = new System.Windows.Forms.Label();
             this.fwd_button = new System.Windows.Forms.Button();
             this.fwd_seed = new System.Windows.Forms.TextBox();
             this.fwd_tap = new System.Windows.Forms.NumericUpDown();
@@ -266,10 +256,53 @@ namespace ImageEncryptCompress
             this.label73 = new System.Windows.Forms.Label();
             this.label74 = new System.Windows.Forms.Label();
             this.label75 = new System.Windows.Forms.Label();
-            this.decomp_fail = new System.Windows.Forms.Label();
-            this.comp_fail = new System.Windows.Forms.Label();
+            this.bck_panel = new System.Windows.Forms.Panel();
+            this.bck_timeBox = new System.Windows.Forms.TextBox();
+            this.label65 = new System.Windows.Forms.Label();
+            this.panel20 = new System.Windows.Forms.Panel();
             this.bck_fail = new System.Windows.Forms.Label();
-            this.fwd_fail = new System.Windows.Forms.Label();
+            this.bck_file = new System.Windows.Forms.TextBox();
+            this.bck_size = new System.Windows.Forms.Label();
+            this.label72 = new System.Windows.Forms.Label();
+            this.label76 = new System.Windows.Forms.Label();
+            this.bck_button = new System.Windows.Forms.Button();
+            this.bck_load = new System.Windows.Forms.Button();
+            this.bck_done = new System.Windows.Forms.Label();
+            this.bck_save = new System.Windows.Forms.Button();
+            this.panel21 = new System.Windows.Forms.Panel();
+            this.pictureBox14 = new System.Windows.Forms.PictureBox();
+            this.Test_Panel = new System.Windows.Forms.Panel();
+            this.test_result2 = new System.Windows.Forms.Label();
+            this.test_result1 = new System.Windows.Forms.Label();
+            this.label81 = new System.Windows.Forms.Label();
+            this.label82 = new System.Windows.Forms.Label();
+            this.label90 = new System.Windows.Forms.Label();
+            this.label91 = new System.Windows.Forms.Label();
+            this.test_case = new System.Windows.Forms.Label();
+            this.test_bck_time = new System.Windows.Forms.TextBox();
+            this.label89 = new System.Windows.Forms.Label();
+            this.label88 = new System.Windows.Forms.Label();
+            this.test_decomp = new System.Windows.Forms.PictureBox();
+            this.test_dec = new System.Windows.Forms.PictureBox();
+            this.test_enc = new System.Windows.Forms.PictureBox();
+            this.test_original = new System.Windows.Forms.PictureBox();
+            this.label87 = new System.Windows.Forms.Label();
+            this.textBox19 = new System.Windows.Forms.TextBox();
+            this.test_fwd_time = new System.Windows.Forms.TextBox();
+            this.label86 = new System.Windows.Forms.Label();
+            this.panel24 = new System.Windows.Forms.Panel();
+            this.label80 = new System.Windows.Forms.Label();
+            this.test_size = new System.Windows.Forms.Label();
+            this.test_ratio = new System.Windows.Forms.Label();
+            this.label83 = new System.Windows.Forms.Label();
+            this.label84 = new System.Windows.Forms.Label();
+            this.label85 = new System.Windows.Forms.Label();
+            this.label78 = new System.Windows.Forms.Label();
+            this.label79 = new System.Windows.Forms.Label();
+            this.label77 = new System.Windows.Forms.Label();
+            this.label71 = new System.Windows.Forms.Label();
+            this.test_back = new System.Windows.Forms.Button();
+            this.label53 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaskSize)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -318,10 +351,6 @@ namespace ImageEncryptCompress
             this.panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             this.Complete_Panel.SuspendLayout();
-            this.bck_panel.SuspendLayout();
-            this.panel20.SuspendLayout();
-            this.panel21.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
             this.fwd_panel.SuspendLayout();
             this.fwd_panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fwd_tap)).BeginInit();
@@ -329,6 +358,16 @@ namespace ImageEncryptCompress
             this.panel22.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
             this.fwd_output.SuspendLayout();
+            this.bck_panel.SuspendLayout();
+            this.panel20.SuspendLayout();
+            this.panel21.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
+            this.Test_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.test_decomp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.test_dec)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.test_enc)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.test_original)).BeginInit();
+            this.panel24.SuspendLayout();
             this.SuspendLayout();
             // 
             // enc_load
@@ -968,6 +1007,7 @@ namespace ImageEncryptCompress
             // 
             // Menu_Panel
             // 
+            this.Menu_Panel.Controls.Add(this.test_b);
             this.Menu_Panel.Controls.Add(this.break_b);
             this.Menu_Panel.Controls.Add(this.op_b);
             this.Menu_Panel.Controls.Add(this.comp_b);
@@ -977,6 +1017,18 @@ namespace ImageEncryptCompress
             this.Menu_Panel.Name = "Menu_Panel";
             this.Menu_Panel.Size = new System.Drawing.Size(1419, 735);
             this.Menu_Panel.TabIndex = 1;
+            // 
+            // test_b
+            // 
+            this.test_b.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.test_b.Location = new System.Drawing.Point(1237, 670);
+            this.test_b.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.test_b.Name = "test_b";
+            this.test_b.Size = new System.Drawing.Size(166, 49);
+            this.test_b.TabIndex = 5;
+            this.test_b.Text = "Run Complete Tests";
+            this.test_b.UseVisualStyleBackColor = true;
+            this.test_b.Click += new System.EventHandler(this.test_b_Click);
             // 
             // break_b
             // 
@@ -2031,8 +2083,8 @@ namespace ImageEncryptCompress
             this.Comp_Panel.Controls.Add(this.comp_radio);
             this.Comp_Panel.Controls.Add(this.comp_back);
             this.Comp_Panel.Controls.Add(this.label57);
-            this.Comp_Panel.Controls.Add(this.comp_decomp);
             this.Comp_Panel.Controls.Add(this.comp_comp);
+            this.Comp_Panel.Controls.Add(this.comp_decomp);
             this.Comp_Panel.Location = new System.Drawing.Point(0, 0);
             this.Comp_Panel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Comp_Panel.Name = "Comp_Panel";
@@ -2145,6 +2197,16 @@ namespace ImageEncryptCompress
             this.panel18.Size = new System.Drawing.Size(587, 186);
             this.panel18.TabIndex = 85;
             this.panel18.Visible = false;
+            // 
+            // comp_fail
+            // 
+            this.comp_fail.AutoSize = true;
+            this.comp_fail.Location = new System.Drawing.Point(197, 165);
+            this.comp_fail.Name = "comp_fail";
+            this.comp_fail.Size = new System.Drawing.Size(131, 16);
+            this.comp_fail.TabIndex = 88;
+            this.comp_fail.Text = "Compression Failed!";
+            this.comp_fail.Visible = false;
             // 
             // comp_method
             // 
@@ -2463,6 +2525,16 @@ namespace ImageEncryptCompress
             this.panel6.TabIndex = 74;
             this.panel6.Visible = false;
             // 
+            // decomp_fail
+            // 
+            this.decomp_fail.AutoSize = true;
+            this.decomp_fail.Location = new System.Drawing.Point(178, 247);
+            this.decomp_fail.Name = "decomp_fail";
+            this.decomp_fail.Size = new System.Drawing.Size(147, 16);
+            this.decomp_fail.TabIndex = 77;
+            this.decomp_fail.Text = "Decompression Failed!";
+            this.decomp_fail.Visible = false;
+            // 
             // decomp_name
             // 
             this.decomp_name.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -2608,7 +2680,7 @@ namespace ImageEncryptCompress
             this.Complete_Panel.Controls.Add(this.label63);
             this.Complete_Panel.Controls.Add(this.fwd_panel);
             this.Complete_Panel.Controls.Add(this.bck_panel);
-            this.Complete_Panel.Location = new System.Drawing.Point(2, 3);
+            this.Complete_Panel.Location = new System.Drawing.Point(2, 0);
             this.Complete_Panel.Name = "Complete_Panel";
             this.Complete_Panel.Size = new System.Drawing.Size(1414, 727);
             this.Complete_Panel.TabIndex = 4;
@@ -2662,172 +2734,6 @@ namespace ImageEncryptCompress
             this.label63.TabIndex = 87;
             this.label63.Text = "Complete Operations";
             // 
-            // bck_panel
-            // 
-            this.bck_panel.Controls.Add(this.bck_timeBox);
-            this.bck_panel.Controls.Add(this.label65);
-            this.bck_panel.Controls.Add(this.panel20);
-            this.bck_panel.Controls.Add(this.bck_load);
-            this.bck_panel.Controls.Add(this.bck_done);
-            this.bck_panel.Controls.Add(this.bck_save);
-            this.bck_panel.Controls.Add(this.panel21);
-            this.bck_panel.Location = new System.Drawing.Point(23, 71);
-            this.bck_panel.Name = "bck_panel";
-            this.bck_panel.Size = new System.Drawing.Size(1363, 645);
-            this.bck_panel.TabIndex = 92;
-            this.bck_panel.Visible = false;
-            // 
-            // bck_timeBox
-            // 
-            this.bck_timeBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bck_timeBox.Location = new System.Drawing.Point(1198, 584);
-            this.bck_timeBox.Margin = new System.Windows.Forms.Padding(4);
-            this.bck_timeBox.Name = "bck_timeBox";
-            this.bck_timeBox.ReadOnly = true;
-            this.bck_timeBox.Size = new System.Drawing.Size(120, 27);
-            this.bck_timeBox.TabIndex = 83;
-            this.bck_timeBox.Visible = false;
-            // 
-            // label65
-            // 
-            this.label65.AutoSize = true;
-            this.label65.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label65.Location = new System.Drawing.Point(1086, 587);
-            this.label65.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(107, 21);
-            this.label65.TabIndex = 82;
-            this.label65.Text = "Time Taken";
-            this.label65.Visible = false;
-            // 
-            // panel20
-            // 
-            this.panel20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel20.Controls.Add(this.bck_fail);
-            this.panel20.Controls.Add(this.bck_file);
-            this.panel20.Controls.Add(this.bck_size);
-            this.panel20.Controls.Add(this.label72);
-            this.panel20.Controls.Add(this.label76);
-            this.panel20.Controls.Add(this.bck_button);
-            this.panel20.Location = new System.Drawing.Point(36, 187);
-            this.panel20.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel20.Name = "panel20";
-            this.panel20.Size = new System.Drawing.Size(575, 274);
-            this.panel20.TabIndex = 81;
-            this.panel20.Visible = false;
-            // 
-            // bck_file
-            // 
-            this.bck_file.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.bck_file.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.bck_file.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bck_file.Location = new System.Drawing.Point(139, 30);
-            this.bck_file.Margin = new System.Windows.Forms.Padding(4);
-            this.bck_file.Multiline = true;
-            this.bck_file.Name = "bck_file";
-            this.bck_file.ReadOnly = true;
-            this.bck_file.Size = new System.Drawing.Size(411, 65);
-            this.bck_file.TabIndex = 84;
-            // 
-            // bck_size
-            // 
-            this.bck_size.AutoSize = true;
-            this.bck_size.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.bck_size.Location = new System.Drawing.Point(141, 102);
-            this.bck_size.Name = "bck_size";
-            this.bck_size.Size = new System.Drawing.Size(51, 16);
-            this.bck_size.TabIndex = 76;
-            this.bck_size.Text = "label58";
-            // 
-            // label72
-            // 
-            this.label72.AutoSize = true;
-            this.label72.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label72.Location = new System.Drawing.Point(47, 99);
-            this.label72.Name = "label72";
-            this.label72.Size = new System.Drawing.Size(89, 20);
-            this.label72.TabIndex = 74;
-            this.label72.Text = "File Size:";
-            // 
-            // label76
-            // 
-            this.label76.AutoSize = true;
-            this.label76.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label76.Location = new System.Drawing.Point(47, 30);
-            this.label76.Name = "label76";
-            this.label76.Size = new System.Drawing.Size(46, 20);
-            this.label76.TabIndex = 73;
-            this.label76.Text = "File:";
-            // 
-            // bck_button
-            // 
-            this.bck_button.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bck_button.Location = new System.Drawing.Point(125, 162);
-            this.bck_button.Margin = new System.Windows.Forms.Padding(4);
-            this.bck_button.Name = "bck_button";
-            this.bck_button.Size = new System.Drawing.Size(326, 81);
-            this.bck_button.TabIndex = 70;
-            this.bck_button.Text = "Decompress + Decrypt";
-            this.bck_button.UseVisualStyleBackColor = true;
-            this.bck_button.Click += new System.EventHandler(this.bck_button_Click);
-            // 
-            // bck_load
-            // 
-            this.bck_load.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bck_load.Location = new System.Drawing.Point(182, 121);
-            this.bck_load.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.bck_load.Name = "bck_load";
-            this.bck_load.Size = new System.Drawing.Size(155, 30);
-            this.bck_load.TabIndex = 80;
-            this.bck_load.Text = "Load Binary File";
-            this.bck_load.UseVisualStyleBackColor = true;
-            this.bck_load.Click += new System.EventHandler(this.bck_load_Click);
-            // 
-            // bck_done
-            // 
-            this.bck_done.AutoSize = true;
-            this.bck_done.Location = new System.Drawing.Point(976, 500);
-            this.bck_done.Name = "bck_done";
-            this.bck_done.Size = new System.Drawing.Size(169, 16);
-            this.bck_done.TabIndex = 79;
-            this.bck_done.Text = "Image Saved Successfully!";
-            this.bck_done.Visible = false;
-            // 
-            // bck_save
-            // 
-            this.bck_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bck_save.Location = new System.Drawing.Point(989, 527);
-            this.bck_save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.bck_save.Name = "bck_save";
-            this.bck_save.Size = new System.Drawing.Size(137, 46);
-            this.bck_save.TabIndex = 78;
-            this.bck_save.Text = "Save Image";
-            this.bck_save.UseVisualStyleBackColor = true;
-            this.bck_save.Visible = false;
-            this.bck_save.Click += new System.EventHandler(this.bck_save_Click);
-            // 
-            // panel21
-            // 
-            this.panel21.AutoScroll = true;
-            this.panel21.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel21.Controls.Add(this.pictureBox14);
-            this.panel21.Location = new System.Drawing.Point(708, 34);
-            this.panel21.Margin = new System.Windows.Forms.Padding(4);
-            this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(619, 456);
-            this.panel21.TabIndex = 77;
-            this.panel21.Visible = false;
-            // 
-            // pictureBox14
-            // 
-            this.pictureBox14.Location = new System.Drawing.Point(-5, -2);
-            this.pictureBox14.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox14.Name = "pictureBox14";
-            this.pictureBox14.Size = new System.Drawing.Size(412, 360);
-            this.pictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox14.TabIndex = 1;
-            this.pictureBox14.TabStop = false;
-            // 
             // fwd_panel
             // 
             this.fwd_panel.Controls.Add(this.fwd_panel2);
@@ -2855,6 +2761,17 @@ namespace ImageEncryptCompress
             this.fwd_panel2.Size = new System.Drawing.Size(247, 250);
             this.fwd_panel2.TabIndex = 88;
             this.fwd_panel2.Visible = false;
+            // 
+            // fwd_fail
+            // 
+            this.fwd_fail.AutoSize = true;
+            this.fwd_fail.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.fwd_fail.Location = new System.Drawing.Point(73, 220);
+            this.fwd_fail.Name = "fwd_fail";
+            this.fwd_fail.Size = new System.Drawing.Size(110, 16);
+            this.fwd_fail.TabIndex = 86;
+            this.fwd_fail.Text = "Operation Failed!";
+            this.fwd_fail.Visible = false;
             // 
             // fwd_button
             // 
@@ -3128,25 +3045,59 @@ namespace ImageEncryptCompress
             this.label75.TabIndex = 0;
             this.label75.Text = "Output:";
             // 
-            // decomp_fail
+            // bck_panel
             // 
-            this.decomp_fail.AutoSize = true;
-            this.decomp_fail.Location = new System.Drawing.Point(178, 247);
-            this.decomp_fail.Name = "decomp_fail";
-            this.decomp_fail.Size = new System.Drawing.Size(147, 16);
-            this.decomp_fail.TabIndex = 77;
-            this.decomp_fail.Text = "Decompression Failed!";
-            this.decomp_fail.Visible = false;
+            this.bck_panel.Controls.Add(this.bck_timeBox);
+            this.bck_panel.Controls.Add(this.label65);
+            this.bck_panel.Controls.Add(this.panel20);
+            this.bck_panel.Controls.Add(this.bck_load);
+            this.bck_panel.Controls.Add(this.bck_done);
+            this.bck_panel.Controls.Add(this.bck_save);
+            this.bck_panel.Controls.Add(this.panel21);
+            this.bck_panel.Location = new System.Drawing.Point(23, 71);
+            this.bck_panel.Name = "bck_panel";
+            this.bck_panel.Size = new System.Drawing.Size(1363, 645);
+            this.bck_panel.TabIndex = 92;
+            this.bck_panel.Visible = false;
             // 
-            // comp_fail
+            // bck_timeBox
             // 
-            this.comp_fail.AutoSize = true;
-            this.comp_fail.Location = new System.Drawing.Point(197, 165);
-            this.comp_fail.Name = "comp_fail";
-            this.comp_fail.Size = new System.Drawing.Size(131, 16);
-            this.comp_fail.TabIndex = 88;
-            this.comp_fail.Text = "Compression Failed!";
-            this.comp_fail.Visible = false;
+            this.bck_timeBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bck_timeBox.Location = new System.Drawing.Point(1198, 584);
+            this.bck_timeBox.Margin = new System.Windows.Forms.Padding(4);
+            this.bck_timeBox.Name = "bck_timeBox";
+            this.bck_timeBox.ReadOnly = true;
+            this.bck_timeBox.Size = new System.Drawing.Size(120, 27);
+            this.bck_timeBox.TabIndex = 83;
+            this.bck_timeBox.Visible = false;
+            // 
+            // label65
+            // 
+            this.label65.AutoSize = true;
+            this.label65.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label65.Location = new System.Drawing.Point(1086, 587);
+            this.label65.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(107, 21);
+            this.label65.TabIndex = 82;
+            this.label65.Text = "Time Taken";
+            this.label65.Visible = false;
+            // 
+            // panel20
+            // 
+            this.panel20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel20.Controls.Add(this.bck_fail);
+            this.panel20.Controls.Add(this.bck_file);
+            this.panel20.Controls.Add(this.bck_size);
+            this.panel20.Controls.Add(this.label72);
+            this.panel20.Controls.Add(this.label76);
+            this.panel20.Controls.Add(this.bck_button);
+            this.panel20.Location = new System.Drawing.Point(36, 187);
+            this.panel20.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel20.Name = "panel20";
+            this.panel20.Size = new System.Drawing.Size(575, 274);
+            this.panel20.TabIndex = 81;
+            this.panel20.Visible = false;
             // 
             // bck_fail
             // 
@@ -3159,27 +3110,474 @@ namespace ImageEncryptCompress
             this.bck_fail.Text = "Operation Failed!";
             this.bck_fail.Visible = false;
             // 
-            // fwd_fail
+            // bck_file
             // 
-            this.fwd_fail.AutoSize = true;
-            this.fwd_fail.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.fwd_fail.Location = new System.Drawing.Point(73, 220);
-            this.fwd_fail.Name = "fwd_fail";
-            this.fwd_fail.Size = new System.Drawing.Size(110, 16);
-            this.fwd_fail.TabIndex = 86;
-            this.fwd_fail.Text = "Operation Failed!";
-            this.fwd_fail.Visible = false;
+            this.bck_file.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.bck_file.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.bck_file.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bck_file.Location = new System.Drawing.Point(139, 30);
+            this.bck_file.Margin = new System.Windows.Forms.Padding(4);
+            this.bck_file.Multiline = true;
+            this.bck_file.Name = "bck_file";
+            this.bck_file.ReadOnly = true;
+            this.bck_file.Size = new System.Drawing.Size(411, 65);
+            this.bck_file.TabIndex = 84;
+            // 
+            // bck_size
+            // 
+            this.bck_size.AutoSize = true;
+            this.bck_size.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.bck_size.Location = new System.Drawing.Point(141, 102);
+            this.bck_size.Name = "bck_size";
+            this.bck_size.Size = new System.Drawing.Size(51, 16);
+            this.bck_size.TabIndex = 76;
+            this.bck_size.Text = "label58";
+            // 
+            // label72
+            // 
+            this.label72.AutoSize = true;
+            this.label72.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label72.Location = new System.Drawing.Point(47, 99);
+            this.label72.Name = "label72";
+            this.label72.Size = new System.Drawing.Size(89, 20);
+            this.label72.TabIndex = 74;
+            this.label72.Text = "File Size:";
+            // 
+            // label76
+            // 
+            this.label76.AutoSize = true;
+            this.label76.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label76.Location = new System.Drawing.Point(47, 30);
+            this.label76.Name = "label76";
+            this.label76.Size = new System.Drawing.Size(46, 20);
+            this.label76.TabIndex = 73;
+            this.label76.Text = "File:";
+            // 
+            // bck_button
+            // 
+            this.bck_button.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bck_button.Location = new System.Drawing.Point(125, 162);
+            this.bck_button.Margin = new System.Windows.Forms.Padding(4);
+            this.bck_button.Name = "bck_button";
+            this.bck_button.Size = new System.Drawing.Size(326, 81);
+            this.bck_button.TabIndex = 70;
+            this.bck_button.Text = "Decompress + Decrypt";
+            this.bck_button.UseVisualStyleBackColor = true;
+            this.bck_button.Click += new System.EventHandler(this.bck_button_Click);
+            // 
+            // bck_load
+            // 
+            this.bck_load.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bck_load.Location = new System.Drawing.Point(182, 121);
+            this.bck_load.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.bck_load.Name = "bck_load";
+            this.bck_load.Size = new System.Drawing.Size(155, 30);
+            this.bck_load.TabIndex = 80;
+            this.bck_load.Text = "Load Binary File";
+            this.bck_load.UseVisualStyleBackColor = true;
+            this.bck_load.Click += new System.EventHandler(this.bck_load_Click);
+            // 
+            // bck_done
+            // 
+            this.bck_done.AutoSize = true;
+            this.bck_done.Location = new System.Drawing.Point(976, 500);
+            this.bck_done.Name = "bck_done";
+            this.bck_done.Size = new System.Drawing.Size(169, 16);
+            this.bck_done.TabIndex = 79;
+            this.bck_done.Text = "Image Saved Successfully!";
+            this.bck_done.Visible = false;
+            // 
+            // bck_save
+            // 
+            this.bck_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bck_save.Location = new System.Drawing.Point(989, 527);
+            this.bck_save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.bck_save.Name = "bck_save";
+            this.bck_save.Size = new System.Drawing.Size(137, 46);
+            this.bck_save.TabIndex = 78;
+            this.bck_save.Text = "Save Image";
+            this.bck_save.UseVisualStyleBackColor = true;
+            this.bck_save.Visible = false;
+            this.bck_save.Click += new System.EventHandler(this.bck_save_Click);
+            // 
+            // panel21
+            // 
+            this.panel21.AutoScroll = true;
+            this.panel21.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel21.Controls.Add(this.pictureBox14);
+            this.panel21.Location = new System.Drawing.Point(708, 34);
+            this.panel21.Margin = new System.Windows.Forms.Padding(4);
+            this.panel21.Name = "panel21";
+            this.panel21.Size = new System.Drawing.Size(619, 456);
+            this.panel21.TabIndex = 77;
+            this.panel21.Visible = false;
+            // 
+            // pictureBox14
+            // 
+            this.pictureBox14.Location = new System.Drawing.Point(-5, -2);
+            this.pictureBox14.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox14.Name = "pictureBox14";
+            this.pictureBox14.Size = new System.Drawing.Size(412, 360);
+            this.pictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox14.TabIndex = 1;
+            this.pictureBox14.TabStop = false;
+            // 
+            // Test_Panel
+            // 
+            this.Test_Panel.Controls.Add(this.test_result2);
+            this.Test_Panel.Controls.Add(this.test_result1);
+            this.Test_Panel.Controls.Add(this.label81);
+            this.Test_Panel.Controls.Add(this.label82);
+            this.Test_Panel.Controls.Add(this.label90);
+            this.Test_Panel.Controls.Add(this.label91);
+            this.Test_Panel.Controls.Add(this.test_case);
+            this.Test_Panel.Controls.Add(this.test_bck_time);
+            this.Test_Panel.Controls.Add(this.label89);
+            this.Test_Panel.Controls.Add(this.label88);
+            this.Test_Panel.Controls.Add(this.test_decomp);
+            this.Test_Panel.Controls.Add(this.test_dec);
+            this.Test_Panel.Controls.Add(this.test_enc);
+            this.Test_Panel.Controls.Add(this.test_original);
+            this.Test_Panel.Controls.Add(this.label87);
+            this.Test_Panel.Controls.Add(this.textBox19);
+            this.Test_Panel.Controls.Add(this.test_fwd_time);
+            this.Test_Panel.Controls.Add(this.label86);
+            this.Test_Panel.Controls.Add(this.panel24);
+            this.Test_Panel.Controls.Add(this.label78);
+            this.Test_Panel.Controls.Add(this.label79);
+            this.Test_Panel.Controls.Add(this.label77);
+            this.Test_Panel.Controls.Add(this.label71);
+            this.Test_Panel.Controls.Add(this.test_back);
+            this.Test_Panel.Controls.Add(this.label53);
+            this.Test_Panel.Location = new System.Drawing.Point(8, 3);
+            this.Test_Panel.Name = "Test_Panel";
+            this.Test_Panel.Size = new System.Drawing.Size(1410, 726);
+            this.Test_Panel.TabIndex = 5;
+            // 
+            // test_result2
+            // 
+            this.test_result2.AutoSize = true;
+            this.test_result2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.test_result2.Location = new System.Drawing.Point(15, 605);
+            this.test_result2.Name = "test_result2";
+            this.test_result2.Size = new System.Drawing.Size(0, 18);
+            this.test_result2.TabIndex = 104;
+            // 
+            // test_result1
+            // 
+            this.test_result1.AutoSize = true;
+            this.test_result1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.test_result1.Location = new System.Drawing.Point(16, 561);
+            this.test_result1.Name = "test_result1";
+            this.test_result1.Size = new System.Drawing.Size(0, 18);
+            this.test_result1.TabIndex = 103;
+            // 
+            // label81
+            // 
+            this.label81.AutoSize = true;
+            this.label81.Location = new System.Drawing.Point(95, 238);
+            this.label81.Name = "label81";
+            this.label81.Size = new System.Drawing.Size(62, 16);
+            this.label81.TabIndex = 102;
+            this.label81.Text = "------------>";
+            // 
+            // label82
+            // 
+            this.label82.AutoSize = true;
+            this.label82.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label82.Location = new System.Drawing.Point(91, 212);
+            this.label82.Name = "label82";
+            this.label82.Size = new System.Drawing.Size(70, 20);
+            this.label82.TabIndex = 101;
+            this.label82.Text = "Forward";
+            // 
+            // label90
+            // 
+            this.label90.AutoSize = true;
+            this.label90.Location = new System.Drawing.Point(603, 528);
+            this.label90.Name = "label90";
+            this.label90.Size = new System.Drawing.Size(22, 16);
+            this.label90.TabIndex = 100;
+            this.label90.Text = "<--";
+            // 
+            // label91
+            // 
+            this.label91.AutoSize = true;
+            this.label91.Location = new System.Drawing.Point(581, 512);
+            this.label91.Name = "label91";
+            this.label91.Size = new System.Drawing.Size(72, 16);
+            this.label91.TabIndex = 99;
+            this.label91.Text = "Decryption";
+            // 
+            // test_case
+            // 
+            this.test_case.AutoSize = true;
+            this.test_case.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.test_case.Location = new System.Drawing.Point(4, 69);
+            this.test_case.Name = "test_case";
+            this.test_case.Size = new System.Drawing.Size(173, 25);
+            this.test_case.TabIndex = 98;
+            this.test_case.Text = "Running Case 1:";
+            // 
+            // test_bck_time
+            // 
+            this.test_bck_time.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.test_bck_time.Location = new System.Drawing.Point(22, 478);
+            this.test_bck_time.Margin = new System.Windows.Forms.Padding(4);
+            this.test_bck_time.Name = "test_bck_time";
+            this.test_bck_time.ReadOnly = true;
+            this.test_bck_time.Size = new System.Drawing.Size(120, 27);
+            this.test_bck_time.TabIndex = 97;
+            this.test_bck_time.Visible = false;
+            // 
+            // label89
+            // 
+            this.label89.AutoSize = true;
+            this.label89.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label89.Location = new System.Drawing.Point(5, 446);
+            this.label89.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label89.Name = "label89";
+            this.label89.Size = new System.Drawing.Size(171, 18);
+            this.label89.TabIndex = 96;
+            this.label89.Text = "Backward Time Taken";
+            this.label89.Visible = false;
+            // 
+            // label88
+            // 
+            this.label88.AutoSize = true;
+            this.label88.Location = new System.Drawing.Point(1100, 503);
+            this.label88.Name = "label88";
+            this.label88.Size = new System.Drawing.Size(103, 16);
+            this.label88.TabIndex = 95;
+            this.label88.Text = "Decompression";
+            // 
+            // test_decomp
+            // 
+            this.test_decomp.Location = new System.Drawing.Point(654, 391);
+            this.test_decomp.Margin = new System.Windows.Forms.Padding(4);
+            this.test_decomp.Name = "test_decomp";
+            this.test_decomp.Size = new System.Drawing.Size(390, 320);
+            this.test_decomp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.test_decomp.TabIndex = 94;
+            this.test_decomp.TabStop = false;
+            // 
+            // test_dec
+            // 
+            this.test_dec.Location = new System.Drawing.Point(184, 391);
+            this.test_dec.Margin = new System.Windows.Forms.Padding(4);
+            this.test_dec.Name = "test_dec";
+            this.test_dec.Size = new System.Drawing.Size(390, 320);
+            this.test_dec.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.test_dec.TabIndex = 93;
+            this.test_dec.TabStop = false;
+            // 
+            // test_enc
+            // 
+            this.test_enc.Location = new System.Drawing.Point(654, 40);
+            this.test_enc.Margin = new System.Windows.Forms.Padding(4);
+            this.test_enc.Name = "test_enc";
+            this.test_enc.Size = new System.Drawing.Size(390, 320);
+            this.test_enc.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.test_enc.TabIndex = 92;
+            this.test_enc.TabStop = false;
+            // 
+            // test_original
+            // 
+            this.test_original.Location = new System.Drawing.Point(184, 40);
+            this.test_original.Margin = new System.Windows.Forms.Padding(4);
+            this.test_original.Name = "test_original";
+            this.test_original.Size = new System.Drawing.Size(390, 320);
+            this.test_original.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.test_original.TabIndex = 0;
+            this.test_original.TabStop = false;
+            // 
+            // label87
+            // 
+            this.label87.AutoSize = true;
+            this.label87.Location = new System.Drawing.Point(1085, 522);
+            this.label87.Name = "label87";
+            this.label87.Size = new System.Drawing.Size(166, 16);
+            this.label87.TabIndex = 91;
+            this.label87.Text = "<--------------------------------------";
+            // 
+            // textBox19
+            // 
+            this.textBox19.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox19.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox19.Location = new System.Drawing.Point(1230, 406);
+            this.textBox19.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox19.Multiline = true;
+            this.textBox19.Name = "textBox19";
+            this.textBox19.ReadOnly = true;
+            this.textBox19.Size = new System.Drawing.Size(104, 170);
+            this.textBox19.TabIndex = 90;
+            this.textBox19.Text = "      |\r\n      |\r\nBackwards\r\n      | \r\n      |\r\n      |\r\n   --+";
+            this.textBox19.Visible = false;
+            // 
+            // test_fwd_time
+            // 
+            this.test_fwd_time.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.test_fwd_time.Location = new System.Drawing.Point(1277, 355);
+            this.test_fwd_time.Margin = new System.Windows.Forms.Padding(4);
+            this.test_fwd_time.Name = "test_fwd_time";
+            this.test_fwd_time.ReadOnly = true;
+            this.test_fwd_time.Size = new System.Drawing.Size(120, 27);
+            this.test_fwd_time.TabIndex = 89;
+            this.test_fwd_time.Visible = false;
+            // 
+            // label86
+            // 
+            this.label86.AutoSize = true;
+            this.label86.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label86.Location = new System.Drawing.Point(1082, 358);
+            this.label86.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label86.Name = "label86";
+            this.label86.Size = new System.Drawing.Size(183, 21);
+            this.label86.TabIndex = 88;
+            this.label86.Text = "Forward Time Taken";
+            this.label86.Visible = false;
+            // 
+            // panel24
+            // 
+            this.panel24.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel24.Controls.Add(this.label80);
+            this.panel24.Controls.Add(this.test_size);
+            this.panel24.Controls.Add(this.test_ratio);
+            this.panel24.Controls.Add(this.label83);
+            this.panel24.Controls.Add(this.label84);
+            this.panel24.Controls.Add(this.label85);
+            this.panel24.Location = new System.Drawing.Point(1133, 143);
+            this.panel24.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel24.Name = "panel24";
+            this.panel24.Size = new System.Drawing.Size(273, 176);
+            this.panel24.TabIndex = 82;
+            this.panel24.Visible = false;
+            // 
+            // label80
+            // 
+            this.label80.AutoSize = true;
+            this.label80.Location = new System.Drawing.Point(75, 242);
+            this.label80.Name = "label80";
+            this.label80.Size = new System.Drawing.Size(194, 16);
+            this.label80.TabIndex = 7;
+            this.label80.Text = "Binary File Saved Successfully!";
+            this.label80.Visible = false;
+            // 
+            // test_size
+            // 
+            this.test_size.AutoSize = true;
+            this.test_size.Location = new System.Drawing.Point(176, 114);
+            this.test_size.Name = "test_size";
+            this.test_size.Size = new System.Drawing.Size(0, 16);
+            this.test_size.TabIndex = 5;
+            // 
+            // test_ratio
+            // 
+            this.test_ratio.AutoSize = true;
+            this.test_ratio.Location = new System.Drawing.Point(176, 79);
+            this.test_ratio.Name = "test_ratio";
+            this.test_ratio.Size = new System.Drawing.Size(0, 16);
+            this.test_ratio.TabIndex = 4;
+            // 
+            // label83
+            // 
+            this.label83.AutoSize = true;
+            this.label83.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label83.Location = new System.Drawing.Point(28, 113);
+            this.label83.Name = "label83";
+            this.label83.Size = new System.Drawing.Size(113, 18);
+            this.label83.TabIndex = 2;
+            this.label83.Text = "Binary File Size:";
+            // 
+            // label84
+            // 
+            this.label84.AutoSize = true;
+            this.label84.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label84.Location = new System.Drawing.Point(28, 78);
+            this.label84.Name = "label84";
+            this.label84.Size = new System.Drawing.Size(141, 18);
+            this.label84.TabIndex = 1;
+            this.label84.Text = "Compression Ratio:";
+            // 
+            // label85
+            // 
+            this.label85.AutoSize = true;
+            this.label85.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label85.Location = new System.Drawing.Point(15, 12);
+            this.label85.Name = "label85";
+            this.label85.Size = new System.Drawing.Size(97, 29);
+            this.label85.TabIndex = 0;
+            this.label85.Text = "Output:";
+            // 
+            // label78
+            // 
+            this.label78.AutoSize = true;
+            this.label78.Location = new System.Drawing.Point(1069, 231);
+            this.label78.Name = "label78";
+            this.label78.Size = new System.Drawing.Size(22, 16);
+            this.label78.TabIndex = 80;
+            this.label78.Text = "-->";
+            // 
+            // label79
+            // 
+            this.label79.AutoSize = true;
+            this.label79.Location = new System.Drawing.Point(1045, 213);
+            this.label79.Name = "label79";
+            this.label79.Size = new System.Drawing.Size(87, 16);
+            this.label79.TabIndex = 79;
+            this.label79.Text = "Compression";
+            // 
+            // label77
+            // 
+            this.label77.AutoSize = true;
+            this.label77.Location = new System.Drawing.Point(602, 238);
+            this.label77.Name = "label77";
+            this.label77.Size = new System.Drawing.Size(22, 16);
+            this.label77.TabIndex = 78;
+            this.label77.Text = "-->";
+            // 
+            // label71
+            // 
+            this.label71.AutoSize = true;
+            this.label71.Location = new System.Drawing.Point(580, 222);
+            this.label71.Name = "label71";
+            this.label71.Size = new System.Drawing.Size(70, 16);
+            this.label71.TabIndex = 77;
+            this.label71.Text = "Encryption";
+            // 
+            // test_back
+            // 
+            this.test_back.Location = new System.Drawing.Point(3, 2);
+            this.test_back.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.test_back.Name = "test_back";
+            this.test_back.Size = new System.Drawing.Size(29, 30);
+            this.test_back.TabIndex = 74;
+            this.test_back.Text = "<";
+            this.test_back.UseVisualStyleBackColor = true;
+            this.test_back.Click += new System.EventHandler(this.test_back_Click);
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label53.ForeColor = System.Drawing.SystemColors.InfoText;
+            this.label53.Location = new System.Drawing.Point(36, 2);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(191, 29);
+            this.label53.TabIndex = 73;
+            this.label53.Text = "Complete Tests";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1423, 731);
-            this.Controls.Add(this.Complete_Panel);
-            this.Controls.Add(this.Comp_Panel);
-            this.Controls.Add(this.Break_Panel);
             this.Controls.Add(this.Menu_Panel);
             this.Controls.Add(this.Enc_Panel);
+            this.Controls.Add(this.Complete_Panel);
+            this.Controls.Add(this.Break_Panel);
+            this.Controls.Add(this.Test_Panel);
+            this.Controls.Add(this.Comp_Panel);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "Image Encryption and Compression...";
@@ -3259,13 +3657,6 @@ namespace ImageEncryptCompress
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             this.Complete_Panel.ResumeLayout(false);
             this.Complete_Panel.PerformLayout();
-            this.bck_panel.ResumeLayout(false);
-            this.bck_panel.PerformLayout();
-            this.panel20.ResumeLayout(false);
-            this.panel20.PerformLayout();
-            this.panel21.ResumeLayout(false);
-            this.panel21.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
             this.fwd_panel.ResumeLayout(false);
             this.fwd_panel.PerformLayout();
             this.fwd_panel2.ResumeLayout(false);
@@ -3278,6 +3669,21 @@ namespace ImageEncryptCompress
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
             this.fwd_output.ResumeLayout(false);
             this.fwd_output.PerformLayout();
+            this.bck_panel.ResumeLayout(false);
+            this.bck_panel.PerformLayout();
+            this.panel20.ResumeLayout(false);
+            this.panel20.PerformLayout();
+            this.panel21.ResumeLayout(false);
+            this.panel21.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
+            this.Test_Panel.ResumeLayout(false);
+            this.Test_Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.test_decomp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.test_dec)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.test_enc)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.test_original)).EndInit();
+            this.panel24.ResumeLayout(false);
+            this.panel24.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -3525,5 +3931,38 @@ namespace ImageEncryptCompress
         private System.Windows.Forms.Label comp_fail;
         private System.Windows.Forms.Label fwd_fail;
         private System.Windows.Forms.Label bck_fail;
+        private System.Windows.Forms.Button test_b;
+        private System.Windows.Forms.Panel Test_Panel;
+        private System.Windows.Forms.Button test_back;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Label label77;
+        private System.Windows.Forms.Label label71;
+        private System.Windows.Forms.Label label78;
+        private System.Windows.Forms.Label label79;
+        private System.Windows.Forms.Panel panel24;
+        private System.Windows.Forms.Label label80;
+        private System.Windows.Forms.Label test_size;
+        private System.Windows.Forms.Label test_ratio;
+        private System.Windows.Forms.Label label83;
+        private System.Windows.Forms.Label label84;
+        private System.Windows.Forms.Label label85;
+        private System.Windows.Forms.Label label88;
+        private System.Windows.Forms.PictureBox test_decomp;
+        private System.Windows.Forms.PictureBox test_dec;
+        private System.Windows.Forms.PictureBox test_enc;
+        private System.Windows.Forms.PictureBox test_original;
+        private System.Windows.Forms.Label label87;
+        private System.Windows.Forms.TextBox textBox19;
+        private System.Windows.Forms.TextBox test_fwd_time;
+        private System.Windows.Forms.Label label86;
+        private System.Windows.Forms.Label label90;
+        private System.Windows.Forms.Label label91;
+        private System.Windows.Forms.Label test_case;
+        private System.Windows.Forms.TextBox test_bck_time;
+        private System.Windows.Forms.Label label89;
+        private System.Windows.Forms.Label label81;
+        private System.Windows.Forms.Label label82;
+        private System.Windows.Forms.Label test_result2;
+        private System.Windows.Forms.Label test_result1;
     }
 }
