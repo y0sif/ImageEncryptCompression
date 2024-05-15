@@ -396,16 +396,6 @@ namespace ImageEncryptCompress
             return ImageMatrix;
         }
 
-        private static byte ConvertToByte(char[] binaryKey)
-        {
-            byte result = 0;
-            for (int i = 0; i < binaryKey.Length; i++)
-            {
-                result = (byte)((result << 1) | (binaryKey[i] - '0'));
-            }
-            return result;
-        }
-
         public static RGBPixel[,] AlphaNumLFSR(RGBPixel[,] ImageMatrix, int tapPosition, string initSeed, bool isXOR)
         {
             char[] seed = initSeed.ToCharArray();
@@ -512,48 +502,7 @@ namespace ImageEncryptCompress
 
             return best_seed_and_tap;
         }
-
-        //--------------------------------//
-        //       AUXILLARY FUNCTIONS      //
-        //--------------------------------//
-        public static void CheckAlpha(char[] seed, char[][] alphaBinarySeed, StringBuilder concatBinaryASCII)
-        {
-            byte[] alphaSeed;
-
-            foreach (char c in seed)
-            {
-                if (!char.IsLetterOrDigit(c))
-                {
-                    throw new Exception("Alphanumeric encryption must have alphanum seed");
-                }
-            }
-
-            alphaSeed = Encoding.ASCII.GetBytes(seed);
-
-            for (int i = 0; i < alphaSeed.Length; i++)
-            {
-                alphaBinarySeed[i] = Convert.ToString(alphaSeed[i], 2).PadLeft(8, '0').ToCharArray();
-            }
-            if (concatBinaryASCII != null)
-            {
-                foreach (char[] bytes in alphaBinarySeed)
-                {
-                    concatBinaryASCII.Append(bytes);
-                }
-            }
-        }
-
-        public static byte ConvertToDecimal(char[] binary)
-        {
-            byte total = 0;
-            for (int i = 0; i < 8; i++)
-            {
-                total += (byte)((binary[i] - '0') * Math.Pow(2, 7 - i));
-            }
-
-            return total;
-        }
-
+   
 
         //--------------------------------//
         // COMPRESSION & DECOMPRESSION    //
@@ -1301,5 +1250,69 @@ namespace ImageEncryptCompress
                 return memoryStream.Length;
             }
         }
+
+
+
+        //--------------------------------//
+        //       AUXILLARY FUNCTIONS      //
+        //--------------------------------//
+        public static void CheckAlpha(char[] seed, char[][] alphaBinarySeed, StringBuilder concatBinaryASCII)
+        {
+            byte[] alphaSeed;
+
+            foreach (char c in seed)
+            {
+                if (!char.IsLetterOrDigit(c))
+                {
+                    throw new Exception("Alphanumeric encryption must have alphanum seed");
+                }
+            }
+
+            alphaSeed = Encoding.ASCII.GetBytes(seed);
+
+            for (int i = 0; i < alphaSeed.Length; i++)
+            {
+                alphaBinarySeed[i] = Convert.ToString(alphaSeed[i], 2).PadLeft(8, '0').ToCharArray();
+            }
+            if (concatBinaryASCII != null)
+            {
+                foreach (char[] bytes in alphaBinarySeed)
+                {
+                    concatBinaryASCII.Append(bytes);
+                }
+            }
+        }
+
+        public static byte ConvertToDecimal(char[] binary)
+        {
+            byte total = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                total += (byte)((binary[i] - '0') * Math.Pow(2, 7 - i));
+            }
+
+            return total;
+        }
+        private static byte ConvertToByte(char[] binaryKey)
+        {
+            byte result = 0;
+            for (int i = 0; i < binaryKey.Length; i++)
+            {
+                result = (byte)((result << 1) | (binaryKey[i] - '0'));
+            }
+            return result;
+        }
+        public static bool IsBinary(string input)
+        {
+            foreach (char c in input)
+            {
+                if (c != '0' && c != '1')
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
 }

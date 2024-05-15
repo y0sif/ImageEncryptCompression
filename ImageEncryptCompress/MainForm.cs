@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,17 +26,24 @@ namespace ImageEncryptCompress
         //Enc Panel
         private void enc_load_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            try
             {
-                //Open the browsed image and display it
-                string OpenedFilePath = openFileDialog1.FileName;
-                ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
-                ImageOperations.DisplayImage(ImageMatrix, pictureBox1);
-                enc_load.Visible = false;
-                panel1.Visible = true;
-                txtWidth.Text = ImageOperations.GetWidth(ImageMatrix).ToString();
-                txtHeight.Text = ImageOperations.GetHeight(ImageMatrix).ToString();
+                OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    //Open the browsed image and display it
+                    string OpenedFilePath = openFileDialog1.FileName;
+                    ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
+                    ImageOperations.DisplayImage(ImageMatrix, pictureBox1);
+                    enc_load.Visible = false;
+                    panel1.Visible = true;
+                    txtWidth.Text = ImageOperations.GetWidth(ImageMatrix).ToString();
+                    txtHeight.Text = ImageOperations.GetHeight(ImageMatrix).ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                enc_load.Visible = true;
             }
             
         }
@@ -53,10 +61,6 @@ namespace ImageEncryptCompress
 
         private void btnGaussSmooth_Click(object sender, EventArgs e)
         {
-            /*double sigma = double.Parse(txtGaussSigma.Text);
-            int maskSize = (int)nudMaskSize.Value ;
-            ImageMatrix = ImageOperations.GaussianFilter1D(ImageMatrix, maskSize, sigma);
-            ImageOperations.DisplayImage(ImageMatrix, pictureBox2);*/
 
             string initSeed = txtGaussSigma.Text;
             int tap = (int)nudMaskSize.Value;
@@ -73,9 +77,9 @@ namespace ImageEncryptCompress
 
             if (method == "Binary")
                 ImageMatrix_copy = ImageOperations.LFSR(ImageMatrix_copy, tap, initSeed);
-            else if (method == "Concat")
+            else if (method == "Alphanumerical Concat")
                 ImageMatrix_copy = ImageOperations.AlphaNumLFSR(ImageMatrix_copy, tap, initSeed, false);
-            else if (method == "XOR")
+            else if (method == "Alphanumerical XOR")
                 ImageMatrix_copy = ImageOperations.AlphaNumLFSR(ImageMatrix_copy, tap, initSeed, true);
             
             stopwatch.Stop();
@@ -106,7 +110,20 @@ namespace ImageEncryptCompress
 
         private void txtGaussSigma_TextChanged(object sender, EventArgs e)
         {
-            nudMaskSize.Maximum = txtGaussSigma.Text.Length - 1;
+            if (comboBox1.SelectedItem.ToString() == "Binary")
+            {
+                if (!ImageOperations.IsBinary(txtGaussSigma.Text))
+                    txtGaussSigma.Text = "1";
+                nudMaskSize.Maximum = txtGaussSigma.Text.Length - 1;
+            }
+            else if (comboBox1.SelectedItem.ToString() == "Alphanumerical Concat")
+            {
+                nudMaskSize.Maximum = (txtGaussSigma.Text.Length * 8) - 1;
+            }
+            else if (comboBox1.SelectedItem.ToString() == "Alphanumerical XOR")
+            {
+                nudMaskSize.Maximum = txtGaussSigma.Text.Length - 1;
+            }
             panel2.Visible = false;
             label2.Visible = false;
             enc_save.Visible = false;
@@ -144,6 +161,22 @@ namespace ImageEncryptCompress
             enc_save.Visible = false;
             label56.Visible = false;
             enc_timeBox.Visible = false;
+
+            if (comboBox1.SelectedItem.ToString() == "Binary")
+            {
+                if (!ImageOperations.IsBinary(txtGaussSigma.Text))
+                    txtGaussSigma.Text = "1";
+                nudMaskSize.Maximum = txtGaussSigma.Text.Length - 1;
+            }
+            else if (comboBox1.SelectedItem.ToString() == "Alphanumerical Concat")
+            {
+                nudMaskSize.Maximum = (txtGaussSigma.Text.Length * 8) - 1;
+            }
+            else if (comboBox1.SelectedItem.ToString() == "Alphanumerical XOR")
+            {
+                nudMaskSize.Maximum = txtGaussSigma.Text.Length - 1;
+            }
+
         }
 
         //End of Enc Panel
@@ -352,16 +385,24 @@ namespace ImageEncryptCompress
         private void comp_load_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            try
             {
-                //Open the browsed image and display it
-                string OpenedFilePath = openFileDialog1.FileName;
-                ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
-                ImageOperations.DisplayImage(ImageMatrix, pictureBox12);
-                comp_load.Visible = false;
-                panel18.Visible = true;
-                comp_width.Text = ImageOperations.GetWidth(ImageMatrix).ToString();
-                comp_height.Text = ImageOperations.GetHeight(ImageMatrix).ToString();
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    //Open the browsed image and display it
+                    string OpenedFilePath = openFileDialog1.FileName;
+                    ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
+                    ImageOperations.DisplayImage(ImageMatrix, pictureBox12);
+                    comp_load.Visible = false;
+                    panel18.Visible = true;
+                    comp_width.Text = ImageOperations.GetWidth(ImageMatrix).ToString();
+                    comp_height.Text = ImageOperations.GetHeight(ImageMatrix).ToString();
+                    comp_fail.Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                comp_load.Visible = true;
             }
         }
 
@@ -393,7 +434,7 @@ namespace ImageEncryptCompress
 
         private void comp_button_Click(object sender, EventArgs e)
         {
-
+            comp_fail.Visible = false;
             comp_output.Visible = false;
             comp_done.Visible = false;
             label58.Visible = false;
@@ -410,33 +451,41 @@ namespace ImageEncryptCompress
             height = int.Parse(comp_height.Text);
 
 
-
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            if (method == "Huffman")
+            try
             {
-                (ratio, red_root, green_root, blue_root, rgbChannels) = ImageOperations.Huffman_Compress(ImageMatrix_copy, tap, seed);
+                Stopwatch stopwatch = Stopwatch.StartNew();
+                if (method == "Huffman")
+                {
+                    (ratio, red_root, green_root, blue_root, rgbChannels) = ImageOperations.Huffman_Compress(ImageMatrix_copy, tap, seed);
 
+                }
+                else
+                {
+                    (ratio, redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq) = ImageOperations.RunLengthEncoding(ImageMatrix, tap, seed);
+
+                }
+
+                stopwatch.Stop();
+
+                double elapsedTimeInSeconds = stopwatch.Elapsed.TotalSeconds;
+                label58.Visible = true;
+                comp_timeBox.Visible = true;
+                int minutes = (int)elapsedTimeInSeconds / 60;
+                int seconds = (int)elapsedTimeInSeconds % 60;
+                comp_timeBox.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
+
+                comp_ratio.Text = ratio.ToString() + " %";
+
+                if (method == "Huffman")
+                    comp_size.Text = ImageOperations.CalculateCompressedImageSize(seed, tap, red_root, green_root, blue_root, width, height, rgbChannels).ToString() + " Bytes";
+                else
+                    comp_size.Text = ImageOperations.CalculateCompressedImageSizeForRLE(redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq, tap, seed, width, height).ToString() + " Bytes";
+
+                comp_output.Visible = true;
             }
-            else
-            {
-                (ratio, redVal, greenVal, blueVal, redFreq, greenFreq, blueFreq) = ImageOperations.RunLengthEncoding(ImageMatrix, tap, seed);  
-
+            catch (Exception ex) {
+                comp_fail.Visible = true;
             }
-
-            stopwatch.Stop();
-
-            double elapsedTimeInSeconds = stopwatch.Elapsed.TotalSeconds;
-            label58.Visible = true;
-            comp_timeBox.Visible = true;
-            int minutes = (int)elapsedTimeInSeconds / 60;
-            int seconds = (int)elapsedTimeInSeconds % 60;
-            comp_timeBox.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
-
-            comp_ratio.Text = ratio.ToString() + " %";
-            comp_size.Text = ImageOperations.CalculateCompressedImageSize(seed, tap, red_root, green_root, blue_root, width, height, rgbChannels).ToString() + " Bytes";
-            
-            comp_output.Visible = true;
-
         }
 
         private void comp_save_Click(object sender, EventArgs e)
@@ -499,6 +548,7 @@ namespace ImageEncryptCompress
                 decomp_timeBox.Visible = false;
                 decomp_save.Visible = false;
                 label60.Visible = false;
+                decomp_fail.Visible = false;
 
             }
         }
@@ -508,37 +558,46 @@ namespace ImageEncryptCompress
             decomp_done.Visible = false;
             decomp_save.Visible = false;
             panel16.Visible = false;
-
+            decomp_fail.Visible = false;
             label60.Visible = false;
             decomp_timeBox.Visible = false;
 
             string filePath = decomp_name.Text;
             string method = decomp_method.Text.ToString();
             Stopwatch stopwatch = Stopwatch.StartNew();
-            if (method == "Huffman")
+            try
             {
-                (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.Huffman_Decompress(filePath);
-                stopwatch.Stop();
-                ImageOperations.DisplayImage(decompressedImage, pictureBox11);
+                if (method == "Huffman")
+                {
+                    (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.Huffman_Decompress(filePath);
+                    stopwatch.Stop();
+                    ImageOperations.DisplayImage(decompressedImage, pictureBox11);
+                }
+                else
+                {
+                    (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.RunLengthDecoding(filePath);
+                    stopwatch.Stop();
+                    ImageOperations.DisplayImage(decompressedImage, pictureBox11);
+                }
+
+                double elapsedTimeInSeconds = stopwatch.Elapsed.TotalSeconds;
+
+                label60.Visible = true;
+                decomp_timeBox.Visible = true;
+
+                int minutes = (int)elapsedTimeInSeconds / 60;
+                int seconds = (int)elapsedTimeInSeconds % 60;
+                decomp_timeBox.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
+
+                decomp_save.Visible = true;
+                panel16.Visible = true;
             }
-            else
+            catch (Exception ex)
             {
-                (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.RunLengthDecoding(filePath);
-                stopwatch.Stop();
-                ImageOperations.DisplayImage(decompressedImage, pictureBox11);
+                decomp_fail.Visible = true;
             }
 
-            double elapsedTimeInSeconds = stopwatch.Elapsed.TotalSeconds;
-
-            label60.Visible = true;
-            decomp_timeBox.Visible = true;
-
-            int minutes = (int)elapsedTimeInSeconds / 60;
-            int seconds = (int)elapsedTimeInSeconds % 60;
-            decomp_timeBox.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
-
-            decomp_save.Visible = true;
-            panel16.Visible = true;
+            
         } 
 
         private void decomp_save_Click(object sender, EventArgs e)
@@ -611,18 +670,26 @@ namespace ImageEncryptCompress
 
         private void fwd_load_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            try
             {
-                //Open the browsed image and display it
-                string OpenedFilePath = openFileDialog1.FileName;
-                ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
-                ImageOperations.DisplayImage(ImageMatrix, pictureBox13);
-                fwd_load.Visible = false;
-                fwd_panel1.Visible = true;
-                fwd_panel2.Visible = true;
-                fwd_width.Text = ImageOperations.GetWidth(ImageMatrix).ToString();
-                fwd_height.Text = ImageOperations.GetHeight(ImageMatrix).ToString();
+                OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    //Open the browsed image and display it
+                    string OpenedFilePath = openFileDialog1.FileName;
+                    ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
+                    ImageOperations.DisplayImage(ImageMatrix, pictureBox13);
+                    fwd_load.Visible = false;
+                    fwd_panel1.Visible = true;
+                    fwd_panel2.Visible = true;
+                    fwd_width.Text = ImageOperations.GetWidth(ImageMatrix).ToString();
+                    fwd_height.Text = ImageOperations.GetHeight(ImageMatrix).ToString();
+                    fwd_fail.Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                fwd_fail.Visible = true;
             }
         }
 
@@ -663,37 +730,45 @@ namespace ImageEncryptCompress
             fwd_timeBox.Visible = false;
             label64.Visible = false;
             fwd_timeBox.Visible = false;
+            fwd_fail.Visible = false;
 
-            RGBPixel[,] ImageMatrix_copy = (RGBPixel[,])ImageMatrix.Clone();
+            try
+            {
+                RGBPixel[,] ImageMatrix_copy = (RGBPixel[,])ImageMatrix.Clone();
 
-            float ratio = 0;
-            tap = (int)fwd_tap.Value;
-            seed = fwd_seed.Text;
-            width = int.Parse(fwd_width.Text);
-            height = int.Parse(fwd_height.Text);
+                float ratio = 0;
+                tap = (int)fwd_tap.Value;
+                seed = fwd_seed.Text;
+                width = int.Parse(fwd_width.Text);
+                height = int.Parse(fwd_height.Text);
 
-            Stopwatch stopwatch = Stopwatch.StartNew();
+                Stopwatch stopwatch = Stopwatch.StartNew();
 
-            ImageOperations.LFSR(ImageMatrix_copy, tap, seed);
-            
-            (ratio, red_root, green_root, blue_root, rgbChannels) = ImageOperations.Huffman_Compress(ImageMatrix_copy, tap, seed);
-            
-            fwd_ratio.Text = ratio.ToString() + " %";
-            fwd_size.Text = ImageOperations.CalculateCompressedImageSize(seed, tap, red_root, green_root, blue_root, width, height, rgbChannels).ToString() + " Bytes";
+                ImageOperations.LFSR(ImageMatrix_copy, tap, seed);
 
-            stopwatch.Stop();
-            double elapsedTimeInSeconds = stopwatch.Elapsed.TotalSeconds;
+                (ratio, red_root, green_root, blue_root, rgbChannels) = ImageOperations.Huffman_Compress(ImageMatrix_copy, tap, seed);
 
-            label64.Visible = false;
-            fwd_timeBox.Visible = false;
+                fwd_ratio.Text = ratio.ToString() + " %";
+                fwd_size.Text = ImageOperations.CalculateCompressedImageSize(seed, tap, red_root, green_root, blue_root, width, height, rgbChannels).ToString() + " Bytes";
 
-            int minutes = (int)elapsedTimeInSeconds / 60;
-            int seconds = (int)elapsedTimeInSeconds % 60;
-            fwd_timeBox.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
+                stopwatch.Stop();
+                double elapsedTimeInSeconds = stopwatch.Elapsed.TotalSeconds;
 
-            fwd_output.Visible = true;
-            label64.Visible = true;
-            fwd_timeBox.Visible = true;
+                label64.Visible = false;
+                fwd_timeBox.Visible = false;
+
+                int minutes = (int)elapsedTimeInSeconds / 60;
+                int seconds = (int)elapsedTimeInSeconds % 60;
+                fwd_timeBox.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
+
+                fwd_output.Visible = true;
+                label64.Visible = true;
+                fwd_timeBox.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                fwd_fail.Visible = true;
+            }
         }
 
         private void fwd_save_Click(object sender, EventArgs e)
@@ -709,17 +784,25 @@ namespace ImageEncryptCompress
 
         private void bck_load_Click(object sender, EventArgs e)
         {
-            (string fileName, long fileSize) = ImageOperations.loadBinary();
-            if (fileName != null)
+            try
             {
-                bck_file.Text = fileName;
-                bck_size.Text = fileSize.ToString() + " Bytes";
-                panel20.Visible = true;
-                panel21.Visible = false;
-                bck_save.Visible = false;
-                bck_done.Visible = false;
-                label65.Visible = false;
-                bck_timeBox.Visible = false;
+                (string fileName, long fileSize) = ImageOperations.loadBinary();
+                if (fileName != null)
+                {
+                    bck_file.Text = fileName;
+                    bck_size.Text = fileSize.ToString() + " Bytes";
+                    panel20.Visible = true;
+                    panel21.Visible = false;
+                    bck_save.Visible = false;
+                    bck_done.Visible = false;
+                    label65.Visible = false;
+                    bck_timeBox.Visible = false;
+                    bck_fail.Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                bck_fail.Visible = true;
             }
         }
 
@@ -730,26 +813,34 @@ namespace ImageEncryptCompress
             panel21.Visible = false;
             label65.Visible = false;
             bck_timeBox.Visible = false;
+            bck_fail.Visible = false;
 
-            string filePath = bck_file.Text;
+            try
+            {
+                string filePath = bck_file.Text;
 
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.Huffman_Decompress(filePath);
-            ImageOperations.LFSR(decompressedImage, tap, seed);
-            stopwatch.Stop();
-            double elapsedTimeInSeconds = stopwatch.Elapsed.TotalSeconds;
+                Stopwatch stopwatch = Stopwatch.StartNew();
+                (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.Huffman_Decompress(filePath);
+                ImageOperations.LFSR(decompressedImage, tap, seed);
+                stopwatch.Stop();
+                double elapsedTimeInSeconds = stopwatch.Elapsed.TotalSeconds;
 
-            ImageOperations.DisplayImage(decompressedImage, pictureBox14);    
+                ImageOperations.DisplayImage(decompressedImage, pictureBox14);
 
 
-            bck_save.Visible = true;
-            panel21.Visible = true;
-            bck_timeBox.Visible = true;
-            label65.Visible = true;
+                bck_save.Visible = true;
+                panel21.Visible = true;
+                bck_timeBox.Visible = true;
+                label65.Visible = true;
 
-            int minutes = (int)elapsedTimeInSeconds / 60;
-            int seconds = (int)elapsedTimeInSeconds % 60;
-            bck_timeBox.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
+                int minutes = (int)elapsedTimeInSeconds / 60;
+                int seconds = (int)elapsedTimeInSeconds % 60;
+                bck_timeBox.Text = minutes.ToString() + " min, " + seconds.ToString() + " sec";
+            }
+            catch (Exception ex)
+            {
+                bck_fail.Visible = true;
+            }
         }
 
         private void bck_save_Click(object sender, EventArgs e)
