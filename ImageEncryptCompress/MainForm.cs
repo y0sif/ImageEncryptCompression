@@ -188,6 +188,7 @@ namespace ImageEncryptCompress
             Menu_Panel.Visible = false;
             Enc_Panel.Visible = true;
             comboBox1.SelectedItem = "Binary";
+            comboBox1_SelectionChangeCommitted(sender, e);
         }
         private void break_b_Click(object sender, EventArgs e)
         {
@@ -234,8 +235,7 @@ namespace ImageEncryptCompress
 
         private async void test_b_Click(object sender, EventArgs e)
         {
-            //box
-            //try
+            try
             {
                 folderPath = getFolderPath();
 
@@ -253,7 +253,7 @@ namespace ImageEncryptCompress
                         for (int i = 0; i < numberOfCases; i++)
                         {
 
-                            test_case.Text = "Running Case " + (i + 1).ToString() + ": ";
+                            test_case.Text = "Running Case " + (i + 1).ToString() + ":";
                             await Task.Delay(1000);
 
                             string imgPath = reader.ReadLine();
@@ -274,7 +274,7 @@ namespace ImageEncryptCompress
 
                             ImageOperations.LFSR(ImageMatrix_copy, tapPosition, binarySeed);
                             ImageOperations.DisplayImage(ImageMatrix_copy, test_enc);
-                            test_enc.Image.Save(folderPath + "\\" + imgName + "_enc", ImageFormat.Bmp);
+                            test_enc.Image.Save(folderPath + "\\" + imgName + "_enc.bmp", ImageFormat.Bmp);
 
                             await Task.Delay(100);
 
@@ -299,13 +299,13 @@ namespace ImageEncryptCompress
 
                             (RGBPixel[,] decompressedImage, int tap, string seed) = ImageOperations.Huffman_Decompress(folderPath + "\\" + imgName + ".bin");
                             ImageOperations.DisplayImage(decompressedImage, test_decomp);
-                            test_decomp.Image.Save(folderPath + "\\" + imgName + "_decopm", ImageFormat.Bmp);
+                            test_decomp.Image.Save(folderPath + "\\" + imgName + "_decomp.bmp", ImageFormat.Bmp);
 
                             await Task.Delay(100);
 
                             ImageOperations.LFSR(decompressedImage, tap, seed);
                             ImageOperations.DisplayImage(decompressedImage, test_dec);
-                            test_dec.Image.Save(folderPath + "\\" + imgName + "_dec", ImageFormat.Bmp);
+                            test_dec.Image.Save(folderPath + "\\" + imgName + "_dec.bmp", ImageFormat.Bmp);
 
                             bckSw.Stop();
 
@@ -326,14 +326,18 @@ namespace ImageEncryptCompress
                             }
 
                             await Task.Delay(3000);
-                            test_dec.Image = null;
-                            test_enc.Image = null;
-                            test_original.Image = null;
-                            test_decomp.Image = null;
-                            test_bck_time.Text = "";
-                            test_fwd_time.Text = "";
-                            test_size.Text = "";
-                            test_ratio.Text = "";
+
+                            if (i != numberOfCases - 1)
+                            {
+                                test_dec.Image = null;
+                                test_enc.Image = null;
+                                test_original.Image = null;
+                                test_decomp.Image = null;
+                                test_bck_time.Text = "";
+                                test_fwd_time.Text = "";
+                                test_size.Text = "";
+                                test_ratio.Text = "";
+                            }
 
                         }
 
@@ -344,10 +348,20 @@ namespace ImageEncryptCompress
 
                 }
             }
-            /*catch
+            catch (Exception ex)
             {
-                Console.WriteLine("negawatt");
-            }*/
+                folderPath = null;
+                Test_Panel.Visible = false;
+                Menu_Panel.Visible = true;
+                test_dec.Image = null;
+                test_enc.Image = null;
+                test_original.Image = null;
+                test_decomp.Image = null;
+                test_bck_time.Text = "";
+                test_fwd_time.Text = "";
+                test_size.Text = "";
+                test_ratio.Text = "";
+            }
 
 
 
@@ -373,20 +387,27 @@ namespace ImageEncryptCompress
 
         private void break_load_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            try
             {
-                //Open the browsed image and display it
-                string OpenedFilePath = openFileDialog1.FileName;
-                ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
-                ImageOperations.DisplayImage(ImageMatrix, pictureBox10);
-                break_load.Visible = false;
-                break_insights.Visible = true;
-                panel13.Visible = true;
-                textBox17.Text = ImageOperations.GetWidth(ImageMatrix).ToString();
-                textBox16.Text = ImageOperations.GetHeight(ImageMatrix).ToString();
-                break_bits_ValueChanged(sender, e);
+                OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    //Open the browsed image and display it
+                    string OpenedFilePath = openFileDialog1.FileName;
+                    ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
+                    ImageOperations.DisplayImage(ImageMatrix, pictureBox10);
+                    break_load.Visible = false;
+                    break_insights.Visible = true;
+                    panel13.Visible = true;
+                    textBox17.Text = ImageOperations.GetWidth(ImageMatrix).ToString();
+                    textBox16.Text = ImageOperations.GetHeight(ImageMatrix).ToString();
+                    break_bits_ValueChanged(sender, e);
 
+                }
+            }
+            catch (Exception ex)
+            {
+                break_load.Visible = true;
             }
         }
 
@@ -858,7 +879,6 @@ namespace ImageEncryptCompress
             fwd_timeBox.Visible = false;
         }
 
-
         private void fwd_button_Click(object sender, EventArgs e)
         {
             fwd_output.Visible = false;
@@ -997,7 +1017,14 @@ namespace ImageEncryptCompress
             folderPath = null;
             Test_Panel.Visible = false;
             Menu_Panel.Visible = true;
-
+            test_dec.Image = null;
+            test_enc.Image = null;
+            test_original.Image = null;
+            test_decomp.Image = null;
+            test_bck_time.Text = "";
+            test_fwd_time.Text = "";
+            test_size.Text = "";
+            test_ratio.Text = "";
         }
 
         //End of Test Panel
